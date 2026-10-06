@@ -11,6 +11,9 @@ targets:
     client:
         target: ruby
         source: Mollie API
+        publish:
+            rubygems:
+                token: $rubygems_auth_token
         codeSamples:
             registry:
                 location: registry.speakeasyapi.dev/mollie-oom/mollie/mollie-api-ruby-code-samples
