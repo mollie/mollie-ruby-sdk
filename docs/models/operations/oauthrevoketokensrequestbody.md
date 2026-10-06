@@ -1,0 +1,9 @@
+# OauthRevokeTokensRequestBody
+
+
+## Fields
+
+| Field                                                                               | Type                                                                                | Required                                                                            | Description                                                                         | Example                                                                             |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `token_type_hint`                                                                   | [Models::Components::OauthTokenTypeHint](../../models/shared/oauthtokentypehint.md) | :heavy_check_mark:                                                                  | N/A                                                                                 | access_token                                                                        |
+| `token`                                                                             | *::String*                                                                          | :heavy_check_mark:                                                                  | The token you want to revoke.                                                       | access_...                                                                          |

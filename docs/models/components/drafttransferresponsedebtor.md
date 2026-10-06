@@ -1,0 +1,11 @@
+# DraftTransferResponseDebtor
+
+The debtor (sender) of the draft transfer, resolved from `debtorIban` at creation time.
+
+
+## Fields
+
+| Field                                                                                                   | Type                                                                                                    | Required                                                                                                | Description                                                                                             | Example                                                                                                 |
+| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `full_name`                                                                                             | *::String*                                                                                              | :heavy_check_mark:                                                                                      | The full name of the account holder.                                                                    | Jan Jansen                                                                                              |
+| `account`                                                                                               | [Models::Components::DraftTransferResponseAccount](../../models/shared/drafttransferresponseaccount.md) | :heavy_check_mark:                                                                                      | The bank account details of the party.                                                                  |                                                                                                         |

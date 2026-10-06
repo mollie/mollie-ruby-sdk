@@ -1,0 +1,13 @@
+# EntityOnboardingStatusLinks
+
+An object with several relevant URLs. Every URL object will contain an `href` and a `type` field.
+
+
+## Fields
+
+| Field                                                                                      | Type                                                                                       | Required                                                                                   | Description                                                                                |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| `self_`                                                                                    | [T.nilable(Models::Components::Url)](../../models/shared/url.md)                           | :heavy_minus_sign:                                                                         | In v2 endpoints, URLs are commonly represented as objects with an `href` and `type` field. |
+| `dashboard`                                                                                | [T.nilable(Models::Components::Url)](../../models/shared/url.md)                           | :heavy_minus_sign:                                                                         | In v2 endpoints, URLs are commonly represented as objects with an `href` and `type` field. |
+| `organization`                                                                             | [T.nilable(Models::Components::Url)](../../models/shared/url.md)                           | :heavy_minus_sign:                                                                         | In v2 endpoints, URLs are commonly represented as objects with an `href` and `type` field. |
+| `documentation`                                                                            | [T.nilable(Models::Components::Url)](../../models/shared/url.md)                           | :heavy_minus_sign:                                                                         | In v2 endpoints, URLs are commonly represented as objects with an `href` and `type` field. |

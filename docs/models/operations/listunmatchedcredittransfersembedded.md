@@ -1,0 +1,8 @@
+# ListUnmatchedCreditTransfersEmbedded
+
+
+## Fields
+
+| Field                                                                                                                       | Type                                                                                                                        | Required                                                                                                                    | Description                                                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `unmatched_credit_transfers`                                                                                                | T::Array<[Models::Components::ListEntityUnmatchedCreditTransfer](../../models/shared/listentityunmatchedcredittransfer.md)> | :heavy_check_mark:                                                                                                          | An array of unmatched credit transfer objects.                                                                              |

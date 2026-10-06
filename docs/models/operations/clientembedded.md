@@ -1,0 +1,10 @@
+# ClientEmbedded
+
+
+## Fields
+
+| Field                                                                                                  | Type                                                                                                   | Required                                                                                               | Description                                                                                            |
+| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `organization`                                                                                         | [T.nilable(Models::Components::EntityOrganization)](../../models/shared/entityorganization.md)         | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
+| `onboarding`                                                                                           | [T.nilable(Models::Components::EntityOnboardingStatus)](../../models/shared/entityonboardingstatus.md) | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |
+| `capabilities`                                                                                         | T::Array<[Models::Components::EntityCapability](../../models/shared/entitycapability.md)>              | :heavy_minus_sign:                                                                                     | N/A                                                                                                    |

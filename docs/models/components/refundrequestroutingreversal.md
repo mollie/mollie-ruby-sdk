@@ -1,0 +1,9 @@
+# RefundRequestRoutingReversal
+
+
+## Fields
+
+| Field                                                                                             | Type                                                                                              | Required                                                                                          | Description                                                                                       |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `amount`                                                                                          | [T.nilable(Models::Components::Amount)](../../models/shared/amount.md)                            | :heavy_minus_sign:                                                                                | In v2 endpoints, monetary amounts are represented as objects with a `currency` and `value` field. |
+| `source`                                                                                          | [T.nilable(Models::Components::RefundRequestSource)](../../models/shared/refundrequestsource.md)  | :heavy_minus_sign:                                                                                | Where the funds will be pulled back from.                                                         |

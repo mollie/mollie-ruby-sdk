@@ -1,0 +1,9 @@
+# SubGroup
+
+
+## Fields
+
+| Field                                                                                             | Type                                                                                              | Required                                                                                          | Description                                                                                       |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `amount`                                                                                          | [T.nilable(Models::Components::Amount)](../../models/shared/amount.md)                            | :heavy_minus_sign:                                                                                | In v2 endpoints, monetary amounts are represented as objects with a `currency` and `value` field. |
+| `subtotals`                                                                                       | T::Array<[Models::Components::SubTotals2](../../models/shared/subtotals2.md)>                     | :heavy_minus_sign:                                                                                | N/A                                                                                               |

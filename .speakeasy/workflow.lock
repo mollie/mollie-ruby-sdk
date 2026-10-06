@@ -1,0 +1,37 @@
+speakeasyVersion: 1.800.1
+sources:
+    Mollie API:
+        sourceNamespace: mollie-api
+        sourceRevisionDigest: sha256:f556e340aabc5b1de3dc618eb572cef5a46b5a41b14689ad8859638fc9ba2b91
+        sourceBlobDigest: sha256:19cc4bf221bc97623919d7dcfd6dd98d3e4596f15426c226420cc3e1c4c55510
+        tags:
+            - latest
+            - 1.0.0
+targets:
+    client:
+        source: Mollie API
+        sourceNamespace: mollie-api
+        sourceRevisionDigest: sha256:f556e340aabc5b1de3dc618eb572cef5a46b5a41b14689ad8859638fc9ba2b91
+        sourceBlobDigest: sha256:19cc4bf221bc97623919d7dcfd6dd98d3e4596f15426c226420cc3e1c4c55510
+        codeSamplesNamespace: mollie-api-ruby-code-samples
+        codeSamplesRevisionDigest: sha256:3259b2cdb59ff952d423bade4a3a45ca6af7140262c40d79b744e4e02ec803fd
+workflow:
+    workflowVersion: 1.0.0
+    speakeasyVersion: latest
+    sources:
+        Mollie API:
+            inputs:
+                - location: https://raw.githubusercontent.com/mollie/openapi-specs/main/specs.yaml
+            output: .speakeasy/out.openapi.yaml
+            registry:
+                location: registry.speakeasyapi.dev/mollie-oom/mollie/mollie-api
+    targets:
+        client:
+            target: ruby
+            source: Mollie API
+            codeSamples:
+                registry:
+                    location: registry.speakeasyapi.dev/mollie-oom/mollie/mollie-api-ruby-code-samples
+                labelOverride:
+                    fixedValue: Ruby (SDK)
+                blocking: false

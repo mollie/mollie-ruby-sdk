@@ -1,0 +1,8 @@
+# ListConnectBalanceTransfersEmbedded
+
+
+## Fields
+
+| Field                                                                                                               | Type                                                                                                                | Required                                                                                                            | Description                                                                                                         |
+| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `connect_balance_transfers`                                                                                         | T::Array<[Models::Components::EntityBalanceTransferResponse](../../models/shared/entitybalancetransferresponse.md)> | :heavy_check_mark:                                                                                                  | A list of Connect balance transfers.                                                                                |
