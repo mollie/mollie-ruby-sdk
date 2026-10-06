@@ -9,6 +9,7 @@
 #
 
 require_relative "./types"
+require_relative "./mollie_hooks"
 
 module Mollie
   module SDKHooks
@@ -22,12 +23,9 @@ module Mollie
           .void
       end
       def self.init_hooks(hooks)
-        # example_hook = ExampleHook.new
+        mollie_hooks = MollieHooks.new
 
-        # hooks.register_sdk_init_hook example_hook
-        # hooks.register_before_request_hook example_hook
-        # hooks.register_after_error_hook example_hook
-        # hooks.register_after_success_hook example_hook
+        hooks.register_before_request_hook mollie_hooks
       end
     end
   end
