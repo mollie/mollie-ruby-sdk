@@ -335,7 +335,7 @@ Two exception types to catch, both raised as Ruby exceptions (not returned as er
 
 ```ruby
 begin
-  client.payments.get(payment_id: "invalid")
+  client.payments.get(request: Models::Operations::GetPaymentRequest.new(payment_id: "invalid"))
 rescue Mollie::Models::Errors::ErrorResponse => e
   e.status    # HTTP status code
   e.title     # HTTP reason phrase
