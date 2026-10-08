@@ -48,6 +48,12 @@ class Mollie::Models::Components::SessionRequest
   def shipping_address=(str_)
   end
 
+  def shipping
+  end
+
+  def shipping=(str_)
+  end
+
   def customer_id
   end
 

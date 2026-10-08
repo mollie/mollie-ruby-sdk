@@ -141,17 +141,6 @@ module Mollie
         server_idx,
         globals
       )
-
-      resolved_security = @sdk_configuration.security_source&.call
-      has_global_fields = SDKHooks::MollieAuthUtils.client_has_global_fields?(profile_id, testmode)
-      can_have_global_fields = SDKHooks::MollieAuthUtils.client_can_have_global_fields?(resolved_security)
-
-      if has_global_fields && !can_have_global_fields
-        Kernel.raise StandardError,
-                     "Invalid client configuration: global fields like testmode and profile_id can only be set " \
-                     "when using an advanced_access_token or o_auth credential."
-      end
-
       @sdk_configuration = hooks.sdk_init(config: @sdk_configuration)
       init_sdks
     end

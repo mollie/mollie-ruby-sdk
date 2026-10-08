@@ -41,7 +41,7 @@ The SDK can be installed using [RubyGems](https://rubygems.org/):
 
 ```bash
 gem install specific_install
-gem specific_install  
+gem specific_install https://github.com/mollie/mollie-ruby-sdk 
 ```
 <!-- End SDK Installation [installation] -->
 

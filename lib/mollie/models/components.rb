@@ -450,14 +450,6 @@ module Mollie
       )
       autoload :PaymentDetailsFeeRegionResponse, "mollie/models/components/payment_details_fee_region_response.rb"
       autoload(
-        :PaymentDetailsReceiptCardReadMethodResponse,
-        "mollie/models/components/payment_details_receipt_card_read_method_response.rb"
-      )
-      autoload(
-        :PaymentDetailsReceiptCardVerificationMethodResponse,
-        "mollie/models/components/payment_details_receipt_card_verification_method_response.rb"
-      )
-      autoload(
         :PaymentDetailsSellerProtectionResponse,
         "mollie/models/components/payment_details_seller_protection_response.rb"
       )
@@ -508,7 +500,6 @@ module Mollie
       autoload :ProfileResponseStatus, "mollie/models/components/profile_response_status.rb"
       autoload :ProfileReviewStatusResponse, "mollie/models/components/profile_review_status_response.rb"
       autoload :Rate, "mollie/models/components/rate.rb"
-      autoload :Receipt, "mollie/models/components/receipt.rb"
       autoload :RecurringLineItem, "mollie/models/components/recurring_line_item.rb"
       autoload :Refund, "mollie/models/components/refund.rb"
       autoload :RefundCompensation, "mollie/models/components/refund_compensation.rb"
@@ -591,7 +582,12 @@ module Mollie
       autoload :SessionLineItem, "mollie/models/components/session_line_item.rb"
       autoload :SessionLineItemResponse, "mollie/models/components/session_line_item_response.rb"
       autoload :SessionRequest, "mollie/models/components/session_request.rb"
+      autoload :SessionRequestOption1, "mollie/models/components/session_request_option_1.rb"
+      autoload :SessionRequestOption2, "mollie/models/components/session_request_option_2.rb"
       autoload :SessionRequestPayment, "mollie/models/components/session_request_payment.rb"
+      autoload :SessionRequestShipping1, "mollie/models/components/session_request_shipping_1.rb"
+      autoload :SessionRequestShipping2, "mollie/models/components/session_request_shipping_2.rb"
+      autoload :SessionRequestShippingUnion, "mollie/models/components/session_request_shipping_union.rb"
       autoload :SessionRequiredCustomerDetails, "mollie/models/components/session_required_customer_details.rb"
       autoload(
         :SessionRequiredCustomerDetailsResponse,
@@ -599,7 +595,12 @@ module Mollie
       )
       autoload :SessionResponse, "mollie/models/components/session_response.rb"
       autoload :SessionResponseLinks, "mollie/models/components/session_response_links.rb"
+      autoload :SessionResponseOption1, "mollie/models/components/session_response_option_1.rb"
+      autoload :SessionResponseOption2, "mollie/models/components/session_response_option_2.rb"
       autoload :SessionResponsePayment, "mollie/models/components/session_response_payment.rb"
+      autoload :SessionResponseShipping1, "mollie/models/components/session_response_shipping_1.rb"
+      autoload :SessionResponseShipping2, "mollie/models/components/session_response_shipping_2.rb"
+      autoload :SessionResponseShippingUnion, "mollie/models/components/session_response_shipping_union.rb"
       autoload :SessionResponseStatus, "mollie/models/components/session_response_status.rb"
       autoload :SessionSequenceType, "mollie/models/components/session_sequence_type.rb"
       autoload :SessionSequenceTypeResponse, "mollie/models/components/session_sequence_type_response.rb"

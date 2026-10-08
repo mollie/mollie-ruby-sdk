@@ -43,22 +43,6 @@ module Mollie
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("terminalId")}}
         )
-        # The Point of sale receipt object.
-        #
-        # * `authorizationCode` _string|null_ - a unique code provided by the cardholder's bank to confirm that the
-        #   transaction was successfully approved.
-        # * `applicationIdentifier` _string|null_ - the unique number that identifies a specific payment application
-        #   on a chip card.
-        # * `cardReadMethod` _string|null_ - the method by which the card was read by the terminal. Possible values:
-        #   `chip` | `magnetic-stripe` | `near-field-communication` | `contactless` | `moto`.
-        # * `cardVerificationMethod` _string|null_ - the method used to verify the cardholder's identity. Possible
-        #   values: `no-cvm-required` | `online-pin` | `offline-pin` | `consumer-device` | `signature` |
-        #   `signature-and-online-pin` | `online-pin-and-signature` | `none` | `failed`.
-        field(
-          :receipt,
-          Crystalline::Nilable.new(Models::Components::Receipt),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("receipt")}}
-        )
         # **Optional include.** If a QR code was requested during payment creation for a QR-compatible payment method,
         # the QR code details will be available in this object.
         #
@@ -442,7 +426,6 @@ module Mollie
             bank_bic: T.nilable(::String),
             customer_reference: T.nilable(::String),
             terminal_id: T.nilable(::String),
-            receipt: T.nilable(Models::Components::Receipt),
             qr_code: T.nilable(Models::Components::PaymentDetailsQrCode),
             voucher_number: T.nilable(::String),
             giftcards: T.nilable(T::Array[T::Hash[Symbol, ::Object]]),
@@ -499,7 +482,6 @@ module Mollie
           bank_bic: nil,
           customer_reference: nil,
           terminal_id: nil,
-          receipt: nil,
           qr_code: nil,
           voucher_number: nil,
           giftcards: nil,
@@ -553,7 +535,6 @@ module Mollie
           @bank_bic = bank_bic
           @customer_reference = customer_reference
           @terminal_id = terminal_id
-          @receipt = receipt
           @qr_code = qr_code
           @voucher_number = voucher_number
           @giftcards = giftcards
@@ -611,7 +592,6 @@ module Mollie
           return false unless @bank_bic == other.bank_bic
           return false unless @customer_reference == other.customer_reference
           return false unless @terminal_id == other.terminal_id
-          return false unless @receipt == other.receipt
           return false unless @qr_code == other.qr_code
           return false unless @voucher_number == other.voucher_number
           return false unless @giftcards == other.giftcards

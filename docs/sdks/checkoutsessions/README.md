@@ -66,6 +66,19 @@ res = s.checkout_sessions.create(idempotency_key: '123e4567-e89b-12d3-a456-426',
     region: 'Noord-Holland',
     country: 'NL'
   ),
+  shipping: Models::Components::SessionRequestShipping1.new(
+    options: [
+      Models::Components::SessionRequestOption1.new(
+        description: 'Next day delivery',
+        reference: 'express',
+        amount: Models::Components::Amount.new(
+          currency: 'EUR',
+          value: '10.00'
+        )
+      ),
+    ],
+    callback_url: 'https://example.org/shipping-options'
+  ),
   customer_id: 'cst_5B8cwPMGnU',
   sequence_type: Models::Components::SessionSequenceType::ONEOFF,
   payment: Models::Components::SessionRequestPayment.new(
@@ -130,6 +143,19 @@ res = s.checkout_sessions.create(idempotency_key: '123e4567-e89b-12d3-a456-426',
     city: 'Amsterdam',
     region: 'Noord-Holland',
     country: 'NL'
+  ),
+  shipping: Models::Components::SessionRequestShipping1.new(
+    options: [
+      Models::Components::SessionRequestOption1.new(
+        description: 'Next day delivery',
+        reference: 'express',
+        amount: Models::Components::Amount.new(
+          currency: 'EUR',
+          value: '10.00'
+        )
+      ),
+    ],
+    callback_url: 'https://example.org/shipping-options'
   ),
   customer_id: 'cst_5B8cwPMGnU',
   sequence_type: Models::Components::SessionSequenceType::ONEOFF,
@@ -196,6 +222,19 @@ res = s.checkout_sessions.create(idempotency_key: '123e4567-e89b-12d3-a456-426',
     region: 'Noord-Holland',
     country: 'NL'
   ),
+  shipping: Models::Components::SessionRequestShipping1.new(
+    options: [
+      Models::Components::SessionRequestOption1.new(
+        description: 'Next day delivery',
+        reference: 'express',
+        amount: Models::Components::Amount.new(
+          currency: 'EUR',
+          value: '10.00'
+        )
+      ),
+    ],
+    callback_url: 'https://example.org/shipping-options'
+  ),
   customer_id: 'cst_5B8cwPMGnU',
   sequence_type: Models::Components::SessionSequenceType::ONEOFF,
   payment: Models::Components::SessionRequestPayment.new(
@@ -260,6 +299,19 @@ res = s.checkout_sessions.create(idempotency_key: '123e4567-e89b-12d3-a456-426',
     city: 'Amsterdam',
     region: 'Noord-Holland',
     country: 'NL'
+  ),
+  shipping: Models::Components::SessionRequestShipping1.new(
+    options: [
+      Models::Components::SessionRequestOption1.new(
+        description: 'Next day delivery',
+        reference: 'express',
+        amount: Models::Components::Amount.new(
+          currency: 'EUR',
+          value: '10.00'
+        )
+      ),
+    ],
+    callback_url: 'https://example.org/shipping-options'
   ),
   customer_id: 'cst_5B8cwPMGnU',
   sequence_type: Models::Components::SessionSequenceType::ONEOFF,
