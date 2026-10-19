@@ -1,18 +1,18 @@
 lockVersion: 2.0.0
 id: a76ce462-91f2-4777-a0d1-dbc0a271cee2
 management:
-  docChecksum: f0d36ca4c49ab7e7ff7e07aa80093d9c
+  docChecksum: 73b84c34b41d3207af209021bf73c6e0
   docVersion: 1.0.0
-  speakeasyVersion: 1.801.0
-  generationVersion: 2.946.0
-  releaseVersion: 0.0.1-alpha.1
-  configChecksum: 1a4be5a08088c45135226c3708c8fd93
+  speakeasyVersion: 1.802.0
+  generationVersion: 2.948.4
+  releaseVersion: 0.0.1-alpha.2
+  configChecksum: fefd404578e114c5aa7d0d85beca5880
   repoURL: https://github.com/mollie/mollie-ruby-sdk.git
   installationURL: https://github.com/mollie/mollie-ruby-sdk
 persistentEdits:
-  generation_id: 2784844d-d502-47ea-9925-7a1b9e638043
-  pristine_commit_hash: 31962c7f4c05036fbde4b9cd139c4ecc1d48192f
-  pristine_tree_hash: 5aedc4cec54778866d7fec1cbf6cfc9ad9152062
+  generation_id: dac143ff-115c-427c-a469-f0521f3485b8
+  pristine_commit_hash: 858d2130030df692ed5cf2d313c729bf2d0f62bc
+  pristine_tree_hash: 75ee1d2ce6b1ba4dcee58de3e58d7df43ab0ea92
 features:
   ruby:
     core: 3.11.36
@@ -50,8 +50,8 @@ trackedFiles:
     pristine_git_object: b0ea40558f3ca80dcf7d30b159d34a1e5ab33440
   Gemfile.lock:
     id: 21fb5836b499
-    last_write_checksum: sha1:be0565060f5c9fc76f23f65f88341606c353fc66
-    pristine_git_object: cc71a4b21304c3032db51c6ed335c26eda1e84fc
+    last_write_checksum: sha1:bf62480d19c9ae06eb74e48c43edc19aebfb4375
+    pristine_git_object: f2c4906a5d63c42aa86afde090e2d2404207e546
   Rakefile:
     id: 44b7fa1ba503
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
@@ -3846,8 +3846,8 @@ trackedFiles:
     pristine_git_object: 3aeef175c119287106d3c2ce238e9ecefda5184a
   docs/sdks/checkoutsessions/README.md:
     id: 093cc3fe624c
-    last_write_checksum: sha1:280b4ff52d6bde42ffaba0bf28bd25d369a5d8e5
-    pristine_git_object: 15253a83e586583d5f14468be0e7f97006c599ba
+    last_write_checksum: sha1:13d64572f319b0c01b95c5605fedb548a6588736
+    pristine_git_object: 7cadd7b662c55454ac538c4471f5938c0992f787
   docs/sdks/clientlinks/README.md:
     id: 74ba097043d3
     last_write_checksum: sha1:f66cd3f47f91d567f2ca684d4c89fec0fd543e9b
@@ -4010,8 +4010,8 @@ trackedFiles:
     pristine_git_object: 0a4a191a901aba8c195ed88289c0589498b3c32e
   lib/mollie/checkout_sessions.rb:
     id: 88a26ebdd60e
-    last_write_checksum: sha1:818589b1a394d9b763a1a217e8b5e69f3c2e0f30
-    pristine_git_object: 82e06bfb7890c985aaf20f31b3ee9fcb25224317
+    last_write_checksum: sha1:703c2343cd2f02f41139313c8813ead4646983f9
+    pristine_git_object: e1c0607ac7ec3d8e276cd6ab24488a351013b10e
   lib/mollie/client.rb:
     id: 6e3c23d54271
     last_write_checksum: sha1:f32b0d86a6f9ad0858c8be52d8649caa4e0e742c
@@ -11642,8 +11642,8 @@ trackedFiles:
     pristine_git_object: 4ec9d964d07d24d9c6efdd15dbee2ae4dcbab47f
   lib/mollie/sdkconfiguration.rb:
     id: d210a4891e32
-    last_write_checksum: sha1:158b1399a8eca6af3c599820c6d2e5dab5afef43
-    pristine_git_object: a67c553839f76e9e2767d814bf0bb5fd9f207f31
+    last_write_checksum: sha1:e4f7f383e9b6f3cac0546d3ee3d9c95ec2f6dea7
+    pristine_git_object: 9eeaec6672a09a8286cfa0e4724671d3949d81bc
   lib/mollie/sdkconfiguration.rbi:
     id: c0ffd0c4f524
     last_write_checksum: sha1:736dfd8a0547d28fe74ce3d0e72adfcea4bdcc6c
@@ -11722,8 +11722,8 @@ trackedFiles:
     pristine_git_object: 33f2af566e9865e31fbc865f14e50476d00674c6
   mollie-ruby-sdk.gemspec:
     id: 1b774e05b6f3
-    last_write_checksum: sha1:a357ee27d8373cdbd774ad2d862393edd8ea76c0
-    pristine_git_object: 7153ee1572330d90f7225c1d18943f06484c1ad3
+    last_write_checksum: sha1:0546f3f16f6da67a47b6e9603c516c92a04f114c
+    pristine_git_object: 5f4b0fc395edc36cde568a1f50653c261cf458b3
   sorbet/config:
     id: 59392da43f94
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
@@ -15446,4 +15446,3 @@ examples:
         "404":
           application/hal+json: {"status": 404, "title": "Not Found", "detail": "The resource does not exist", "field": "description", "_links": {"documentation": {"href": "https://docs.mollie.com/errors", "type": "text/html"}}}
 examplesVersion: 1.0.2
-releaseNotes: "## Ruby SDK Changes:\n* `client.payments.cancel()`:  `response.details.receipt` **Removed** (Breaking ⚠️)\n* `client.webhook_events.get()`:  `response._embedded.entity.union(payment-response).details.receipt` **Removed** (Breaking ⚠️)\n* `client.payments.create()`:  `response.details.receipt` **Removed** (Breaking ⚠️)\n* `client.payments.list()`:  `response._embedded.payments[].details.receipt` **Removed** (Breaking ⚠️)\n* `client.payments.get()`:  `response.details.receipt` **Removed** (Breaking ⚠️)\n* `client.payments.update()`:  `response.details.receipt` **Removed** (Breaking ⚠️)\n* `client.settlements.list_payments()`:  `response._embedded.payments[].details.receipt` **Removed** (Breaking ⚠️)\n* `client.payment_links.list_payments()`:  `response._embedded.payments[].details.receipt` **Removed** (Breaking ⚠️)\n* `client.customers.create_payment()`:  `response.details.receipt` **Removed** (Breaking ⚠️)\n* `client.customers.list_payments()`:  `response._embedded.payments[].details.receipt` **Removed** (Breaking ⚠️)\n* `client.subscriptions.list_payments()`:  `response._embedded.payments[].details.receipt` **Removed** (Breaking ⚠️)\n* `client.checkout_sessions.create()`: \n  *  `request.body.shipping` **Added**\n  *  `response.shipping` **Added**\n* `client.checkout_sessions.get()`:  `response.shipping` **Added**\n"
