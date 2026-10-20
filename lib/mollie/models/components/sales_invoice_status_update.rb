@@ -22,6 +22,7 @@ module Mollie
           ISSUED = new("issued")
           PAID = new("paid")
           CANCELLED = new("cancelled")
+          PAYMENT_REVERSED = new("payment_reversed")
         end
       end
     end
