@@ -16,7 +16,7 @@ module Mollie
           PENDING_PAYMENT = new("pending-payment")
           PAID = new("paid")
           OVERDUE = new("overdue")
-          PAYMENT_REVERSED = new("payment_reversed")
+          PAYMENT_REVERSED = new("payment-reversed")
           CANCELLED = new("cancelled")
           EXPIRED = new("expired")
           FAILED = new("failed")

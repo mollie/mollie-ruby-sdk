@@ -1,18 +1,18 @@
 lockVersion: 2.0.0
 id: a76ce462-91f2-4777-a0d1-dbc0a271cee2
 management:
-  docChecksum: 91150334105ebd8973b60bf680b8e5e4
+  docChecksum: 693e92eeef422ee7b8c54afd390dea7a
   docVersion: 1.0.0
   speakeasyVersion: 1.803.0
   generationVersion: 2.950.2
-  releaseVersion: 0.0.1-alpha.3
-  configChecksum: 4d48e9d1aabb3a543221a2ad2d1b224f
+  releaseVersion: 0.0.1-alpha.4
+  configChecksum: de96c54a2b7a9ba5ae6e864e3ca0c003
   repoURL: https://github.com/mollie/mollie-ruby-sdk.git
   installationURL: https://github.com/mollie/mollie-ruby-sdk
 persistentEdits:
-  generation_id: 0e67863b-99b4-456b-b668-8495788f11ec
-  pristine_commit_hash: c53aa39e4cb3792f82ee5623175d5f831c9dcba8
-  pristine_tree_hash: 0f07e231bb4a497e866eabad3e2d2017f63a762b
+  generation_id: 2bc67785-931d-40ad-a0f9-95bba7ef6381
+  pristine_commit_hash: f9f49eff555c99ee39bc67cf469fd0a8e7e7a583
+  pristine_tree_hash: e870092f1c0a7c74b369fbd7485ef56b31b67024
 features:
   ruby:
     core: 3.11.36
@@ -50,8 +50,8 @@ trackedFiles:
     pristine_git_object: b0ea40558f3ca80dcf7d30b159d34a1e5ab33440
   Gemfile.lock:
     id: 21fb5836b499
-    last_write_checksum: sha1:a94c8f4edde6a994184469e6837da306f134314f
-    pristine_git_object: 88d7ccf8ed8480692f60e319e3f5fb1179ac1a7a
+    last_write_checksum: sha1:012c5fb84f45f578647a646cc9a099c3dc31467e
+    pristine_git_object: 81c111cd974b0fe8e6851d6f6baa5f1589282d7b
   Rakefile:
     id: 44b7fa1ba503
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
@@ -1826,12 +1826,12 @@ trackedFiles:
     pristine_git_object: 93a0117a13bcbd15596cdbf54750330ca9c44292
   docs/models/components/salesinvoicestatusresponse.md:
     id: a8eba54055dc
-    last_write_checksum: sha1:ad61b4757051db58032b8ae2e3a474e0af9c96e4
-    pristine_git_object: eb539f211305ac19e5e3446049b1363603c3347b
+    last_write_checksum: sha1:b5f40688b9891fdd7f35f85b4e6cfaa9cbc4fbb1
+    pristine_git_object: df21bf3e101e4d94344a47c8dc7c86c6ed4c2c54
   docs/models/components/salesinvoicestatusupdate.md:
     id: 164aa81d1227
-    last_write_checksum: sha1:790c14ed001db8cad081b013686bb2fa14323fc5
-    pristine_git_object: 9251ef87cd899082d4f1c6d9d30be5ed217991de
+    last_write_checksum: sha1:080fce294e5831ed63d54d79079621cf3406108f
+    pristine_git_object: f7fc06d3a1b67844d452218b7be4bdc98363d1a1
   docs/models/components/salesinvoicevatmode.md:
     id: 34217af5deb2
     last_write_checksum: sha1:8348c00a5275ff836e5f49283f423c1966362e1d
@@ -7586,16 +7586,16 @@ trackedFiles:
     pristine_git_object: caf586a918ad3bdacc80767a4a144e7d5595ee26
   lib/mollie/models/components/sales_invoice_status_response.rb:
     id: a6478db8a2ed
-    last_write_checksum: sha1:75ae3ee2119a71935ec25cb89ebae7b7bd33e96e
-    pristine_git_object: 075a4c7fab37ffb7d85383fab82bd09c041a4d1c
+    last_write_checksum: sha1:123edb9788ab747f98697430b97ab9b71a2d6e2c
+    pristine_git_object: f221e5960be207a4a1b7ffa82d9577188bf746db
   lib/mollie/models/components/sales_invoice_status_response.rbi:
     id: 49a3b65983b5
     last_write_checksum: sha1:27446257fd2bdc91490d31b99acf8ad2daa43cdc
     pristine_git_object: e99a2bdaee45ddc29922d8d9d9ccc1e8cc5142fc
   lib/mollie/models/components/sales_invoice_status_update.rb:
     id: fc6a88a1c9ce
-    last_write_checksum: sha1:3068441f3e38a74634e373ae3d09b5618464e8c6
-    pristine_git_object: ad1d284e110cba0c1d0a3ed2c4dc427981049ca8
+    last_write_checksum: sha1:290f844adcf1ae04f892b5b9534523fdb7c850c7
+    pristine_git_object: 0db7dadaaab97eff801956cbe9c9b972e94b1269
   lib/mollie/models/components/sales_invoice_status_update.rbi:
     id: e1ad057bd802
     last_write_checksum: sha1:4524adcfc5e8a9bfd2df3a11b52e770b940047f4
@@ -11642,8 +11642,8 @@ trackedFiles:
     pristine_git_object: 4ec9d964d07d24d9c6efdd15dbee2ae4dcbab47f
   lib/mollie/sdkconfiguration.rb:
     id: d210a4891e32
-    last_write_checksum: sha1:9ad355395d0b7dbd7874594f8b3d639833f344b8
-    pristine_git_object: fc306d9bff886cc396d8fab3b1e8762910f0c50e
+    last_write_checksum: sha1:b37e246836d8e79ec0d4de165c96c2afb012410a
+    pristine_git_object: e6d905aacd3c2d8e40edfd35787efd899f3c483f
   lib/mollie/sdkconfiguration.rbi:
     id: c0ffd0c4f524
     last_write_checksum: sha1:736dfd8a0547d28fe74ce3d0e72adfcea4bdcc6c
@@ -11722,8 +11722,8 @@ trackedFiles:
     pristine_git_object: 33f2af566e9865e31fbc865f14e50476d00674c6
   mollie-ruby-sdk.gemspec:
     id: 1b774e05b6f3
-    last_write_checksum: sha1:4cfb6d3d851cbc2a70da359bf8d43fc2ad6d3078
-    pristine_git_object: cbb88fc6e7e7afe29b8436096c950bebed368212
+    last_write_checksum: sha1:e8c77ed42d5ca5c822bf372b3faa982ebf7ab296
+    pristine_git_object: ad7ae8febf2264c9fdc0db558e2f69be1d818f69
   sorbet/config:
     id: 59392da43f94
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
@@ -15446,4 +15446,4 @@ examples:
         "404":
           application/hal+json: {"status": 404, "title": "Not Found", "detail": "The resource does not exist", "field": "description", "_links": {"documentation": {"href": "https://docs.mollie.com/errors", "type": "text/html"}}}
 examplesVersion: 1.0.2
-releaseNotes: "## Ruby SDK Changes:\n* `client.balances.get_report()`:  `response.totals.pending_balance.open.subtotals[].sub_totals[].transaction_type` **Changed**\n* `client.balances.list_transactions()`:  `response._embedded.balance_transactions[].type` **Changed**\n* `client.sales_invoices.update()`: \n  *  `request.body.status.enum(payment_reversed)` **Added**\n"
+releaseNotes: "## Ruby SDK Changes:\n* `client.webhook_events.get()`:  `response._embedded.entity.union(sales-invoice-response).status` **Changed** (Breaking ⚠️)\n* `client.sales_invoices.create()`:  `response.status` **Changed** (Breaking ⚠️)\n* `client.sales_invoices.list()`:  `response._embedded.invoices[].status` **Changed** (Breaking ⚠️)\n* `client.sales_invoices.get()`:  `response.status` **Changed** (Breaking ⚠️)\n* `client.sales_invoices.update()`: \n  *  `request.body.status` **Changed** (Breaking ⚠️)\n  *  `response.status` **Changed** (Breaking ⚠️)\n"
