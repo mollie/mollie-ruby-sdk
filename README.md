@@ -308,6 +308,11 @@ end
 * [cancel](docs/sdks/refunds/README.md#cancel) - Cancel payment refund
 * [all](docs/sdks/refunds/README.md#all) - List all refunds
 
+### [Reports](docs/sdks/reports/README.md)
+
+* [create](docs/sdks/reports/README.md#create) - Create report
+* [get](docs/sdks/reports/README.md#get) - Get report
+
 ### [SalesInvoices](docs/sdks/salesinvoices/README.md)
 
 * [create](docs/sdks/salesinvoices/README.md#create) - Create sales invoice

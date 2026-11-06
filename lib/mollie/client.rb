@@ -20,6 +20,7 @@ module Mollie
     attr_accessor(
       :oauth,
       :balances,
+      :reports,
       :settlements,
       :invoices,
       :permissions,
@@ -149,6 +150,7 @@ module Mollie
     def init_sdks
       @oauth = Oauth.new(@sdk_configuration)
       @balances = Balances.new(@sdk_configuration)
+      @reports = Reports.new(@sdk_configuration)
       @settlements = Settlements.new(@sdk_configuration)
       @invoices = Invoices.new(@sdk_configuration)
       @permissions = Permissions.new(@sdk_configuration)

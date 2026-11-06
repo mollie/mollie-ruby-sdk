@@ -7,6 +7,7 @@ module Mollie
   autoload :Client, "mollie/client"
   autoload :Oauth, "mollie/oauth"
   autoload :Balances, "mollie/balances"
+  autoload :Reports, "mollie/reports"
   autoload :Settlements, "mollie/settlements"
   autoload :Invoices, "mollie/invoices"
   autoload :Permissions, "mollie/permissions"

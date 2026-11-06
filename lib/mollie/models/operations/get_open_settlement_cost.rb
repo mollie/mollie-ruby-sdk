@@ -20,6 +20,9 @@ module Mollie
         # The number of fees
         field :count, ::Integer, {'format_json': {'letter_case': ::Mollie::Utils.field_name("count"), required: true}}
         # The service rates, further divided into `fixed` and `percentage` costs.
+        #
+        # For pass-through fees, which are charged by an external party rather than at an agreed Mollie
+        # rate, both `fixed` and `percentage` are `null`.
         field(
           :rate,
           Models::Operations::GetOpenSettlementRate,

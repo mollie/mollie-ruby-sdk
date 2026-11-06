@@ -58,6 +58,8 @@ module Mollie
           UNMATCHED_CREDIT_TRANSFER_MATCH_FAILED = new("unmatched-credit-transfer.match.failed")
           UNMATCHED_CREDIT_TRANSFER_RETURN_COMPLETED = new("unmatched-credit-transfer.return.completed")
           UNMATCHED_CREDIT_TRANSFER_RETURN_FAILED = new("unmatched-credit-transfer.return.failed")
+          REPORT_COMPLETED = new("report.completed")
+          REPORT_FAILED = new("report.failed")
           WILDCARD_ = new("*")
         end
 
