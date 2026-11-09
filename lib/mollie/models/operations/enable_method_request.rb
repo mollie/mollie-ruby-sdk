@@ -16,7 +16,7 @@ module Mollie
         # Provide the ID of the related payment method.
         field(
           :method_id,
-          Crystalline::Nilable.new(Models::Components::MethodEnum),
+          Crystalline::Nilable.new(Models::Components::MethodId),
           {'path_param': {'field_name': "methodId", 'style': "simple", 'explode': false}}
         )
         # A unique key to ensure idempotent requests. This key should be a UUID v4 string.
@@ -29,7 +29,7 @@ module Mollie
         sig {
           params(
             profile_id: ::String,
-            method_id: T.nilable(Models::Components::MethodEnum),
+            method_id: T.nilable(Models::Components::MethodId),
             idempotency_key: T.nilable(::String)
           )
             .void

@@ -337,7 +337,7 @@ s = ::Mollie::Client.new(
 )
 
 req = Models::Operations::GetMethodRequest.new(
-  method_id: Models::Components::MethodEnum::IDEAL,
+  method_id: Models::Components::MethodId::IDEAL,
   locale: Models::Components::Locale::EN_US,
   currency: 'EUR',
   sequence_type: Models::Components::SequenceType::ONEOFF,
@@ -393,7 +393,7 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.methods.enable(profile_id: 'pfl_5B8cwPMGnU', method_id: Models::Components::MethodEnum::IDEAL, idempotency_key: '123e4567-e89b-12d3-a456-426')
+res = s.methods.enable(profile_id: 'pfl_5B8cwPMGnU', method_id: Models::Components::MethodId::IDEAL, idempotency_key: '123e4567-e89b-12d3-a456-426')
 
 unless res.entity_method_get.nil?
   # handle response
@@ -412,7 +412,7 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.methods.enable(profile_id: 'pfl_5B8cwPMGnU', method_id: Models::Components::MethodEnum::IDEAL, idempotency_key: '123e4567-e89b-12d3-a456-426')
+res = s.methods.enable(profile_id: 'pfl_5B8cwPMGnU', method_id: Models::Components::MethodId::IDEAL, idempotency_key: '123e4567-e89b-12d3-a456-426')
 
 unless res.entity_method_get.nil?
   # handle response
@@ -431,7 +431,7 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.methods.enable(profile_id: 'pfl_5B8cwPMGnU', method_id: Models::Components::MethodEnum::IDEAL, idempotency_key: '123e4567-e89b-12d3-a456-426')
+res = s.methods.enable(profile_id: 'pfl_5B8cwPMGnU', method_id: Models::Components::MethodId::IDEAL, idempotency_key: '123e4567-e89b-12d3-a456-426')
 
 unless res.entity_method_get.nil?
   # handle response
@@ -444,7 +444,7 @@ end
 | Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      | Example                                                                          |
 | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | `profile_id`                                                                     | *::String*                                                                       | :heavy_check_mark:                                                               | Provide the ID of the related profile.                                           | pfl_5B8cwPMGnU                                                                   |
-| `method_id`                                                                      | [T.nilable(Models::Components::MethodEnum)](../../models/shared/methodenum.md)   | :heavy_check_mark:                                                               | Provide the ID of the related payment method.                                    | ideal                                                                            |
+| `method_id`                                                                      | [T.nilable(Models::Components::MethodId)](../../models/shared/methodid.md)       | :heavy_check_mark:                                                               | Provide the ID of the related payment method.                                    | ideal                                                                            |
 | `idempotency_key`                                                                | *T.nilable(::String)*                                                            | :heavy_minus_sign:                                                               | A unique key to ensure idempotent requests. This key should be a UUID v4 string. | 123e4567-e89b-12d3-a456-426                                                      |
 
 ### Response
@@ -477,7 +477,7 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.methods.disable(profile_id: 'pfl_5B8cwPMGnU', method_id: Models::Components::MethodEnum::IDEAL, idempotency_key: '123e4567-e89b-12d3-a456-426')
+res = s.methods.disable(profile_id: 'pfl_5B8cwPMGnU', method_id: Models::Components::MethodId::IDEAL, idempotency_key: '123e4567-e89b-12d3-a456-426')
 
 if res.status_code == 200
   # handle response
@@ -490,7 +490,7 @@ end
 | Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      | Example                                                                          |
 | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
 | `profile_id`                                                                     | *::String*                                                                       | :heavy_check_mark:                                                               | Provide the ID of the related profile.                                           | pfl_5B8cwPMGnU                                                                   |
-| `method_id`                                                                      | [T.nilable(Models::Components::MethodEnum)](../../models/shared/methodenum.md)   | :heavy_check_mark:                                                               | Provide the ID of the related payment method.                                    | ideal                                                                            |
+| `method_id`                                                                      | [T.nilable(Models::Components::MethodId)](../../models/shared/methodid.md)       | :heavy_check_mark:                                                               | Provide the ID of the related payment method.                                    | ideal                                                                            |
 | `idempotency_key`                                                                | *T.nilable(::String)*                                                            | :heavy_minus_sign:                                                               | A unique key to ensure idempotent requests. This key should be a UUID v4 string. | 123e4567-e89b-12d3-a456-426                                                      |
 
 ### Response

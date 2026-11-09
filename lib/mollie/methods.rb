@@ -639,7 +639,7 @@ module Mollie
     sig {
       params(
         profile_id: ::String,
-        method_id: T.nilable(Models::Components::MethodEnum),
+        method_id: T.nilable(Models::Components::MethodId),
         idempotency_key: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(Integer),
@@ -840,7 +840,7 @@ module Mollie
     sig {
       params(
         profile_id: ::String,
-        method_id: T.nilable(Models::Components::MethodEnum),
+        method_id: T.nilable(Models::Components::MethodId),
         idempotency_key: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(Integer),

@@ -6,189 +6,99 @@ class Mollie::Models::Components::Context
 end
 
 class Mollie::Models::Components::Context
-  def payment
+  def payment_id
   end
 
-  def payment=(str_)
+  def payment_id=(str_)
   end
 
-  def capture
+  def payment_description
   end
 
-  def capture=(str_)
+  def payment_description=(str_)
   end
 
-  def capture_commision
+  def capture_id
   end
 
-  def capture_commision=(str_)
+  def capture_id=(str_)
   end
 
-  def capture_rolling_reserve_release
+  def capture_description
   end
 
-  def capture_rolling_reserve_release=(str_)
+  def capture_description=(str_)
   end
 
-  def unauthorized_direct_debit
+  def refund_id
   end
 
-  def unauthorized_direct_debit=(str_)
+  def refund_id=(str_)
   end
 
-  def failed_payment
+  def refund_description
   end
 
-  def failed_payment=(str_)
+  def refund_description=(str_)
   end
 
-  def refund
+  def chargeback_id
   end
 
-  def refund=(str_)
+  def chargeback_id=(str_)
   end
 
-  def refund_compensation
+  def chargeback_description
   end
 
-  def refund_compensation=(str_)
+  def chargeback_description=(str_)
   end
 
-  def returned_refund
+  def transfer_id
   end
 
-  def returned_refund=(str_)
+  def transfer_id=(str_)
   end
 
-  def returned_refund_compensation
+  def settlement_id
   end
 
-  def returned_refund_compensation=(str_)
+  def settlement_id=(str_)
   end
 
-  def chargeback
+  def invoice_id
   end
 
-  def chargeback=(str_)
+  def invoice_id=(str_)
   end
 
-  def chargeback_reversal
+  def paying_owner
   end
 
-  def chargeback_reversal=(str_)
+  def paying_owner=(str_)
   end
 
-  def chargeback_compensation
+  def payment_owner
   end
 
-  def chargeback_compensation=(str_)
+  def payment_owner=(str_)
   end
 
-  def reversed_chargeback_compensation
+  def organization_id
   end
 
-  def reversed_chargeback_compensation=(str_)
+  def organization_id=(str_)
   end
 
-  def outgoing_transfer
+  def fee_type
   end
 
-  def outgoing_transfer=(str_)
+  def fee_type=(str_)
   end
 
-  def canceled_outgoing_transfer
+  def fee_id
   end
 
-  def canceled_outgoing_transfer=(str_)
-  end
-
-  def returned_transfer
-  end
-
-  def returned_transfer=(str_)
-  end
-
-  def invoice_compensation
-  end
-
-  def invoice_compensation=(str_)
-  end
-
-  def application_fee
-  end
-
-  def application_fee=(str_)
-  end
-
-  def split_payment
-  end
-
-  def split_payment=(str_)
-  end
-
-  def platform_payment_refund
-  end
-
-  def platform_payment_refund=(str_)
-  end
-
-  def returned_platform_payment_refund
-  end
-
-  def returned_platform_payment_refund=(str_)
-  end
-
-  def platform_payment_chargeback
-  end
-
-  def platform_payment_chargeback=(str_)
-  end
-
-  def reversed_platform_payment_chargeback
-  end
-
-  def reversed_platform_payment_chargeback=(str_)
-  end
-
-  def payment_commission
-  end
-
-  def payment_commission=(str_)
-  end
-
-  def reimbursement_fee
-  end
-
-  def reimbursement_fee=(str_)
-  end
-
-  def failed_payment_fee
-  end
-
-  def failed_payment_fee=(str_)
-  end
-
-  def payment_fee
-  end
-
-  def payment_fee=(str_)
-  end
-
-  def managed_fee
-  end
-
-  def managed_fee=(str_)
-  end
-
-  def returned_managed_fee
-  end
-
-  def returned_managed_fee=(str_)
-  end
-
-  def post_payment_split_payment
-  end
-
-  def post_payment_split_payment=(str_)
+  def fee_id=(str_)
   end
 end

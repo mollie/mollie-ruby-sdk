@@ -14,7 +14,7 @@ module Mollie
         # Provide the ID of the related payment method.
         field(
           :method_id,
-          Crystalline::Nilable.new(Models::Components::MethodEnum),
+          Crystalline::Nilable.new(Models::Components::MethodId),
           {'path_param': {'field_name': "methodId", 'style': "simple", 'explode': false}}
         )
         # If provided, the `minimumAmount` and `maximumAmount` will be converted
@@ -76,7 +76,7 @@ module Mollie
 
         sig {
           params(
-            method_id: T.nilable(Models::Components::MethodEnum),
+            method_id: T.nilable(Models::Components::MethodId),
             currency: T.nilable(::String),
             profile_id: T.nilable(::String),
             sequence_type: T.nilable(Models::Components::SequenceType),
