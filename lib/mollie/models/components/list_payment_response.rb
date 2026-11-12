@@ -242,7 +242,7 @@ module Mollie
             Crystalline::Union.new(
               ::String,
               ::Float,
-              Crystalline::Hash.new(Symbol, ::Object),
+              Crystalline::Hash.new(::Symbol, ::Object),
               Crystalline::Array.new(::String)
             )
           ),
@@ -445,7 +445,7 @@ module Mollie
             country_code: T.nilable(::String),
             method: T.nilable(Models::Components::MethodResponse),
             restrict_payment_methods_to_country: T.nilable(::String),
-            metadata: T.nilable(T.any(::String, ::Float, T::Hash[Symbol, ::Object], T::Array[::String])),
+            metadata: T.nilable(T.any(::String, ::Float, T::Hash[::Symbol, ::Object], T::Array[::String])),
             capture_mode: T.nilable(Models::Components::CaptureModeResponse),
             capture_delay: T.nilable(::String),
             capture_before: T.nilable(::String),

@@ -500,6 +500,7 @@ module Mollie
       autoload :RefundResponseStatus, "mollie/models/components/refund_response_status.rb"
       autoload :Refunds, "mollie/models/components/refunds.rb"
       autoload :ReportStatusReason, "mollie/models/components/report_status_reason.rb"
+      autoload :ReportStatusReasonCode, "mollie/models/components/report_status_reason_code.rb"
       autoload :ReportType, "mollie/models/components/report_type.rb"
       autoload :ReportTypeResponse, "mollie/models/components/report_type_response.rb"
       autoload :Revenue, "mollie/models/components/revenue.rb"

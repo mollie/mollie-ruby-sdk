@@ -7,7 +7,7 @@ module Mollie
   module Models
     module Errors
       # An error response object.
-      class ErrorResponse < StandardError
+      class ErrorResponse < ::StandardError
         extend T::Sig
         include Crystalline::MetadataFields
 

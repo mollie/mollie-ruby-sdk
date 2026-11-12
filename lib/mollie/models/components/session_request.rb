@@ -108,7 +108,7 @@ module Mollie
         # Any payment created for the Checkout Session will use the same metadata.
         field(
           :metadata,
-          Crystalline::Nilable.new(Crystalline::Hash.new(Symbol, ::Object)),
+          Crystalline::Nilable.new(Crystalline::Hash.new(::Symbol, ::Object)),
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("metadata")}}
         )
 
@@ -152,7 +152,7 @@ module Mollie
             ),
             customer_id: T.nilable(::String),
             sequence_type: T.nilable(Models::Components::SessionSequenceType),
-            metadata: T.nilable(T::Hash[Symbol, ::Object]),
+            metadata: T.nilable(T::Hash[::Symbol, ::Object]),
             payment: T.nilable(Models::Components::SessionRequestPayment),
             profile_id: T.nilable(::String),
             testmode: T.nilable(T::Boolean)

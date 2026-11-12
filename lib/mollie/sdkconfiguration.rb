@@ -18,7 +18,7 @@ module Mollie
     [
       "https://api.mollie.com"
     ].freeze,
-    T::Array[String]
+    T::Array[::String]
   )
   # Contains the list of servers available to the SDK
 
@@ -34,34 +34,34 @@ module Mollie
     sig { returns(T.nilable(::Mollie::Utils::RetryConfig)) }
     attr_accessor :retry_config
 
-    sig { returns(T.nilable(Float)) }
+    sig { returns(T.nilable(::Float)) }
     attr_accessor :timeout
 
     sig { returns(T.nilable(T.proc.returns(T.nilable(Models::Components::Security)))) }
     attr_accessor :security_source
 
-    sig { returns(T.nilable(String)) }
+    sig { returns(T.nilable(::String)) }
     attr_accessor :server_url
 
-    sig { returns(T.nilable(Integer)) }
+    sig { returns(T.nilable(::Integer)) }
     attr_accessor :server_idx
 
-    sig { returns(T::Hash[Symbol, T::Hash[Symbol, T::Hash[Symbol, Object]]]) }
+    sig { returns(T::Hash[::Symbol, T::Hash[::Symbol, T::Hash[::Symbol, ::Object]]]) }
     attr_accessor :globals
 
-    sig { returns(String) }
+    sig { returns(::String) }
     attr_accessor :language
 
-    sig { returns(String) }
+    sig { returns(::String) }
     attr_accessor :openapi_doc_version
 
-    sig { returns(String) }
+    sig { returns(::String) }
     attr_accessor :sdk_version
 
-    sig { returns(String) }
+    sig { returns(::String) }
     attr_accessor :gen_version
 
-    sig { returns(String) }
+    sig { returns(::String) }
     attr_accessor :user_agent
 
     sig do
@@ -69,12 +69,12 @@ module Mollie
         client: T.nilable(Faraday::Connection),
         hooks: ::Mollie::SDKHooks::Hooks,
         retry_config: T.nilable(::Mollie::Utils::RetryConfig),
-        timeout_ms: T.nilable(Integer),
+        timeout_ms: T.nilable(::Integer),
         security: T.nilable(Models::Components::Security),
         security_source: T.nilable(T.proc.returns(Models::Components::Security)),
-        server_url: T.nilable(String),
-        server_idx: T.nilable(Integer),
-        globals: T.nilable(T::Hash[Symbol, T::Hash[Symbol, T::Hash[Symbol, Object]]])
+        server_url: T.nilable(::String),
+        server_idx: T.nilable(::Integer),
+        globals: T.nilable(T::Hash[::Symbol, T::Hash[::Symbol, T::Hash[::Symbol, ::Object]]])
       )
         .void
     end
@@ -86,7 +86,7 @@ module Mollie
       @timeout = (timeout_ms.to_f / 1000) unless timeout_ms.nil?
       @server_idx = server_idx.nil? ? 0 : server_idx
       if @server_idx.negative? || @server_idx >= SERVERS.length
-        raise StandardError, "Invalid server index #{server_idx}"
+        raise ::StandardError, "Invalid server index #{server_idx}"
       end
 
       if !security_source.nil?
@@ -98,12 +98,12 @@ module Mollie
       @globals = globals.nil? ? {} : globals
       @language = "ruby"
       @openapi_doc_version = "1.0.0"
-      @sdk_version = "0.0.1-alpha.6"
-      @gen_version = "2.956.1"
-      @user_agent = "speakeasy-sdk/ruby 0.0.1-alpha.6 2.956.1 1.0.0 mollie-ruby-sdk"
+      @sdk_version = "0.0.1-alpha.7"
+      @gen_version = "2.960.8"
+      @user_agent = "speakeasy-sdk/ruby 0.0.1-alpha.7 2.960.8 1.0.0 mollie-ruby-sdk"
     end
 
-    sig { returns([String, T::Hash[Symbol, String]]) }
+    sig { returns([::String, T::Hash[::Symbol, ::String]]) }
     def get_server_details
       return [@server_url.delete_suffix("/"), {}] if !@server_url.nil?
       @server_idx = T.must(@server_idx)

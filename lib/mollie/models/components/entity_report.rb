@@ -57,7 +57,7 @@ module Mollie
           Models::Components::EntityReportLinks,
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("_links"), required: true}}
         )
-        # The start date of the report period. Set for date-range report types, `null` otherwise.
+        # The start date of the report period. Only present for date-range report types.
         field(
           :from_date,
           Crystalline::Nilable.new(::Date),
@@ -68,7 +68,7 @@ module Mollie
             }
           }
         )
-        # The end date of the report period. Set for date-range report types, `null` otherwise.
+        # The end date of the report period. Only present for date-range report types.
         field(
           :until_date,
           Crystalline::Nilable.new(::Date),

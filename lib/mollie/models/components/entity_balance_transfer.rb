@@ -50,7 +50,7 @@ module Mollie
         # This can be useful for storing additional information about the transfer in a structured format. Maximum size is approximately 1KB.
         field(
           :metadata,
-          Crystalline::Nilable.new(Crystalline::Hash.new(Symbol, ::Object)),
+          Crystalline::Nilable.new(Crystalline::Hash.new(::Symbol, ::Object)),
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("metadata")}}
         )
         # Whether to create the entity in test mode or live mode.
@@ -69,7 +69,7 @@ module Mollie
             destination: Models::Components::EntityBalanceTransferParty,
             description: ::String,
             category: T.nilable(Models::Components::BalanceTransferCategory),
-            metadata: T.nilable(T::Hash[Symbol, ::Object]),
+            metadata: T.nilable(T::Hash[::Symbol, ::Object]),
             testmode: T.nilable(T::Boolean)
           )
             .void

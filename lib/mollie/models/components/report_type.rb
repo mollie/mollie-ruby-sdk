@@ -10,7 +10,7 @@ module Mollie
       # on the resulting report.
       class ReportType < T::Enum
         enums do
-          TRANSACTION_MARGIN = new("transaction_margin")
+          TRANSACTION_MARGIN = new("transaction-margin")
         end
       end
     end

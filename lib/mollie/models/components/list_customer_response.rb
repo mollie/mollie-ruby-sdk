@@ -77,7 +77,7 @@ module Mollie
             Crystalline::Union.new(
               ::String,
               ::Float,
-              Crystalline::Hash.new(Symbol, ::Object),
+              Crystalline::Hash.new(::Symbol, ::Object),
               Crystalline::Array.new(::String)
             )
           ),
@@ -94,7 +94,7 @@ module Mollie
             name: T.nilable(::String),
             email: T.nilable(::String),
             locale: T.nilable(Models::Components::LocaleResponse),
-            metadata: T.nilable(T.any(::String, ::Float, T::Hash[Symbol, ::Object], T::Array[::String]))
+            metadata: T.nilable(T.any(::String, ::Float, T::Hash[::Symbol, ::Object], T::Array[::String]))
           )
             .void
         }

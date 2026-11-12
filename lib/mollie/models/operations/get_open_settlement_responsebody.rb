@@ -83,7 +83,10 @@ module Mollie
         field(
           :periods,
           Crystalline::Nilable.new(
-            Crystalline::Hash.new(Symbol, Crystalline::Hash.new(Symbol, Models::Operations::GetOpenSettlementPeriods))
+            Crystalline::Hash.new(
+              ::Symbol,
+              Crystalline::Hash.new(::Symbol, Models::Operations::GetOpenSettlementPeriods)
+            )
           ),
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("periods")}}
         )
@@ -118,7 +121,7 @@ module Mollie
             balance_id: ::String,
             links: Models::Components::SettlementConvenienceLinks,
             created_at: T.nilable(::String),
-            periods: T.nilable(T::Hash[Symbol, T::Hash[Symbol, Models::Operations::GetOpenSettlementPeriods]]),
+            periods: T.nilable(T::Hash[::Symbol, T::Hash[::Symbol, Models::Operations::GetOpenSettlementPeriods]]),
             reference: T.nilable(::String),
             settled_at: T.nilable(::String),
             invoice_id: T.nilable(::String)

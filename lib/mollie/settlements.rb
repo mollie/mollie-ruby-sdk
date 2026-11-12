@@ -23,7 +23,11 @@ module Mollie
       @sdk_configuration = sdk_config
     end
 
-    sig { params(base_url: String, url_variables: T.nilable(T::Hash[Symbol, T.any(String, T::Enum)])).returns(String) }
+    sig {
+      params(base_url: ::String, url_variables: T.nilable(T::Hash[::Symbol, T.any(::String, T::Enum)])).returns(
+        ::String
+      )
+    }
     def get_url(base_url:, url_variables: nil)
       sd_base_url, sd_options = @sdk_configuration.get_server_details
 
@@ -42,9 +46,9 @@ module Mollie
       params(
         request: Models::Operations::ListSettlementsRequest,
         retries: T.nilable(Utils::RetryConfig),
-        timeout_ms: T.nilable(Integer),
-        url_override: T.nilable(String),
-        http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
+        timeout_ms: T.nilable(::Integer),
+        url_override: T.nilable(::String),
+        http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::ListSettlementsResponse)
     }
@@ -63,7 +67,7 @@ module Mollie
       end
 
       headers = Utils.get_headers(request, @sdk_configuration.globals)
-      headers = T.cast(headers, T::Hash[String, String])
+      headers = T.cast(headers, T::Hash[::String, ::String])
       query_params = Utils.get_query_params(
         Models::Operations::ListSettlementsRequest,
         request,
@@ -83,7 +87,7 @@ module Mollie
         retry_connection_errors: true,
         strategy: "backoff"
       )
-      retry_options = retries.to_faraday_retry_options(initial_time: Time.now)
+      retry_options = retries.to_faraday_retry_options(initial_time: ::Time.now)
       retry_options[:retry_statuses] = [429, 500, 501, 502, 503, 504, 505]
 
       security = @sdk_configuration.security_source&.call
@@ -102,7 +106,7 @@ module Mollie
         security_source: @sdk_configuration.security_source
       )
 
-      error = T.let(nil, T.nilable(StandardError))
+      error = T.let(nil, T.nilable(::StandardError))
       http_response = T.let(nil, T.nilable(Faraday::Response))
 
       begin
@@ -123,7 +127,7 @@ module Mollie
           )
         end
 
-      rescue StandardError => e
+      rescue ::StandardError => e
         error = e
       ensure
         if http_response.nil? || Utils.error_status?(http_response.status)
@@ -159,7 +163,7 @@ module Mollie
             response: http_response
           )
           response_data = http_response.env.response_body
-          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Operations::ListSettlementsResponseBody)
+          obj = Crystalline.unmarshal_json(::JSON.parse(response_data), Models::Operations::ListSettlementsResponseBody)
           response = Models::Operations::ListSettlementsResponse.new(
             status_code: http_response.status,
             content_type: content_type,
@@ -169,7 +173,7 @@ module Mollie
           sdk = self
 
           response.next_page = proc do
-            next_url = Janeway.enum_for("$._links.next.href", JSON.parse(response_data)).search
+            next_url = Janeway.enum_for("$._links.next.href", ::JSON.parse(response_data)).search
             if next_url.nil? || next_url.empty?
               next nil
             else
@@ -183,7 +187,7 @@ module Mollie
 
             end
 
-            if next_url !~ URI::RFC2396_PARSER.make_regexp
+            if next_url !~ ::URI::RFC2396_PARSER.make_regexp
               next nil
             end
 
@@ -222,7 +226,7 @@ module Mollie
             response: http_response
           )
           response_data = http_response.env.response_body
-          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Errors::ErrorResponse)
+          obj = Crystalline.unmarshal_json(::JSON.parse(response_data), Models::Errors::ErrorResponse)
           obj.raw_response = http_response
           raise obj
         else
@@ -271,8 +275,8 @@ module Mollie
         settlement_id: ::String,
         idempotency_key: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
-        timeout_ms: T.nilable(Integer),
-        http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
+        timeout_ms: T.nilable(::Integer),
+        http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetSettlementResponse)
     }
@@ -306,7 +310,7 @@ module Mollie
         @sdk_configuration.globals
       )
       headers = Utils.get_headers(request, @sdk_configuration.globals)
-      headers = T.cast(headers, T::Hash[String, String])
+      headers = T.cast(headers, T::Hash[::String, ::String])
       headers["Accept"] = "application/hal+json"
       headers["user-agent"] = @sdk_configuration.user_agent
       retries ||= @sdk_configuration.retry_config
@@ -320,7 +324,7 @@ module Mollie
         retry_connection_errors: true,
         strategy: "backoff"
       )
-      retry_options = retries.to_faraday_retry_options(initial_time: Time.now)
+      retry_options = retries.to_faraday_retry_options(initial_time: ::Time.now)
       retry_options[:retry_statuses] = [429, 500, 501, 502, 503, 504, 505]
 
       security = @sdk_configuration.security_source&.call
@@ -339,7 +343,7 @@ module Mollie
         security_source: @sdk_configuration.security_source
       )
 
-      error = T.let(nil, T.nilable(StandardError))
+      error = T.let(nil, T.nilable(::StandardError))
       http_response = T.let(nil, T.nilable(Faraday::Response))
 
       begin
@@ -359,7 +363,7 @@ module Mollie
           )
         end
 
-      rescue StandardError => e
+      rescue ::StandardError => e
         error = e
       ensure
         if http_response.nil? || Utils.error_status?(http_response.status)
@@ -395,7 +399,7 @@ module Mollie
             response: http_response
           )
           response_data = http_response.env.response_body
-          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Components::EntitySettlement)
+          obj = Crystalline.unmarshal_json(::JSON.parse(response_data), Models::Components::EntitySettlement)
           response = Models::Operations::GetSettlementResponse.new(
             status_code: http_response.status,
             content_type: content_type,
@@ -423,7 +427,7 @@ module Mollie
             response: http_response
           )
           response_data = http_response.env.response_body
-          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Errors::ErrorResponse)
+          obj = Crystalline.unmarshal_json(::JSON.parse(response_data), Models::Errors::ErrorResponse)
           obj.raw_response = http_response
           raise obj
         else
@@ -471,8 +475,8 @@ module Mollie
       params(
         idempotency_key: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
-        timeout_ms: T.nilable(Integer),
-        http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
+        timeout_ms: T.nilable(::Integer),
+        http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetOpenSettlementResponse)
     }
@@ -495,7 +499,7 @@ module Mollie
       base_url = Utils.template_url(url, params)
       url = "#{base_url}/v2/settlements/open"
       headers = Utils.get_headers(request, @sdk_configuration.globals)
-      headers = T.cast(headers, T::Hash[String, String])
+      headers = T.cast(headers, T::Hash[::String, ::String])
       headers["Accept"] = "application/hal+json"
       headers["user-agent"] = @sdk_configuration.user_agent
       retries ||= @sdk_configuration.retry_config
@@ -509,7 +513,7 @@ module Mollie
         retry_connection_errors: true,
         strategy: "backoff"
       )
-      retry_options = retries.to_faraday_retry_options(initial_time: Time.now)
+      retry_options = retries.to_faraday_retry_options(initial_time: ::Time.now)
       retry_options[:retry_statuses] = [429, 500, 501, 502, 503, 504, 505]
 
       security = @sdk_configuration.security_source&.call
@@ -528,7 +532,7 @@ module Mollie
         security_source: @sdk_configuration.security_source
       )
 
-      error = T.let(nil, T.nilable(StandardError))
+      error = T.let(nil, T.nilable(::StandardError))
       http_response = T.let(nil, T.nilable(Faraday::Response))
 
       begin
@@ -548,7 +552,7 @@ module Mollie
           )
         end
 
-      rescue StandardError => e
+      rescue ::StandardError => e
         error = e
       ensure
         if http_response.nil? || Utils.error_status?(http_response.status)
@@ -584,7 +588,10 @@ module Mollie
             response: http_response
           )
           response_data = http_response.env.response_body
-          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Operations::GetOpenSettlementResponseBody)
+          obj = Crystalline.unmarshal_json(
+            ::JSON.parse(response_data),
+            Models::Operations::GetOpenSettlementResponseBody
+          )
           response = Models::Operations::GetOpenSettlementResponse.new(
             status_code: http_response.status,
             content_type: content_type,
@@ -612,7 +619,7 @@ module Mollie
             response: http_response
           )
           response_data = http_response.env.response_body
-          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Errors::ErrorResponse)
+          obj = Crystalline.unmarshal_json(::JSON.parse(response_data), Models::Errors::ErrorResponse)
           obj.raw_response = http_response
           raise obj
         else
@@ -660,8 +667,8 @@ module Mollie
       params(
         idempotency_key: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
-        timeout_ms: T.nilable(Integer),
-        http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
+        timeout_ms: T.nilable(::Integer),
+        http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetNextSettlementResponse)
     }
@@ -683,7 +690,7 @@ module Mollie
       base_url = Utils.template_url(url, params)
       url = "#{base_url}/v2/settlements/next"
       headers = Utils.get_headers(request, @sdk_configuration.globals)
-      headers = T.cast(headers, T::Hash[String, String])
+      headers = T.cast(headers, T::Hash[::String, ::String])
       headers["Accept"] = "application/hal+json"
       headers["user-agent"] = @sdk_configuration.user_agent
       retries ||= @sdk_configuration.retry_config
@@ -697,7 +704,7 @@ module Mollie
         retry_connection_errors: true,
         strategy: "backoff"
       )
-      retry_options = retries.to_faraday_retry_options(initial_time: Time.now)
+      retry_options = retries.to_faraday_retry_options(initial_time: ::Time.now)
       retry_options[:retry_statuses] = [429, 500, 501, 502, 503, 504, 505]
 
       security = @sdk_configuration.security_source&.call
@@ -716,7 +723,7 @@ module Mollie
         security_source: @sdk_configuration.security_source
       )
 
-      error = T.let(nil, T.nilable(StandardError))
+      error = T.let(nil, T.nilable(::StandardError))
       http_response = T.let(nil, T.nilable(Faraday::Response))
 
       begin
@@ -736,7 +743,7 @@ module Mollie
           )
         end
 
-      rescue StandardError => e
+      rescue ::StandardError => e
         error = e
       ensure
         if http_response.nil? || Utils.error_status?(http_response.status)
@@ -772,7 +779,10 @@ module Mollie
             response: http_response
           )
           response_data = http_response.env.response_body
-          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Operations::GetNextSettlementResponseBody)
+          obj = Crystalline.unmarshal_json(
+            ::JSON.parse(response_data),
+            Models::Operations::GetNextSettlementResponseBody
+          )
           response = Models::Operations::GetNextSettlementResponse.new(
             status_code: http_response.status,
             content_type: content_type,
@@ -800,7 +810,7 @@ module Mollie
             response: http_response
           )
           response_data = http_response.env.response_body
-          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Errors::ErrorResponse)
+          obj = Crystalline.unmarshal_json(::JSON.parse(response_data), Models::Errors::ErrorResponse)
           obj.raw_response = http_response
           raise obj
         else
@@ -848,9 +858,9 @@ module Mollie
       params(
         request: Models::Operations::ListSettlementPaymentsRequest,
         retries: T.nilable(Utils::RetryConfig),
-        timeout_ms: T.nilable(Integer),
-        url_override: T.nilable(String),
-        http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
+        timeout_ms: T.nilable(::Integer),
+        url_override: T.nilable(::String),
+        http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::ListSettlementPaymentsResponse)
     }
@@ -878,7 +888,7 @@ module Mollie
       end
 
       headers = Utils.get_headers(request, @sdk_configuration.globals)
-      headers = T.cast(headers, T::Hash[String, String])
+      headers = T.cast(headers, T::Hash[::String, ::String])
       query_params = Utils.get_query_params(
         Models::Operations::ListSettlementPaymentsRequest,
         request,
@@ -898,7 +908,7 @@ module Mollie
         retry_connection_errors: true,
         strategy: "backoff"
       )
-      retry_options = retries.to_faraday_retry_options(initial_time: Time.now)
+      retry_options = retries.to_faraday_retry_options(initial_time: ::Time.now)
       retry_options[:retry_statuses] = [429, 500, 501, 502, 503, 504, 505]
 
       security = @sdk_configuration.security_source&.call
@@ -917,7 +927,7 @@ module Mollie
         security_source: @sdk_configuration.security_source
       )
 
-      error = T.let(nil, T.nilable(StandardError))
+      error = T.let(nil, T.nilable(::StandardError))
       http_response = T.let(nil, T.nilable(Faraday::Response))
 
       begin
@@ -938,7 +948,7 @@ module Mollie
           )
         end
 
-      rescue StandardError => e
+      rescue ::StandardError => e
         error = e
       ensure
         if http_response.nil? || Utils.error_status?(http_response.status)
@@ -975,7 +985,7 @@ module Mollie
           )
           response_data = http_response.env.response_body
           obj = Crystalline.unmarshal_json(
-            JSON.parse(response_data),
+            ::JSON.parse(response_data),
             Models::Operations::ListSettlementPaymentsResponseBody
           )
           response = Models::Operations::ListSettlementPaymentsResponse.new(
@@ -987,7 +997,7 @@ module Mollie
           sdk = self
 
           response.next_page = proc do
-            next_url = Janeway.enum_for("$._links.next.href", JSON.parse(response_data)).search
+            next_url = Janeway.enum_for("$._links.next.href", ::JSON.parse(response_data)).search
             if next_url.nil? || next_url.empty?
               next nil
             else
@@ -1001,7 +1011,7 @@ module Mollie
 
             end
 
-            if next_url !~ URI::RFC2396_PARSER.make_regexp
+            if next_url !~ ::URI::RFC2396_PARSER.make_regexp
               next nil
             end
 
@@ -1039,7 +1049,7 @@ module Mollie
             response: http_response
           )
           response_data = http_response.env.response_body
-          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Errors::ErrorResponse)
+          obj = Crystalline.unmarshal_json(::JSON.parse(response_data), Models::Errors::ErrorResponse)
           obj.raw_response = http_response
           raise obj
         else
@@ -1087,9 +1097,9 @@ module Mollie
       params(
         request: Models::Operations::ListSettlementCapturesRequest,
         retries: T.nilable(Utils::RetryConfig),
-        timeout_ms: T.nilable(Integer),
-        url_override: T.nilable(String),
-        http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
+        timeout_ms: T.nilable(::Integer),
+        url_override: T.nilable(::String),
+        http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::ListSettlementCapturesResponse)
     }
@@ -1114,7 +1124,7 @@ module Mollie
       end
 
       headers = Utils.get_headers(request, @sdk_configuration.globals)
-      headers = T.cast(headers, T::Hash[String, String])
+      headers = T.cast(headers, T::Hash[::String, ::String])
       query_params = Utils.get_query_params(
         Models::Operations::ListSettlementCapturesRequest,
         request,
@@ -1134,7 +1144,7 @@ module Mollie
         retry_connection_errors: true,
         strategy: "backoff"
       )
-      retry_options = retries.to_faraday_retry_options(initial_time: Time.now)
+      retry_options = retries.to_faraday_retry_options(initial_time: ::Time.now)
       retry_options[:retry_statuses] = [429, 500, 501, 502, 503, 504, 505]
 
       security = @sdk_configuration.security_source&.call
@@ -1153,7 +1163,7 @@ module Mollie
         security_source: @sdk_configuration.security_source
       )
 
-      error = T.let(nil, T.nilable(StandardError))
+      error = T.let(nil, T.nilable(::StandardError))
       http_response = T.let(nil, T.nilable(Faraday::Response))
 
       begin
@@ -1174,7 +1184,7 @@ module Mollie
           )
         end
 
-      rescue StandardError => e
+      rescue ::StandardError => e
         error = e
       ensure
         if http_response.nil? || Utils.error_status?(http_response.status)
@@ -1211,7 +1221,7 @@ module Mollie
           )
           response_data = http_response.env.response_body
           obj = Crystalline.unmarshal_json(
-            JSON.parse(response_data),
+            ::JSON.parse(response_data),
             Models::Operations::ListSettlementCapturesResponseBody
           )
           response = Models::Operations::ListSettlementCapturesResponse.new(
@@ -1223,7 +1233,7 @@ module Mollie
           sdk = self
 
           response.next_page = proc do
-            next_url = Janeway.enum_for("$._links.next.href", JSON.parse(response_data)).search
+            next_url = Janeway.enum_for("$._links.next.href", ::JSON.parse(response_data)).search
             if next_url.nil? || next_url.empty?
               next nil
             else
@@ -1237,7 +1247,7 @@ module Mollie
 
             end
 
-            if next_url !~ URI::RFC2396_PARSER.make_regexp
+            if next_url !~ ::URI::RFC2396_PARSER.make_regexp
               next nil
             end
 
@@ -1274,7 +1284,7 @@ module Mollie
             response: http_response
           )
           response_data = http_response.env.response_body
-          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Errors::ErrorResponse)
+          obj = Crystalline.unmarshal_json(::JSON.parse(response_data), Models::Errors::ErrorResponse)
           obj.raw_response = http_response
           raise obj
         else
@@ -1322,9 +1332,9 @@ module Mollie
       params(
         request: Models::Operations::ListSettlementRefundsRequest,
         retries: T.nilable(Utils::RetryConfig),
-        timeout_ms: T.nilable(Integer),
-        url_override: T.nilable(String),
-        http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
+        timeout_ms: T.nilable(::Integer),
+        url_override: T.nilable(::String),
+        http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::ListSettlementRefundsResponse)
     }
@@ -1349,7 +1359,7 @@ module Mollie
       end
 
       headers = Utils.get_headers(request, @sdk_configuration.globals)
-      headers = T.cast(headers, T::Hash[String, String])
+      headers = T.cast(headers, T::Hash[::String, ::String])
       query_params = Utils.get_query_params(
         Models::Operations::ListSettlementRefundsRequest,
         request,
@@ -1369,7 +1379,7 @@ module Mollie
         retry_connection_errors: true,
         strategy: "backoff"
       )
-      retry_options = retries.to_faraday_retry_options(initial_time: Time.now)
+      retry_options = retries.to_faraday_retry_options(initial_time: ::Time.now)
       retry_options[:retry_statuses] = [429, 500, 501, 502, 503, 504, 505]
 
       security = @sdk_configuration.security_source&.call
@@ -1388,7 +1398,7 @@ module Mollie
         security_source: @sdk_configuration.security_source
       )
 
-      error = T.let(nil, T.nilable(StandardError))
+      error = T.let(nil, T.nilable(::StandardError))
       http_response = T.let(nil, T.nilable(Faraday::Response))
 
       begin
@@ -1409,7 +1419,7 @@ module Mollie
           )
         end
 
-      rescue StandardError => e
+      rescue ::StandardError => e
         error = e
       ensure
         if http_response.nil? || Utils.error_status?(http_response.status)
@@ -1446,7 +1456,7 @@ module Mollie
           )
           response_data = http_response.env.response_body
           obj = Crystalline.unmarshal_json(
-            JSON.parse(response_data),
+            ::JSON.parse(response_data),
             Models::Operations::ListSettlementRefundsResponseBody
           )
           response = Models::Operations::ListSettlementRefundsResponse.new(
@@ -1458,7 +1468,7 @@ module Mollie
           sdk = self
 
           response.next_page = proc do
-            next_url = Janeway.enum_for("$._links.next.href", JSON.parse(response_data)).search
+            next_url = Janeway.enum_for("$._links.next.href", ::JSON.parse(response_data)).search
             if next_url.nil? || next_url.empty?
               next nil
             else
@@ -1472,7 +1482,7 @@ module Mollie
 
             end
 
-            if next_url !~ URI::RFC2396_PARSER.make_regexp
+            if next_url !~ ::URI::RFC2396_PARSER.make_regexp
               next nil
             end
 
@@ -1509,7 +1519,7 @@ module Mollie
             response: http_response
           )
           response_data = http_response.env.response_body
-          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Errors::ErrorResponse)
+          obj = Crystalline.unmarshal_json(::JSON.parse(response_data), Models::Errors::ErrorResponse)
           obj.raw_response = http_response
           raise obj
         else
@@ -1557,9 +1567,9 @@ module Mollie
       params(
         request: Models::Operations::ListSettlementChargebacksRequest,
         retries: T.nilable(Utils::RetryConfig),
-        timeout_ms: T.nilable(Integer),
-        url_override: T.nilable(String),
-        http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
+        timeout_ms: T.nilable(::Integer),
+        url_override: T.nilable(::String),
+        http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::ListSettlementChargebacksResponse)
     }
@@ -1584,7 +1594,7 @@ module Mollie
       end
 
       headers = Utils.get_headers(request, @sdk_configuration.globals)
-      headers = T.cast(headers, T::Hash[String, String])
+      headers = T.cast(headers, T::Hash[::String, ::String])
       query_params = Utils.get_query_params(
         Models::Operations::ListSettlementChargebacksRequest,
         request,
@@ -1604,7 +1614,7 @@ module Mollie
         retry_connection_errors: true,
         strategy: "backoff"
       )
-      retry_options = retries.to_faraday_retry_options(initial_time: Time.now)
+      retry_options = retries.to_faraday_retry_options(initial_time: ::Time.now)
       retry_options[:retry_statuses] = [429, 500, 501, 502, 503, 504, 505]
 
       security = @sdk_configuration.security_source&.call
@@ -1623,7 +1633,7 @@ module Mollie
         security_source: @sdk_configuration.security_source
       )
 
-      error = T.let(nil, T.nilable(StandardError))
+      error = T.let(nil, T.nilable(::StandardError))
       http_response = T.let(nil, T.nilable(Faraday::Response))
 
       begin
@@ -1644,7 +1654,7 @@ module Mollie
           )
         end
 
-      rescue StandardError => e
+      rescue ::StandardError => e
         error = e
       ensure
         if http_response.nil? || Utils.error_status?(http_response.status)
@@ -1681,7 +1691,7 @@ module Mollie
           )
           response_data = http_response.env.response_body
           obj = Crystalline.unmarshal_json(
-            JSON.parse(response_data),
+            ::JSON.parse(response_data),
             Models::Operations::ListSettlementChargebacksResponseBody
           )
           response = Models::Operations::ListSettlementChargebacksResponse.new(
@@ -1693,7 +1703,7 @@ module Mollie
           sdk = self
 
           response.next_page = proc do
-            next_url = Janeway.enum_for("$._links.next.href", JSON.parse(response_data)).search
+            next_url = Janeway.enum_for("$._links.next.href", ::JSON.parse(response_data)).search
             if next_url.nil? || next_url.empty?
               next nil
             else
@@ -1707,7 +1717,7 @@ module Mollie
 
             end
 
-            if next_url !~ URI::RFC2396_PARSER.make_regexp
+            if next_url !~ ::URI::RFC2396_PARSER.make_regexp
               next nil
             end
 
@@ -1745,7 +1755,7 @@ module Mollie
             response: http_response
           )
           response_data = http_response.env.response_body
-          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Errors::ErrorResponse)
+          obj = Crystalline.unmarshal_json(::JSON.parse(response_data), Models::Errors::ErrorResponse)
           obj.raw_response = http_response
           raise obj
         else

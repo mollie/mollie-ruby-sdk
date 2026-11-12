@@ -66,7 +66,7 @@ module Mollie
         # An array of detail objects for each gift card that was used on this payment, if any.
         field(
           :giftcards,
-          Crystalline::Nilable.new(Crystalline::Array.new(Crystalline::Hash.new(Symbol, ::Object))),
+          Crystalline::Nilable.new(Crystalline::Array.new(Crystalline::Hash.new(::Symbol, ::Object))),
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("giftcards")}}
         )
         # For payments with vouchers: the brand name of the first voucher applied.
@@ -78,7 +78,7 @@ module Mollie
         # An array of detail objects for each voucher that was used on this payment, if any.
         field(
           :vouchers,
-          Crystalline::Nilable.new(Crystalline::Array.new(Crystalline::Hash.new(Symbol, ::Object))),
+          Crystalline::Nilable.new(Crystalline::Array.new(Crystalline::Hash.new(::Symbol, ::Object))),
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("vouchers")}}
         )
         # In v2 endpoints, monetary amounts are represented as objects with a `currency` and `value` field.
@@ -96,7 +96,7 @@ module Mollie
         # **Optional include.** The full payment method details of the remainder payment.
         field(
           :remainder_details,
-          Crystalline::Nilable.new(Crystalline::Hash.new(Symbol, ::Object)),
+          Crystalline::Nilable.new(Crystalline::Hash.new(::Symbol, ::Object)),
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("remainderDetails")}}
         )
         # The customer's name, if made available by the payment method. For card payments, refer to `details.cardHolder`.
@@ -128,7 +128,7 @@ module Mollie
         # the wallet provider. In these cases the shipping address may be available as a payment detail.
         field(
           :shipping_address,
-          Crystalline::Nilable.new(Crystalline::Hash.new(Symbol, ::Object)),
+          Crystalline::Nilable.new(Crystalline::Hash.new(::Symbol, ::Object)),
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("shippingAddress")}}
         )
         # The customer's masked card number.
@@ -428,16 +428,16 @@ module Mollie
             terminal_id: T.nilable(::String),
             qr_code: T.nilable(Models::Components::PaymentDetailsQrCode),
             voucher_number: T.nilable(::String),
-            giftcards: T.nilable(T::Array[T::Hash[Symbol, ::Object]]),
+            giftcards: T.nilable(T::Array[T::Hash[::Symbol, ::Object]]),
             issuer: T.nilable(::String),
-            vouchers: T.nilable(T::Array[T::Hash[Symbol, ::Object]]),
+            vouchers: T.nilable(T::Array[T::Hash[::Symbol, ::Object]]),
             remainder_amount: T.nilable(Models::Components::Amount),
             remainder_method: T.nilable(::String),
-            remainder_details: T.nilable(T::Hash[Symbol, ::Object]),
+            remainder_details: T.nilable(T::Hash[::Symbol, ::Object]),
             consumer_name: T.nilable(::String),
             consumer_account: T.nilable(::String),
             consumer_bic: T.nilable(::String),
-            shipping_address: T.nilable(T::Hash[Symbol, ::Object]),
+            shipping_address: T.nilable(T::Hash[::Symbol, ::Object]),
             card_number: T.nilable(::String),
             transfer_reference: T.nilable(::String),
             bizum_reference: T.nilable(::String),

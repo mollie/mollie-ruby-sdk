@@ -81,7 +81,7 @@ module Mollie
 
       sig do
         params(
-          error: T.nilable(StandardError),
+          error: T.nilable(::StandardError),
           hook_ctx: AfterErrorHookContext,
           response: T.nilable(Faraday::Response)
         )

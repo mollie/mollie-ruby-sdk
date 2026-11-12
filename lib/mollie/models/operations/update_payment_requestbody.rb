@@ -102,7 +102,7 @@ module Mollie
             Crystalline::Union.new(
               ::String,
               ::Float,
-              Crystalline::Hash.new(Symbol, ::Object),
+              Crystalline::Hash.new(::Symbol, ::Object),
               Crystalline::Array.new(::String)
             )
           ),
@@ -187,7 +187,7 @@ module Mollie
             redirect_url: T.nilable(::String),
             cancel_url: T.nilable(::String),
             webhook_url: T.nilable(::String),
-            metadata: T.nilable(T.any(::String, ::Float, T::Hash[Symbol, ::Object], T::Array[::String])),
+            metadata: T.nilable(T.any(::String, ::Float, T::Hash[::Symbol, ::Object], T::Array[::String])),
             method: T.nilable(T.any(Models::Components::MethodEnum, T::Array[Models::Components::MethodEnum])),
             locale: T.nilable(Models::Components::Locale2),
             due_date: T.nilable(::String),

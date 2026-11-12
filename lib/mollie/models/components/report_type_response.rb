@@ -11,7 +11,7 @@ module Mollie
       class ReportTypeResponse
         include ::Crystalline::Enum
         enums do
-          TRANSACTION_MARGIN = new("transaction_margin")
+          TRANSACTION_MARGIN = new("transaction-margin")
         end
 
         open!

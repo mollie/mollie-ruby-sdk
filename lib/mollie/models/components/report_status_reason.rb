@@ -12,7 +12,17 @@ module Mollie
         include Crystalline::MetadataFields
 
         # A machine-readable code for the failure reason.
-        field :code, ::String, {'format_json': {'letter_case': ::Mollie::Utils.field_name("code"), required: true}}
+        field(
+          :code,
+          Models::Components::ReportStatusReasonCode,
+          {
+            'format_json': {
+              'letter_case': ::Mollie::Utils.field_name("code"),
+              required: true,
+              'decoder': ::Mollie::Utils.open_enum_from_string(Models::Components::ReportStatusReasonCode, false)
+            }
+          }
+        )
         # A human-readable explanation of why the report failed.
         field(
           :message,
@@ -20,7 +30,7 @@ module Mollie
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("message"), required: true}}
         )
 
-        sig { params(code: ::String, message: ::String).void }
+        sig { params(code: Models::Components::ReportStatusReasonCode, message: ::String).void }
         def initialize(code:, message:)
           @code = code
           @message = message

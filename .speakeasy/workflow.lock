@@ -1,9 +1,9 @@
-speakeasyVersion: 1.806.0
+speakeasyVersion: 1.808.1
 sources:
     Mollie API:
         sourceNamespace: mollie-api
-        sourceRevisionDigest: sha256:4ff5c325c61fd936d1a685eea09be03e120bb760eb7914824b79a09c732078a2
-        sourceBlobDigest: sha256:d3086f250a5c355aa383d22cfa9f9797fe72e8b23443c80f07f1e21e9343dbb3
+        sourceRevisionDigest: sha256:bf31da887adb79613fe7d891a1038ac0468c5edc762de9973ce5cefd9739fd90
+        sourceBlobDigest: sha256:d005ecd619fea8beb0d804d7f02d7df3936c99eaa0766ada72998cf1ec143830
         tags:
             - latest
             - 1.0.0
@@ -11,10 +11,10 @@ targets:
     client:
         source: Mollie API
         sourceNamespace: mollie-api
-        sourceRevisionDigest: sha256:4ff5c325c61fd936d1a685eea09be03e120bb760eb7914824b79a09c732078a2
-        sourceBlobDigest: sha256:d3086f250a5c355aa383d22cfa9f9797fe72e8b23443c80f07f1e21e9343dbb3
+        sourceRevisionDigest: sha256:bf31da887adb79613fe7d891a1038ac0468c5edc762de9973ce5cefd9739fd90
+        sourceBlobDigest: sha256:d005ecd619fea8beb0d804d7f02d7df3936c99eaa0766ada72998cf1ec143830
         codeSamplesNamespace: mollie-api-ruby-code-samples
-        codeSamplesRevisionDigest: sha256:416f3aecadf1cc8c60ea01fe655305a842ac26dce774b8c7efd7b19cf9ff36be
+        codeSamplesRevisionDigest: sha256:c8b481510e2e15166d3f4e700318d740fc4ea0972ce9a2cd39fb274f6e2c9b19
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest

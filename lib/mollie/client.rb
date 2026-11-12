@@ -72,15 +72,15 @@ module Mollie
       params(
         client: T.nilable(Faraday::Connection),
         retry_config: T.nilable(::Mollie::Utils::RetryConfig),
-        timeout_ms: T.nilable(Integer),
+        timeout_ms: T.nilable(::Integer),
         security: T.nilable(Models::Components::Security),
         security_source: T.nilable(T.proc.returns(Models::Components::Security)),
         profile_id: T.nilable(::String),
         testmode: T.nilable(T::Boolean),
         custom_user_agent: T.nilable(::String),
-        server_idx: T.nilable(Integer),
-        server_url: T.nilable(String),
-        url_params: T.nilable(T::Hash[Symbol, String])
+        server_idx: T.nilable(::Integer),
+        server_url: T.nilable(::String),
+        url_params: T.nilable(T::Hash[::Symbol, ::String])
       )
         .void
     end
@@ -185,7 +185,11 @@ module Mollie
       @payouts = Payouts.new(@sdk_configuration)
     end
 
-    sig { params(base_url: String, url_variables: T.nilable(T::Hash[Symbol, T.any(String, T::Enum)])).returns(String) }
+    sig {
+      params(base_url: ::String, url_variables: T.nilable(T::Hash[::Symbol, T.any(::String, T::Enum)])).returns(
+        ::String
+      )
+    }
     def get_url(base_url:, url_variables: nil)
       sd_base_url, sd_options = @sdk_configuration.get_server_details
 

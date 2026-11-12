@@ -143,7 +143,7 @@ module Mollie
             Crystalline::Union.new(
               ::String,
               ::Float,
-              Crystalline::Hash.new(Symbol, ::Object),
+              Crystalline::Hash.new(::Symbol, ::Object),
               Crystalline::Array.new(::String)
             )
           ),
@@ -196,7 +196,7 @@ module Mollie
             times_remaining: T.nilable(::Integer),
             method: T.nilable(Models::Components::SubscriptionMethodResponse),
             application_fee: T.nilable(Models::Components::ListSubscriptionResponseApplicationFee),
-            metadata: T.nilable(T.any(::String, ::Float, T::Hash[Symbol, ::Object], T::Array[::String])),
+            metadata: T.nilable(T.any(::String, ::Float, T::Hash[::Symbol, ::Object], T::Array[::String])),
             webhook_url: T.nilable(::String),
             mandate_id: T.nilable(::String),
             next_payment_date: T.nilable(::String),
