@@ -36,12 +36,6 @@ class Mollie::Models::Components::PaymentDetails
   def terminal_id=(str_)
   end
 
-  def receipt
-  end
-
-  def receipt=(str_)
-  end
-
   def qr_code
   end
 

@@ -41,7 +41,7 @@ The SDK can be installed using [RubyGems](https://rubygems.org/):
 
 ```bash
 gem install specific_install
-gem specific_install  
+gem specific_install https://github.com/mollie/mollie-ruby-sdk 
 ```
 <!-- End SDK Installation [installation] -->
 
@@ -307,6 +307,11 @@ end
 * [get](docs/sdks/refunds/README.md#get) - Get payment refund
 * [cancel](docs/sdks/refunds/README.md#cancel) - Cancel payment refund
 * [all](docs/sdks/refunds/README.md#all) - List all refunds
+
+### [Reports](docs/sdks/reports/README.md)
+
+* [create](docs/sdks/reports/README.md#create) - Create report
+* [get](docs/sdks/reports/README.md#get) - Get report
 
 ### [SalesInvoices](docs/sdks/salesinvoices/README.md)
 

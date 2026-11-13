@@ -98,7 +98,7 @@ module Mollie
         # This can be useful for storing additional information about the transfer in a structured format. Maximum size is approximately 1KB.
         field(
           :metadata,
-          Crystalline::Nilable.new(Crystalline::Hash.new(Symbol, ::Object)),
+          Crystalline::Nilable.new(Crystalline::Hash.new(::Symbol, ::Object)),
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("metadata")}}
         )
         # The date and time when the transfer was completed, in ISO 8601 format. This parameter is omitted if the transfer is
@@ -122,7 +122,7 @@ module Mollie
             created_at: ::String,
             mode: Models::Components::Mode,
             category: T.nilable(Models::Components::BalanceTransferCategoryResponse),
-            metadata: T.nilable(T::Hash[Symbol, ::Object]),
+            metadata: T.nilable(T::Hash[::Symbol, ::Object]),
             executed_at: T.nilable(::String)
           )
             .void

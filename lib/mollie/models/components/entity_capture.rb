@@ -31,7 +31,7 @@ module Mollie
             Crystalline::Union.new(
               ::String,
               ::Float,
-              Crystalline::Hash.new(Symbol, ::Object),
+              Crystalline::Hash.new(::Symbol, ::Object),
               Crystalline::Array.new(::String)
             )
           ),
@@ -52,7 +52,7 @@ module Mollie
           params(
             description: T.nilable(::String),
             amount: T.nilable(Models::Components::AmountNullable),
-            metadata: T.nilable(T.any(::String, ::Float, T::Hash[Symbol, ::Object], T::Array[::String])),
+            metadata: T.nilable(T.any(::String, ::Float, T::Hash[::Symbol, ::Object], T::Array[::String])),
             testmode: T.nilable(T::Boolean)
           )
             .void

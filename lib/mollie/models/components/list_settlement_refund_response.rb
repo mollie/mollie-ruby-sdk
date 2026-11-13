@@ -84,7 +84,7 @@ module Mollie
             Crystalline::Union.new(
               ::String,
               ::Float,
-              Crystalline::Hash.new(Symbol, ::Object),
+              Crystalline::Hash.new(::Symbol, ::Object),
               Crystalline::Array.new(::String)
             )
           ),
@@ -138,7 +138,7 @@ module Mollie
             created_at: ::String,
             links: Models::Components::ListSettlementRefundResponseLinks,
             description: T.nilable(::String),
-            metadata: T.nilable(T.any(::String, ::Float, T::Hash[Symbol, ::Object], T::Array[::String])),
+            metadata: T.nilable(T.any(::String, ::Float, T::Hash[::Symbol, ::Object], T::Array[::String])),
             external_reference: T.nilable(Models::Components::ListSettlementRefundResponseExternalReference),
             settlement_id: T.nilable(::String),
             routing_reversals: T.nilable(T::Array[Models::Components::ListSettlementRefundResponseRoutingReversal]),

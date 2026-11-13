@@ -67,6 +67,24 @@ module Mollie
           Crystalline::Nilable.new(Models::Components::PaymentAddress),
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("shippingAddress")}}
         )
+        # > 🚧 Private beta
+        # >
+        # > This property is currently in private beta, and the final specification may still change.
+        #
+        # Shipping information for the Checkout Session. Provide either `options` or `callbackUrl`, not both.
+        #
+        # The `lines` of the Checkout Session must not contain a line with type `shipping_fee`. When `shipping` is set,
+        # `requiredCustomerDetails` must contain `shipping-address`.
+        field(
+          :shipping,
+          Crystalline::Nilable.new(
+            Crystalline::Union.new(
+              Models::Components::SessionRequestShipping1,
+              Models::Components::SessionRequestShipping2
+            )
+          ),
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("shipping")}}
+        )
 
         field(
           :customer_id,
@@ -90,7 +108,7 @@ module Mollie
         # Any payment created for the Checkout Session will use the same metadata.
         field(
           :metadata,
-          Crystalline::Nilable.new(Crystalline::Hash.new(Symbol, ::Object)),
+          Crystalline::Nilable.new(Crystalline::Hash.new(::Symbol, ::Object)),
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("metadata")}}
         )
 
@@ -129,9 +147,12 @@ module Mollie
             required_customer_details: T.nilable(T::Array[Models::Components::SessionRequiredCustomerDetails]),
             billing_address: T.nilable(Models::Components::PaymentAddress),
             shipping_address: T.nilable(Models::Components::PaymentAddress),
+            shipping: T.nilable(
+              T.any(Models::Components::SessionRequestShipping1, Models::Components::SessionRequestShipping2)
+            ),
             customer_id: T.nilable(::String),
             sequence_type: T.nilable(Models::Components::SessionSequenceType),
-            metadata: T.nilable(T::Hash[Symbol, ::Object]),
+            metadata: T.nilable(T::Hash[::Symbol, ::Object]),
             payment: T.nilable(Models::Components::SessionRequestPayment),
             profile_id: T.nilable(::String),
             testmode: T.nilable(T::Boolean)
@@ -146,6 +167,7 @@ module Mollie
           required_customer_details: nil,
           billing_address: nil,
           shipping_address: nil,
+          shipping: nil,
           customer_id: nil,
           sequence_type: nil,
           metadata: nil,
@@ -160,6 +182,7 @@ module Mollie
           @required_customer_details = required_customer_details
           @billing_address = billing_address
           @shipping_address = shipping_address
+          @shipping = shipping
           @customer_id = customer_id
           @sequence_type = sequence_type
           @metadata = metadata
@@ -178,6 +201,7 @@ module Mollie
           return false unless @required_customer_details == other.required_customer_details
           return false unless @billing_address == other.billing_address
           return false unless @shipping_address == other.shipping_address
+          return false unless @shipping == other.shipping
           return false unless @customer_id == other.customer_id
           return false unless @sequence_type == other.sequence_type
           return false unless @metadata == other.metadata

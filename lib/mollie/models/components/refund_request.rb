@@ -31,7 +31,7 @@ module Mollie
             Crystalline::Union.new(
               ::String,
               ::Float,
-              Crystalline::Hash.new(Symbol, ::Object),
+              Crystalline::Hash.new(::Symbol, ::Object),
               Crystalline::Array.new(::String)
             )
           ),
@@ -81,7 +81,7 @@ module Mollie
           params(
             amount: Models::Components::Amount,
             description: T.nilable(::String),
-            metadata: T.nilable(T.any(::String, ::Float, T::Hash[Symbol, ::Object], T::Array[::String])),
+            metadata: T.nilable(T.any(::String, ::Float, T::Hash[::Symbol, ::Object], T::Array[::String])),
             reverse_routing: T.nilable(T::Boolean),
             routing_reversals: T.nilable(T::Array[Models::Components::RefundRequestRoutingReversal]),
             testmode: T.nilable(T::Boolean)

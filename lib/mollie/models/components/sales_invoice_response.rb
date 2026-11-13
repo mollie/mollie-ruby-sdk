@@ -190,7 +190,7 @@ module Mollie
         # you fetch the entity with our API, we will also include the metadata. You can use up to approximately 1kB.
         field(
           :metadata,
-          Crystalline::Nilable.new(Crystalline::Hash.new(Symbol, ::Object)),
+          Crystalline::Nilable.new(Crystalline::Hash.new(::Symbol, ::Object)),
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("metadata")}}
         )
         # The payment term to be set on the invoice.
@@ -280,7 +280,7 @@ module Mollie
             invoice_number: T.nilable(::String),
             profile_id: T.nilable(::String),
             memo: T.nilable(::String),
-            metadata: T.nilable(T::Hash[Symbol, ::Object]),
+            metadata: T.nilable(T::Hash[::Symbol, ::Object]),
             payment_term: T.nilable(Models::Components::SalesInvoicePaymentTermResponse),
             email_details: T.nilable(Models::Components::SalesInvoiceEmailDetails),
             recipient: T.nilable(Models::Components::SalesInvoiceRecipientResponse),

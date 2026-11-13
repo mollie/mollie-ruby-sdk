@@ -60,6 +60,8 @@ tags:
     description: Operations related to the Profiles API
   - name: Refunds API
     description: Operations related to the Refunds API
+  - name: Reports API
+    description: Operations related to the Reports API
   - name: Sales Invoices API
     description: Operations related to the Sales Invoices API
   - name: Settlements API
@@ -2379,6 +2381,234 @@ paths:
           - language: ruby
             code: ''
       x-speakeasy-group: balances
+  /v2/reports:
+    post:
+      summary: Create report
+      x-speakeasy-name-override: create
+      tags:
+        - Reports API
+      operationId: create-report
+      security:
+        - advancedAccessToken:
+            - reports.write
+      description: |-
+        > 🚧 Beta feature
+        >
+        > This feature is currently in private beta, and the final specification may still change. To
+        > join the beta program, reach out to [partners@mollie.com](mailto:partners@mollie.com).
+
+        Create a report. Mollie generates it in the background, so you get a `pending` status back right away.
+
+        Poll [Get report](get-report) to check on progress, and grab a download link once it's ready.
+
+        Creating a report with the exact same parameters while one is already pending or completed doesn't create
+        a new one. You get the existing report back instead, whatever status it currently has.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create-report-request'
+      responses:
+        '202':
+          description: |-
+            The report was accepted. Returns `pending` for a new report, or the existing report's status when
+            deduplicated.
+        '400':
+          description: The request contains issues, or was made with a test mode credential.
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/error-response'
+              example:
+                status: 400
+                title: Bad Request
+                detail: Operation not supported in test mode.
+                _links:
+                  documentation:
+                    href: https://docs.mollie.com/overview/handling-errors
+                    type: text/html
+        '403':
+          description: |-
+            The request was made with a credential scoped to a single website profile. Use an organization-level
+            credential instead.
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/error-response'
+              example:
+                status: 403
+                title: Forbidden
+                detail: Report data spans a whole organization, use an organization-level credential instead.
+                _links:
+                  documentation:
+                    href: https://docs.mollie.com/overview/handling-errors
+                    type: text/html
+        '422':
+          description: |-
+            The request is invalid. For example, the `fromDate` is after `untilDate`, or `fromDate` and
+            `untilDate` are the same date.
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/error-response'
+              example:
+                status: 422
+                title: Unprocessable Entity
+                detail: The fromDate must not be after the untilDate.
+                field: fromDate
+                _links:
+                  documentation:
+                    href: https://docs.mollie.com/overview/handling-errors
+                    type: text/html
+        '429':
+          $ref: '#/components/responses/429-rate-limit'
+      x-readme:
+        code-samples:
+          - language: shell
+            code: |-
+              curl -X POST https://api.mollie.com/v2/reports \
+                  -H "Authorization: Bearer access_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM" \
+                  -H "Content-Type: application/json" \
+                  -d '{
+                    "reportType": "transaction-margin",
+                    "fromDate": "2026-08-01",
+                    "untilDate": "2026-08-31"
+                  }'
+          - language: php
+            code: |-
+              <?php
+              use Mollie\Api\Http\Requests\CreateReportRequest;
+
+              $mollie = new \Mollie\Api\MollieApiClient();
+              $mollie->setAccessToken("access_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM");
+
+              $report = $mollie->send(
+                  new CreateReportRequest(
+                      reportType: "transaction-margin",
+                      fromDate: "2026-08-01",
+                      untilDate: "2026-08-31",
+                  )
+              );
+          - language: node
+            code: |-
+              const { createMollieClient } = require('mollie-api-typescript');
+              const mollieClient = createMollieClient({ accessToken: 'access_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM' });
+
+              const report = await mollieClient.reports.create({
+                reportType: 'transaction-margin',
+                fromDate: '2026-08-01',
+                untilDate: '2026-08-31'
+              });
+          - language: python
+            code: No example available.
+          - language: ruby
+            code: No example available.
+      x-speakeasy-group: reports
+      parameters:
+        - $ref: '#/components/parameters/idempotency-key'
+  /v2/reports/{reportId}:
+    parameters:
+      - $ref: '#/components/parameters/parent-report-id'
+    get:
+      summary: Get report
+      x-speakeasy-name-override: get
+      tags:
+        - Reports API
+      operationId: get-report
+      security:
+        - advancedAccessToken:
+            - reports.read
+      description: |-
+        > 🚧 Beta feature
+        >
+        > This feature is currently in private beta, and the final specification may still change. To
+        > join the beta program, reach out to [partners@mollie.com](mailto:partners@mollie.com).
+
+        Retrieve a single report by its ID. Poll this to check on a report you created, and to grab a download
+        link once it's ready.
+
+        The download link is pre-signed and freshly generated on every call, and expires 15 minutes after you get
+        it. If it expires before you download the file, just call this endpoint again for a new one. Expiry of
+        the link doesn't affect the report itself.
+      responses:
+        '200':
+          description: The report object.
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/entity-report'
+              examples:
+                get-report-200-pending:
+                  $ref: '#/components/examples/get-report-pending'
+                get-report-200-completed:
+                  $ref: '#/components/examples/get-report-completed'
+                get-report-200-failed:
+                  $ref: '#/components/examples/get-report-failed'
+        '400':
+          description: The request contains issues, or was made with a test mode credential.
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/error-response'
+              example:
+                status: 400
+                title: Bad Request
+                detail: Operation not supported in test mode.
+                _links:
+                  documentation:
+                    href: https://docs.mollie.com/overview/handling-errors
+                    type: text/html
+        '403':
+          description: |-
+            The request was made with a credential scoped to a single website profile. Use an organization-level
+            credential instead.
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/error-response'
+              example:
+                status: 403
+                title: Forbidden
+                detail: Report data spans a whole organization, use an organization-level credential instead.
+                _links:
+                  documentation:
+                    href: https://docs.mollie.com/overview/handling-errors
+                    type: text/html
+        '404':
+          $ref: '#/components/responses/404-invalid-id'
+        '429':
+          $ref: '#/components/responses/429-rate-limit'
+      x-readme:
+        code-samples:
+          - language: shell
+            code: |-
+              curl -X GET https://api.mollie.com/v2/reports/rpt_9fKq2pLxAqYTBz9WQvhc4 \
+                  -H "Authorization: Bearer access_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM"
+          - language: php
+            code: |-
+              <?php
+              use Mollie\Api\Http\Requests\GetReportRequest;
+
+              $mollie = new \Mollie\Api\MollieApiClient();
+              $mollie->setAccessToken("access_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM");
+
+              $report = $mollie->send(
+                  new GetReportRequest(id: "rpt_9fKq2pLxAqYTBz9WQvhc4")
+              );
+          - language: node
+            code: |-
+              const { createMollieClient } = require('mollie-api-typescript');
+              const mollieClient = createMollieClient({ accessToken: 'access_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM' });
+
+              const report = await mollieClient.reports.get('rpt_9fKq2pLxAqYTBz9WQvhc4');
+          - language: python
+            code: No example available.
+          - language: ruby
+            code: No example available.
+      x-speakeasy-group: reports
+      parameters:
+        - $ref: '#/components/parameters/idempotency-key'
   /v2/settlements:
     get:
       summary: List settlements
@@ -12468,7 +12698,9 @@ paths:
       description: |-
         > 🚧 Beta feature
         >
-        > This feature is currently in private beta, and the final specification may still change.
+        > This feature is currently in beta.
+        >
+        > The `shipping` and `requiredCustomerDetails` properties are still in private beta.
 
         Create a Checkout Session to start a checkout process with Mollie Components.
       requestBody:
@@ -12736,7 +12968,9 @@ paths:
       description: |-
         > 🚧 Beta feature
         >
-        > This feature is currently in private beta, and the final specification may still change.
+        > This feature is currently in beta.
+        >
+        > The `shipping` and `requiredCustomerDetails` properties are still in private beta.
 
         Retrieve a Checkout Session to view its details and status to inform your customers about the checkout process.
       tags:
@@ -29439,6 +29673,7 @@ components:
         - balance-reserve
         - balance-reserve-return
         - balance-topup
+        - bank-charged-failure-fee
         - canceled-transfer
         - capture
         - cash-collateral-issuance
@@ -29447,6 +29682,7 @@ components:
         - chargeback-compensation
         - chargeback-reversal
         - failed-payment
+        - failed-payment-fee
         - failed-platform-split-payment
         - failed-split-payment-compensation
         - fee-prepayment
@@ -29965,394 +30201,268 @@ components:
             * Type `cash-collateral-issuance`: none
             * Type `cash-collateral-release`: none
           properties:
-            payment:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-            capture:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-                captureId:
-                  $ref: '#/components/schemas/captureToken'
-                captureDescription:
-                  type: string
-                  example: Capture Description
-            capture-commision:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-                captureId:
-                  $ref: '#/components/schemas/captureToken'
-                captureDescription:
-                  type: string
-                  example: Capture Description
-            capture-rolling-reserve-release:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-                captureId:
-                  $ref: '#/components/schemas/captureToken'
-                captureDescription:
-                  type: string
-                  example: Capture Description
-            unauthorized-direct-debit:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-            failed-payment:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-            refund:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-                refundId:
-                  $ref: '#/components/schemas/refundToken'
-                refundDescription:
-                  type: string
-                  example: Refund Description
-            refund-compensation:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-                refundId:
-                  $ref: '#/components/schemas/refundToken'
-                refundDescription:
-                  type: string
-                  example: Refund Description
-            returned-refund:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-                refundId:
-                  $ref: '#/components/schemas/refundToken'
-                refundDescription:
-                  type: string
-                  example: Refund Description
-            returned-refund-compensation:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-                refundId:
-                  $ref: '#/components/schemas/refundToken'
-                refundDescription:
-                  type: string
-                  example: Refund Description
-            chargeback:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-                chargebackId:
-                  $ref: '#/components/schemas/chargebackToken'
-                chargebackDescription:
-                  type: string
-                  example: Chargeback Description
-            chargeback-reversal:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-                chargebackId:
-                  $ref: '#/components/schemas/chargebackToken'
-                chargebackDescription:
-                  type: string
-                  example: Chargeback Description
-            chargeback-compensation:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-                chargebackId:
-                  $ref: '#/components/schemas/chargebackToken'
-                chargebackDescription:
-                  type: string
-                  example: Chargeback Description
-            reversed-chargeback-compensation:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-                chargebackId:
-                  $ref: '#/components/schemas/chargebackToken'
-                chargebackDescription:
-                  type: string
-                  example: Chargeback Description
-            outgoing-transfer:
-              type:
-                - object
-                - 'null'
-              properties:
-                transferId:
-                  $ref: '#/components/schemas/transferToken'
-                settlementId:
-                  $ref: '#/components/schemas/settlementToken'
-            canceled-outgoing-transfer:
-              type:
-                - object
-                - 'null'
-              properties:
-                transferId:
-                  $ref: '#/components/schemas/transferToken'
-                settlementId:
-                  $ref: '#/components/schemas/settlementToken'
-            returned-transfer:
-              type:
-                - object
-                - 'null'
-              properties:
-                transferId:
-                  type: string
-                  example: trf_nyjwa2
-                settlementId:
-                  type: string
-                  example: stl_s3hcSM2hKP
-            invoice-compensation:
-              type:
-                - object
-                - 'null'
-              properties:
-                invoiceId:
-                  $ref: '#/components/schemas/invoiceToken'
-            application-fee:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-                payingOwner:
-                  $ref: '#/components/schemas/organizationToken'
-            split-payment:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-                paymentOnwer:
-                  $ref: '#/components/schemas/organizationToken'
-            platform-payment-refund:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-                refundId:
-                  $ref: '#/components/schemas/refundToken'
-                refundDescription:
-                  type: string
-                  example: Refund Description
-            returned-platform-payment-refund:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-                refundId:
-                  $ref: '#/components/schemas/refundToken'
-                refundDescription:
-                  type: string
-                  example: Refund Description
-            platform-payment-chargeback:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-                chargebackId:
-                  $ref: '#/components/schemas/chargebackToken'
-                chargebackDescription:
-                  type: string
-                  example: Chargeback Description
-            reversed-platform-payment-chargeback:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-                chargebackId:
-                  $ref: '#/components/schemas/chargebackToken'
-                chargebackDescription:
-                  type: string
-                  example: Chargeback Description
-            payment-commission:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-                organizationId:
-                  $ref: '#/components/schemas/organizationToken'
-            reimbursement-fee:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-            failed-payment-fee:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-            payment-fee:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
-                paymentDescription:
-                  type: string
-                  example: Payment Description
-            managed-fee:
-              type:
-                - object
-                - 'null'
-              properties:
-                feeType:
-                  type: string
-                  example: feeType
-                feeId:
-                  type: string
-                  example: feeId
-            returned-managed-fee:
-              type:
-                - object
-                - 'null'
-              properties:
-                feeType:
-                  type: string
-                  example: feeType
-                feeId:
-                  type: string
-                  example: feeId
-            post-payment-split-payment:
-              type:
-                - object
-                - 'null'
-              properties:
-                paymentId:
-                  $ref: '#/components/schemas/paymentToken'
+            paymentId:
+              $ref: '#/components/schemas/paymentToken'
+            paymentDescription:
+              type: string
+              example: Payment Description
+            captureId:
+              $ref: '#/components/schemas/captureToken'
+            captureDescription:
+              type: string
+              example: Capture Description
+            refundId:
+              $ref: '#/components/schemas/refundToken'
+            refundDescription:
+              type: string
+              example: Refund Description
+            chargebackId:
+              $ref: '#/components/schemas/chargebackToken'
+            chargebackDescription:
+              type: string
+              example: Chargeback Description
+            transferId:
+              $ref: '#/components/schemas/transferToken'
+            settlementId:
+              $ref: '#/components/schemas/settlementToken'
+            invoiceId:
+              $ref: '#/components/schemas/invoiceToken'
+            payingOwner:
+              $ref: '#/components/schemas/organizationToken'
+            paymentOwner:
+              $ref: '#/components/schemas/organizationToken'
+            organizationId:
+              $ref: '#/components/schemas/organizationToken'
+            feeType:
+              type: string
+              example: feeType
+            feeId:
+              type: string
+              example: feeId
         createdAt:
           $ref: '#/components/schemas/created-at'
+    report-type:
+      type: string
+      description: |-
+        The type of report to generate. Determines which other fields the request needs, and which fields show up
+        on the resulting report.
+      enum:
+        - transaction-margin
+      x-enumDescriptions:
+        transaction-margin: A transaction margin report for a whole organization, over a date range.
+      example: transaction-margin
+    create-report-request:
+      type: object
+      description: Generate a transaction margin report for your organization over a date range.
+      required:
+        - reportType
+        - fromDate
+        - untilDate
+      properties:
+        reportType:
+          $ref: '#/components/schemas/report-type'
+        fromDate:
+          type: string
+          format: date
+          description: |-
+            The start date of the report period, in `YYYY-MM-DD` format. Must be strictly before `untilDate`; a
+            report can't cover a single day. Data is available from 2026-01-01 onwards.
+          example: '2026-08-01'
+        untilDate:
+          type: string
+          format: date
+          description: The end date of the report period, in `YYYY-MM-DD` format. Must be strictly after `fromDate`.
+          example: '2026-08-31'
+    reportToken:
+      type: string
+      pattern: ^rpt_.+$
+      example: rpt_XRAG3v9EUyCDcX99pJ2Vc
+    report-status:
+      type: string
+      description: The report's current status.
+      enum:
+        - pending
+        - completed
+        - failed
+      x-enumDescriptions:
+        pending: The report is still being generated.
+        completed: The report is ready. See `_links.download` for the file.
+        failed: The report could not be generated. See `statusReason` for why.
+      readOnly: true
+      example: completed
+      x-speakeasy-unknown-values: allow
+    create-report-response:
+      type: object
+      required:
+        - resource
+        - id
+        - reportType
+        - status
+        - createdAt
+        - _links
+      properties:
+        resource:
+          type: string
+          description: |-
+            Indicates the response contains a report object. Will always contain the string `report` for this
+            endpoint.
+          readOnly: true
+          example: report
+        id:
+          allOf:
+            - $ref: '#/components/schemas/reportToken'
+            - description: |-
+                The identifier uniquely referring to this report. Mollie assigns this identifier when you create the
+                report. Example: `rpt_XRAG3v9EUyCDcX99pJ2Vc`.
+          readOnly: true
+        reportType:
+          $ref: '#/components/schemas/report-type-response'
+        fromDate:
+          type: string
+          format: date
+          description: The start date of the report period. Only present for date-range report types.
+          example: '2026-08-01'
+          readOnly: true
+        untilDate:
+          type: string
+          format: date
+          description: The end date of the report period. Only present for date-range report types.
+          example: '2026-08-31'
+          readOnly: true
+        status:
+          allOf:
+            - $ref: '#/components/schemas/report-status'
+          readOnly: true
+        createdAt:
+          $ref: '#/components/schemas/created-at'
+        _links:
+          type: object
+          description: An object with several relevant URLs. Every URL object will contain an `href` and a `type` field.
+          required:
+            - self
+            - documentation
+          properties:
+            self:
+              $ref: '#/components/schemas/url'
+            documentation:
+              $ref: '#/components/schemas/url'
+          readOnly: true
+    report-status-reason-code:
+      type: string
+      description: A machine-readable code for the failure reason.
+      enum:
+        - generation-failed
+        - validation-failed
+        - empty-report
+      x-enumDescriptions:
+        generation-failed: An error occurred while generating the report.
+        validation-failed: The report data could not be verified.
+        empty-report: The report contains no data for the requested period.
+      readOnly: true
+      example: generation-failed
+      x-speakeasy-unknown-values: allow
+    report-status-reason:
+      type: object
+      description: Present when `status` is `failed`. Explains what went wrong.
+      readOnly: true
+      required:
+        - code
+        - message
+      properties:
+        code:
+          $ref: '#/components/schemas/report-status-reason-code'
+        message:
+          type: string
+          description: A human-readable explanation of why the report failed.
+          example: An error occurred while generating the report. Please try again or contact support if the issue persists.
+    entity-report:
+      type: object
+      required:
+        - resource
+        - id
+        - reportType
+        - status
+        - createdAt
+        - _links
+      properties:
+        resource:
+          type: string
+          description: |-
+            Indicates the response contains a report object. Will always contain the string `report` for this
+            endpoint.
+          readOnly: true
+          example: report
+        id:
+          allOf:
+            - $ref: '#/components/schemas/reportToken'
+            - description: |-
+                The identifier uniquely referring to this report. Mollie assigns this identifier when you create the
+                report. Example: `rpt_XRAG3v9EUyCDcX99pJ2Vc`.
+          readOnly: true
+        reportType:
+          $ref: '#/components/schemas/report-type-response'
+        fromDate:
+          type: string
+          format: date
+          description: The start date of the report period. Only present for date-range report types.
+          example: '2026-08-01'
+          readOnly: true
+        untilDate:
+          type: string
+          format: date
+          description: The end date of the report period. Only present for date-range report types.
+          example: '2026-08-31'
+          readOnly: true
+        status:
+          allOf:
+            - $ref: '#/components/schemas/report-status'
+          readOnly: true
+        statusReason:
+          $ref: '#/components/schemas/report-status-reason'
+        createdAt:
+          $ref: '#/components/schemas/created-at'
+        completedAt:
+          type: string
+          format: date-time
+          description: |-
+            The date and time the report finished generating, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+            format. Only present when `status` is `completed`.
+          readOnly: true
+          example: '2026-09-01T09:01:12+00:00'
+        failedAt:
+          type: string
+          format: date-time
+          description: |-
+            The date and time the report failed to generate, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+            format. Only present when `status` is `failed`.
+          readOnly: true
+          example: '2026-09-01T09:03:00+00:00'
+        downloadExpiresAt:
+          type: string
+          format: date-time
+          description: |-
+            The date and time the `_links.download` link expires, in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+            format. Only present when `status` is `completed`.
+          readOnly: true
+          example: '2026-09-01T09:16:12+00:00'
+        _links:
+          type: object
+          description: An object with several relevant URLs. Every URL object will contain an `href` and a `type` field.
+          required:
+            - self
+            - documentation
+          properties:
+            self:
+              $ref: '#/components/schemas/url'
+            download:
+              allOf:
+                - $ref: '#/components/schemas/url'
+                - description: |-
+                    A time-limited, pre-signed download link for the report file. Only present when `status` is
+                    `completed`.
+            documentation:
+              $ref: '#/components/schemas/url'
+          readOnly: true
     settlement-status:
       type: string
       description: The status of the settlement.
@@ -30546,12 +30656,21 @@ components:
                         example: 10
                       rate:
                         type: object
-                        description: The service rates, further divided into `fixed` and `percentage` costs.
+                        description: |-
+                          The service rates, further divided into `fixed` and `percentage` costs.
+
+                          For pass-through fees, which are charged by an external party rather than at an agreed Mollie
+                          rate, both `fixed` and `percentage` are `null`.
+                        required:
+                          - fixed
+                          - percentage
                         properties:
                           fixed:
-                            $ref: '#/components/schemas/amount'
+                            $ref: '#/components/schemas/amount-nullable'
                           percentage:
-                            type: string
+                            type:
+                              - string
+                              - 'null'
                             example: '2.5'
                       amountNet:
                         $ref: '#/components/schemas/amount'
@@ -31557,34 +31676,6 @@ components:
         - NOT_ELIGIBLE
       example: ELIGIBLE
       x-methodSpecific: true
-    payment-details-receipt-card-read-method:
-      type:
-        - string
-        - 'null'
-      description: The method by which the card was read by the terminal.
-      enum:
-        - chip
-        - magnetic-stripe
-        - near-field-communication
-        - contactless
-        - moto
-      example: contactless
-    payment-details-receipt-card-verification-method:
-      type:
-        - string
-        - 'null'
-      description: The method used to verify the cardholder's identity.
-      enum:
-        - no-cvm-required
-        - online-pin
-        - offline-pin
-        - consumer-device
-        - signature
-        - signature-and-online-pin
-        - online-pin-and-signature
-        - none
-        - failed
-      example: no-cvm-required
     payment-details:
       type:
         - object
@@ -31926,40 +32017,6 @@ components:
             - 'null'
           description: The first 6 digits & last 4 digits of the customer's masked card number.
           example: ...
-          x-methodSpecific: true
-          x-method: point-of-sale
-        receipt:
-          type: object
-          x-heading-suffix: (⚠️ Beta feature, reach out to [Support](https://www.mollie.com/contact/merchants))
-          description: |-
-            The Point of sale receipt object.
-
-            * `authorizationCode` _string|null_ - a unique code provided by the cardholder's bank to confirm that the
-              transaction was successfully approved.
-            * `applicationIdentifier` _string|null_ - the unique number that identifies a specific payment application
-              on a chip card.
-            * `cardReadMethod` _string|null_ - the method by which the card was read by the terminal. Possible values:
-              `chip` | `magnetic-stripe` | `near-field-communication` | `contactless` | `moto`.
-            * `cardVerificationMethod` _string|null_ - the method used to verify the cardholder's identity. Possible
-              values: `no-cvm-required` | `online-pin` | `offline-pin` | `consumer-device` | `signature` |
-              `signature-and-online-pin` | `online-pin-and-signature` | `none` | `failed`.
-          properties:
-            authorizationCode:
-              type:
-                - string
-                - 'null'
-              description: A unique code provided by the cardholder's bank to confirm that the transaction was successfully approved.
-              example: ...
-            applicationIdentifier:
-              type:
-                - string
-                - 'null'
-              description: The unique number that identifies a specific payment application on a chip card.
-              example: ...
-            cardReadMethod:
-              $ref: '#/components/schemas/payment-details-receipt-card-read-method-response'
-            cardVerificationMethod:
-              $ref: '#/components/schemas/payment-details-receipt-card-verification-method-response'
           x-methodSpecific: true
           x-method: point-of-sale
         creditorIdentifier:
@@ -34143,6 +34200,8 @@ components:
         - unmatched-credit-transfer.match.failed
         - unmatched-credit-transfer.return.completed
         - unmatched-credit-transfer.return.failed
+        - report.completed
+        - report.failed
         - '*'
       x-enumDescriptions:
         payment.paid: A payment has been completed successfully.
@@ -34194,6 +34253,8 @@ components:
         unmatched-credit-transfer.match.failed: A user-triggered match action has failed.
         unmatched-credit-transfer.return.completed: A user-triggered return action has completed successfully.
         unmatched-credit-transfer.return.failed: A user-triggered return action has failed.
+        report.completed: A report has finished generating successfully.
+        report.failed: A report has failed to generate.
         '*': All event types.
       example: payment-link.paid
     webhook-status:
@@ -35276,7 +35337,7 @@ components:
         - pending-payment
         - paid
         - overdue
-        - payment_reversed
+        - payment-reversed
         - cancelled
         - expired
         - failed
@@ -36058,9 +36119,7 @@ components:
           x-method: credit-card
         voucherNumber:
           type: string
-          description: |-
-            The card token you received from the card component of Mollie Components. The token represents the customer's
-            card information needed to complete the payment.
+          description: Number of the voucher.
           example: '1234567890'
           writeOnly: true
           x-methodSpecific: true
@@ -36754,6 +36813,56 @@ components:
           description: |-
             The customer's shipping address details. We advise to provide these details to improve fraud protection and
             conversion.
+        shipping:
+          type: object
+          description: |-
+            > 🚧 Private beta
+            >
+            > This property is currently in private beta, and the final specification may still change.
+
+            Shipping information for the Checkout Session. Provide either `options` or `callbackUrl`, not both.
+
+            The `lines` of the Checkout Session must not contain a line with type `shipping_fee`. When `shipping` is set,
+            `requiredCustomerDetails` must contain `shipping-address`.
+          oneOf:
+            - required:
+                - options
+            - required:
+                - callbackUrl
+          properties:
+            options:
+              type: array
+              minItems: 1
+              maxItems: 10
+              description: |-
+                A fixed list of shipping options to show your customer during checkout. Use `callbackUrl` instead if your
+                options depend on the customer's shipping address.
+              items:
+                type: object
+                required:
+                  - description
+                  - reference
+                  - amount
+                properties:
+                  description:
+                    type: string
+                    description: The name of the shipping option, as shown to your customer.
+                    example: Next day delivery
+                  reference:
+                    type: string
+                    description: Your own identifier for the shipping option.
+                    example: express
+                  amount:
+                    $ref: '#/components/schemas/amount'
+            callbackUrl:
+              type: string
+              description: |-
+                The URL Mollie calls to retrieve shipping options whenever your customer selects or changes their shipping
+                address. Requires `https://` for live mode. In test mode, `http://` is also allowed.
+
+                See the [shipping options guide](https://docs.mollie.com/docs/handle-shipping-options-with-express-component)
+                for the callback request and response.
+              example: https://example.org/shipping-options
         customerId:
           type:
             - string
@@ -36911,6 +37020,7 @@ components:
         - paybybank
         - paypal
         - paysafecard
+        - pointofsale
         - przelewy24
         - riverty
         - satispay
@@ -37128,7 +37238,7 @@ components:
           properties:
             id:
               allOf:
-                - $ref: '#/components/schemas/method-response'
+                - $ref: '#/components/schemas/method-id'
               type: string
               description: |-
                 The unique identifier of the payment method. When used during [payment creation](create-payment), the payment
@@ -38454,6 +38564,7 @@ components:
         - issued
         - paid
         - cancelled
+        - payment-reversed
       example: draft
     update-values-sales-invoice:
       type: object
@@ -38466,6 +38577,8 @@ components:
             The status for the invoice to end up in.
 
             Dependent parameters: `paymentDetails` for `paid`, `emailDetails` for `issued` and `paid`.
+
+            To cancel a `paid` invoice, first set the status to `payment-reversed`, then set it to `cancelled`.
         memo:
           example: An updated memo!
           type:
@@ -41574,6 +41687,17 @@ components:
             self:
               $ref: '#/components/schemas/url'
               description: The URL to the current resource.
+    report-type-response:
+      type: string
+      description: |-
+        The type of report to generate. Determines which other fields the request needs, and which fields show up
+        on the resulting report.
+      enum:
+        - transaction-margin
+      x-enumDescriptions:
+        transaction-margin: A transaction margin report for a whole organization, over a date range.
+      example: transaction-margin
+      x-speakeasy-unknown-values: allow
     entity-payment-response:
       type: object
       properties:
@@ -42825,36 +42949,6 @@ components:
       example: ELIGIBLE
       x-methodSpecific: true
       x-speakeasy-unknown-values: allow
-    payment-details-receipt-card-read-method-response:
-      type:
-        - string
-        - 'null'
-      description: The method by which the card was read by the terminal.
-      enum:
-        - chip
-        - magnetic-stripe
-        - near-field-communication
-        - contactless
-        - moto
-      example: contactless
-      x-speakeasy-unknown-values: allow
-    payment-details-receipt-card-verification-method-response:
-      type:
-        - string
-        - 'null'
-      description: The method used to verify the cardholder's identity.
-      enum:
-        - no-cvm-required
-        - online-pin
-        - offline-pin
-        - consumer-device
-        - signature
-        - signature-and-online-pin
-        - online-pin-and-signature
-        - none
-        - failed
-      example: no-cvm-required
-      x-speakeasy-unknown-values: allow
     method-response:
       type:
         - string
@@ -43511,6 +43605,8 @@ components:
         - unmatched-credit-transfer.match.failed
         - unmatched-credit-transfer.return.completed
         - unmatched-credit-transfer.return.failed
+        - report.completed
+        - report.failed
         - '*'
       x-enumDescriptions:
         payment.paid: A payment has been completed successfully.
@@ -43562,6 +43658,8 @@ components:
         unmatched-credit-transfer.match.failed: A user-triggered match action has failed.
         unmatched-credit-transfer.return.completed: A user-triggered return action has completed successfully.
         unmatched-credit-transfer.return.failed: A user-triggered return action has failed.
+        report.completed: A report has finished generating successfully.
+        report.failed: A report has failed to generate.
         '*': All event types.
       example: payment-link.paid
       x-speakeasy-unknown-values: allow
@@ -44647,6 +44745,56 @@ components:
           description: |-
             The customer's shipping address details. We advise to provide these details to improve fraud protection and
             conversion.
+        shipping:
+          type: object
+          description: |-
+            > 🚧 Private beta
+            >
+            > This property is currently in private beta, and the final specification may still change.
+
+            Shipping information for the Checkout Session. Provide either `options` or `callbackUrl`, not both.
+
+            The `lines` of the Checkout Session must not contain a line with type `shipping_fee`. When `shipping` is set,
+            `requiredCustomerDetails` must contain `shipping-address`.
+          oneOf:
+            - required:
+                - options
+            - required:
+                - callbackUrl
+          properties:
+            options:
+              type: array
+              minItems: 1
+              maxItems: 10
+              description: |-
+                A fixed list of shipping options to show your customer during checkout. Use `callbackUrl` instead if your
+                options depend on the customer's shipping address.
+              items:
+                type: object
+                required:
+                  - description
+                  - reference
+                  - amount
+                properties:
+                  description:
+                    type: string
+                    description: The name of the shipping option, as shown to your customer.
+                    example: Next day delivery
+                  reference:
+                    type: string
+                    description: Your own identifier for the shipping option.
+                    example: express
+                  amount:
+                    $ref: '#/components/schemas/amount'
+            callbackUrl:
+              type: string
+              description: |-
+                The URL Mollie calls to retrieve shipping options whenever your customer selects or changes their shipping
+                address. Requires `https://` for live mode. In test mode, `http://` is also allowed.
+
+                See the [shipping options guide](https://docs.mollie.com/docs/handle-shipping-options-with-express-component)
+                for the callback request and response.
+              example: https://example.org/shipping-options
         customerId:
           type:
             - string
@@ -45211,6 +45359,13 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/balanceToken'
+    parent-report-id:
+      name: reportId
+      description: Provide the ID of the related report.
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/reportToken'
     parent-settlement-id:
       name: settlementId
       description: Provide the ID of the related settlement.
@@ -45349,7 +45504,7 @@ components:
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/method'
+        $ref: '#/components/schemas/method-id'
     parent-profile-and-me-id:
       name: profileId
       description: Provide the ID of the related profile.
@@ -45507,6 +45662,85 @@ components:
         type: string
         example: 123e4567-e89b-12d3-a456-426
   examples:
+    get-report-pending:
+      summary: A report that is still being generated
+      value:
+        resource: report
+        id: rpt_9fKq2pLxAqYTBz9WQvhc4
+        reportType: transaction-margin
+        fromDate: '2026-08-01'
+        untilDate: '2026-08-31'
+        status: pending
+        createdAt: '2026-09-01T09:00:00+00:00'
+        _links:
+          self:
+            href: https://api.mollie.com/v2/reports/rpt_9fKq2pLxAqYTBz9WQvhc4
+            type: application/hal+json
+          documentation:
+            href: https://docs.mollie.com/reference/get-report
+            type: text/html
+    create-report-completed:
+      summary: A report that already existed and had completed
+      value:
+        resource: report
+        id: rpt_9fKq2pLxAqYTBz9WQvhc4
+        reportType: transaction-margin
+        fromDate: '2026-08-01'
+        untilDate: '2026-08-31'
+        status: completed
+        createdAt: '2026-09-01T09:00:00+00:00'
+        _links:
+          self:
+            href: https://api.mollie.com/v2/reports/rpt_9fKq2pLxAqYTBz9WQvhc4
+            type: application/hal+json
+          documentation:
+            href: https://docs.mollie.com/reference/get-report
+            type: text/html
+    get-report-completed:
+      summary: A completed report, with a fresh download link
+      value:
+        resource: report
+        id: rpt_9fKq2pLxAqYTBz9WQvhc4
+        reportType: transaction-margin
+        fromDate: '2026-08-01'
+        untilDate: '2026-08-31'
+        status: completed
+        createdAt: '2026-09-01T09:00:00+00:00'
+        completedAt: '2026-09-01T09:01:12+00:00'
+        downloadExpiresAt: '2026-09-01T09:16:12+00:00'
+        _links:
+          self:
+            href: https://api.mollie.com/v2/reports/rpt_9fKq2pLxAqYTBz9WQvhc4
+            type: application/hal+json
+          download:
+            href: https://storage.googleapis.com/...(signed)...
+            type: text/csv
+          documentation:
+            href: https://docs.mollie.com/reference/get-report
+            type: text/html
+    get-report-failed:
+      summary: A report that failed to generate
+      value:
+        resource: report
+        id: rpt_9fKq2pLxAqYTBz9WQvhc4
+        reportType: transaction-margin
+        fromDate: '2026-08-01'
+        untilDate: '2026-08-31'
+        status: failed
+        createdAt: '2026-09-01T09:00:00+00:00'
+        failedAt: '2026-09-01T09:03:00+00:00'
+        statusReason:
+          code: generation-failed
+          message: |-
+            An error occurred while generating the report. Please try again or contact support if the
+            issue persists.
+        _links:
+          self:
+            href: https://api.mollie.com/v2/reports/rpt_9fKq2pLxAqYTBz9WQvhc4
+            type: application/hal+json
+          documentation:
+            href: https://docs.mollie.com/reference/get-report
+            type: text/html
     list-chargebacks:
       summary: List of chargeback objects
       value:

@@ -7,6 +7,9 @@ module Mollie
   module Models
     module Operations
       # The service rates, further divided into `fixed` and `percentage` costs.
+      #
+      # For pass-through fees, which are charged by an external party rather than at an agreed Mollie
+      # rate, both `fixed` and `percentage` are `null`.
       class GetOpenSettlementRate
         extend T::Sig
         include Crystalline::MetadataFields
@@ -14,17 +17,17 @@ module Mollie
         # In v2 endpoints, monetary amounts are represented as objects with a `currency` and `value` field.
         field(
           :fixed,
-          Crystalline::Nilable.new(Models::Components::Amount),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("fixed")}}
+          Crystalline::Nilable.new(Models::Components::AmountNullable),
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("fixed"), required: true}}
         )
 
         field(
           :percentage,
           Crystalline::Nilable.new(::String),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("percentage")}}
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("percentage"), required: true}}
         )
 
-        sig { params(fixed: T.nilable(Models::Components::Amount), percentage: T.nilable(::String)).void }
+        sig { params(fixed: T.nilable(Models::Components::AmountNullable), percentage: T.nilable(::String)).void }
         def initialize(fixed: nil, percentage: nil)
           @fixed = fixed
           @percentage = percentage

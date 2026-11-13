@@ -22,7 +22,11 @@ module Mollie
       @sdk_configuration = sdk_config
     end
 
-    sig { params(base_url: String, url_variables: T.nilable(T::Hash[Symbol, T.any(String, T::Enum)])).returns(String) }
+    sig {
+      params(base_url: ::String, url_variables: T.nilable(T::Hash[::Symbol, T.any(::String, T::Enum)])).returns(
+        ::String
+      )
+    }
     def get_url(base_url:, url_variables: nil)
       sd_base_url, sd_options = @sdk_configuration.get_server_details
 
@@ -42,8 +46,8 @@ module Mollie
         body: T.nilable(Models::Components::VerificationOfPayeeRequest),
         idempotency_key: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
-        timeout_ms: T.nilable(Integer),
-        http_headers: T.nilable(T::Hash[T.any(String, Symbol), String])
+        timeout_ms: T.nilable(::Integer),
+        http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::VerifyPayeeResponse)
     }
@@ -81,14 +85,14 @@ module Mollie
       base_url = Utils.template_url(url, params)
       url = "#{base_url}/v2/business-accounts/payee-verifications"
       headers = Utils.get_headers(request, @sdk_configuration.globals)
-      headers = T.cast(headers, T::Hash[String, String])
+      headers = T.cast(headers, T::Hash[::String, ::String])
       req_content_type, data, form = Utils.serialize_request_body(request, false, false, :body, :json)
       headers["content-type"] = req_content_type
 
       if form && !form.empty?
         body = Utils.encode_form(form)
       elsif Utils.match_content_type(req_content_type, "application/x-www-form-urlencoded")
-        body = URI.encode_www_form(T.cast(data, T::Hash[Symbol, Object]))
+        body = ::URI.encode_www_form(T.cast(data, T::Hash[::Symbol, ::Object]))
       else
         body = data
       end
@@ -106,7 +110,7 @@ module Mollie
         retry_connection_errors: true,
         strategy: "backoff"
       )
-      retry_options = retries.to_faraday_retry_options(initial_time: Time.now)
+      retry_options = retries.to_faraday_retry_options(initial_time: ::Time.now)
       retry_options[:retry_statuses] = [429, 500, 501, 502, 503, 504, 505]
 
       security = @sdk_configuration.security_source&.call
@@ -125,7 +129,7 @@ module Mollie
         security_source: @sdk_configuration.security_source
       )
 
-      error = T.let(nil, T.nilable(StandardError))
+      error = T.let(nil, T.nilable(::StandardError))
       http_response = T.let(nil, T.nilable(Faraday::Response))
 
       begin
@@ -146,7 +150,7 @@ module Mollie
           )
         end
 
-      rescue StandardError => e
+      rescue ::StandardError => e
         error = e
       ensure
         if http_response.nil? || Utils.error_status?(http_response.status)
@@ -182,7 +186,7 @@ module Mollie
             response: http_response
           )
           response_data = http_response.env.response_body
-          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Components::VerificationOfPayeeResponse)
+          obj = Crystalline.unmarshal_json(::JSON.parse(response_data), Models::Components::VerificationOfPayeeResponse)
           response = Models::Operations::VerifyPayeeResponse.new(
             status_code: http_response.status,
             content_type: content_type,
@@ -210,7 +214,7 @@ module Mollie
             response: http_response
           )
           response_data = http_response.env.response_body
-          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Errors::ErrorResponse)
+          obj = Crystalline.unmarshal_json(::JSON.parse(response_data), Models::Errors::ErrorResponse)
           obj.raw_response = http_response
           raise obj
         else
@@ -232,7 +236,7 @@ module Mollie
             response: http_response
           )
           response_data = http_response.env.response_body
-          obj = Crystalline.unmarshal_json(JSON.parse(response_data), Models::Errors::ErrorResponse)
+          obj = Crystalline.unmarshal_json(::JSON.parse(response_data), Models::Errors::ErrorResponse)
           obj.raw_response = http_response
           raise obj
         else

@@ -38,6 +38,7 @@ module Mollie
           PAYBYBANK = new("paybybank")
           PAYPAL = new("paypal")
           PAYSAFECARD = new("paysafecard")
+          POINTOFSALE = new("pointofsale")
           PRZELEWY24 = new("przelewy24")
           RIVERTY = new("riverty")
           SATISPAY = new("satispay")

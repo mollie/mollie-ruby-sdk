@@ -125,8 +125,7 @@ module Mollie
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("googlePayPaymentToken")}}
         )
-        # The card token you received from the card component of Mollie Components. The token represents the customer's
-        # card information needed to complete the payment.
+        # Number of the voucher.
         field(
           :voucher_number,
           Crystalline::Nilable.new(::String),
@@ -159,7 +158,7 @@ module Mollie
         # you can send.
         field(
           :extra_merchant_data,
-          Crystalline::Nilable.new(Crystalline::Hash.new(Symbol, ::Object)),
+          Crystalline::Nilable.new(Crystalline::Hash.new(::Symbol, ::Object)),
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("extraMerchantData")}}
         )
         # The unique ID you have used for the PayPal fraud library. You should include this if you use PayPal for an
@@ -309,7 +308,7 @@ module Mollie
             Crystalline::Union.new(
               ::String,
               ::Float,
-              Crystalline::Hash.new(Symbol, ::Object),
+              Crystalline::Hash.new(::Symbol, ::Object),
               Crystalline::Array.new(::String)
             )
           ),
@@ -436,7 +435,7 @@ module Mollie
             voucher_number: T.nilable(::String),
             voucher_pin: T.nilable(::String),
             consumer_date_of_birth: T.nilable(::Date),
-            extra_merchant_data: T.nilable(T::Hash[Symbol, ::Object]),
+            extra_merchant_data: T.nilable(T::Hash[::Symbol, ::Object]),
             session_id: T.nilable(::String),
             digital_goods: T.nilable(T::Boolean),
             customer_reference: T.nilable(::String),
@@ -449,7 +448,7 @@ module Mollie
             method: T.nilable(T.any(Models::Components::MethodEnum, T::Array[Models::Components::MethodEnum])),
             issuer: T.nilable(::String),
             restrict_payment_methods_to_country: T.nilable(::String),
-            metadata: T.nilable(T.any(::String, ::Float, T::Hash[Symbol, ::Object], T::Array[::String])),
+            metadata: T.nilable(T.any(::String, ::Float, T::Hash[::Symbol, ::Object], T::Array[::String])),
             capture_mode: T.nilable(Models::Components::CaptureMode),
             capture_delay: T.nilable(::String),
             application_fee: T.nilable(Models::Components::PaymentRequestApplicationFee),

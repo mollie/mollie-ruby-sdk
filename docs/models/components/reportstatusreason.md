@@ -1,0 +1,11 @@
+# ReportStatusReason
+
+Present when `status` is `failed`. Explains what went wrong.
+
+
+## Fields
+
+| Field                                                                                                     | Type                                                                                                      | Required                                                                                                  | Description                                                                                               | Example                                                                                                   |
+| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `code`                                                                                                    | [Models::Components::ReportStatusReasonCode](../../models/shared/reportstatusreasoncode.md)               | :heavy_check_mark:                                                                                        | A machine-readable code for the failure reason.                                                           | generation-failed                                                                                         |
+| `message`                                                                                                 | *::String*                                                                                                | :heavy_check_mark:                                                                                        | A human-readable explanation of why the report failed.                                                    | An error occurred while generating the report. Please try again or contact support if the issue persists. |

@@ -57,327 +57,177 @@ module Mollie
         include Crystalline::MetadataFields
 
         field(
-          :payment,
-          Crystalline::Nilable.new(Models::Components::EntityBalanceTransactionPayment),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("payment")}}
+          :payment_id,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("paymentId")}}
         )
 
         field(
-          :capture,
-          Crystalline::Nilable.new(Models::Components::Capture),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("capture")}}
+          :payment_description,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("paymentDescription")}}
         )
 
         field(
-          :capture_commision,
-          Crystalline::Nilable.new(Models::Components::CaptureCommision),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("capture-commision")}}
+          :capture_id,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("captureId")}}
         )
 
         field(
-          :capture_rolling_reserve_release,
-          Crystalline::Nilable.new(Models::Components::CaptureRollingReserveRelease),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("capture-rolling-reserve-release")}}
+          :capture_description,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("captureDescription")}}
         )
 
         field(
-          :unauthorized_direct_debit,
-          Crystalline::Nilable.new(Models::Components::UnauthorizedDirectDebit),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("unauthorized-direct-debit")}}
+          :refund_id,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("refundId")}}
         )
 
         field(
-          :failed_payment,
-          Crystalline::Nilable.new(Models::Components::FailedPayment),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("failed-payment")}}
+          :refund_description,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("refundDescription")}}
         )
 
         field(
-          :refund,
-          Crystalline::Nilable.new(Models::Components::Refund),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("refund")}}
+          :chargeback_id,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("chargebackId")}}
         )
 
         field(
-          :refund_compensation,
-          Crystalline::Nilable.new(Models::Components::RefundCompensation),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("refund-compensation")}}
+          :chargeback_description,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("chargebackDescription")}}
         )
 
         field(
-          :returned_refund,
-          Crystalline::Nilable.new(Models::Components::ReturnedRefund),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("returned-refund")}}
+          :transfer_id,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("transferId")}}
         )
 
         field(
-          :returned_refund_compensation,
-          Crystalline::Nilable.new(Models::Components::ReturnedRefundCompensation),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("returned-refund-compensation")}}
+          :settlement_id,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("settlementId")}}
         )
 
         field(
-          :chargeback,
-          Crystalline::Nilable.new(Models::Components::Chargeback),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("chargeback")}}
+          :invoice_id,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("invoiceId")}}
         )
 
         field(
-          :chargeback_reversal,
-          Crystalline::Nilable.new(Models::Components::ChargebackReversal),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("chargeback-reversal")}}
+          :paying_owner,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("payingOwner")}}
         )
 
         field(
-          :chargeback_compensation,
-          Crystalline::Nilable.new(Models::Components::ChargebackCompensation),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("chargeback-compensation")}}
+          :payment_owner,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("paymentOwner")}}
         )
 
         field(
-          :reversed_chargeback_compensation,
-          Crystalline::Nilable.new(Models::Components::ReversedChargebackCompensation),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("reversed-chargeback-compensation")}}
+          :organization_id,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("organizationId")}}
         )
 
         field(
-          :outgoing_transfer,
-          Crystalline::Nilable.new(Models::Components::OutgoingTransfer),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("outgoing-transfer")}}
+          :fee_type,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("feeType")}}
         )
 
         field(
-          :canceled_outgoing_transfer,
-          Crystalline::Nilable.new(Models::Components::CanceledOutgoingTransfer),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("canceled-outgoing-transfer")}}
-        )
-
-        field(
-          :returned_transfer,
-          Crystalline::Nilable.new(Models::Components::ReturnedTransfer),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("returned-transfer")}}
-        )
-
-        field(
-          :invoice_compensation,
-          Crystalline::Nilable.new(Models::Components::InvoiceCompensation),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("invoice-compensation")}}
-        )
-
-        field(
-          :application_fee,
-          Crystalline::Nilable.new(Models::Components::EntityBalanceTransactionApplicationFee),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("application-fee")}}
-        )
-
-        field(
-          :split_payment,
-          Crystalline::Nilable.new(Models::Components::SplitPayment),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("split-payment")}}
-        )
-
-        field(
-          :platform_payment_refund,
-          Crystalline::Nilable.new(Models::Components::PlatformPaymentRefund),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("platform-payment-refund")}}
-        )
-
-        field(
-          :returned_platform_payment_refund,
-          Crystalline::Nilable.new(Models::Components::ReturnedPlatformPaymentRefund),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("returned-platform-payment-refund")}}
-        )
-
-        field(
-          :platform_payment_chargeback,
-          Crystalline::Nilable.new(Models::Components::PlatformPaymentChargeback),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("platform-payment-chargeback")}}
-        )
-
-        field(
-          :reversed_platform_payment_chargeback,
-          Crystalline::Nilable.new(Models::Components::ReversedPlatformPaymentChargeback),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("reversed-platform-payment-chargeback")}}
-        )
-
-        field(
-          :payment_commission,
-          Crystalline::Nilable.new(Models::Components::PaymentCommission),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("payment-commission")}}
-        )
-
-        field(
-          :reimbursement_fee,
-          Crystalline::Nilable.new(Models::Components::ReimbursementFee),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("reimbursement-fee")}}
-        )
-
-        field(
-          :failed_payment_fee,
-          Crystalline::Nilable.new(Models::Components::FailedPaymentFee),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("failed-payment-fee")}}
-        )
-
-        field(
-          :payment_fee,
-          Crystalline::Nilable.new(Models::Components::PaymentFee),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("payment-fee")}}
-        )
-
-        field(
-          :managed_fee,
-          Crystalline::Nilable.new(Models::Components::ManagedFee),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("managed-fee")}}
-        )
-
-        field(
-          :returned_managed_fee,
-          Crystalline::Nilable.new(Models::Components::ReturnedManagedFee),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("returned-managed-fee")}}
-        )
-
-        field(
-          :post_payment_split_payment,
-          Crystalline::Nilable.new(Models::Components::PostPaymentSplitPayment),
-          {'format_json': {'letter_case': ::Mollie::Utils.field_name("post-payment-split-payment")}}
+          :fee_id,
+          Crystalline::Nilable.new(::String),
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("feeId")}}
         )
 
         sig {
           params(
-            payment: T.nilable(Models::Components::EntityBalanceTransactionPayment),
-            capture: T.nilable(Models::Components::Capture),
-            capture_commision: T.nilable(Models::Components::CaptureCommision),
-            capture_rolling_reserve_release: T.nilable(Models::Components::CaptureRollingReserveRelease),
-            unauthorized_direct_debit: T.nilable(Models::Components::UnauthorizedDirectDebit),
-            failed_payment: T.nilable(Models::Components::FailedPayment),
-            refund: T.nilable(Models::Components::Refund),
-            refund_compensation: T.nilable(Models::Components::RefundCompensation),
-            returned_refund: T.nilable(Models::Components::ReturnedRefund),
-            returned_refund_compensation: T.nilable(Models::Components::ReturnedRefundCompensation),
-            chargeback: T.nilable(Models::Components::Chargeback),
-            chargeback_reversal: T.nilable(Models::Components::ChargebackReversal),
-            chargeback_compensation: T.nilable(Models::Components::ChargebackCompensation),
-            reversed_chargeback_compensation: T.nilable(Models::Components::ReversedChargebackCompensation),
-            outgoing_transfer: T.nilable(Models::Components::OutgoingTransfer),
-            canceled_outgoing_transfer: T.nilable(Models::Components::CanceledOutgoingTransfer),
-            returned_transfer: T.nilable(Models::Components::ReturnedTransfer),
-            invoice_compensation: T.nilable(Models::Components::InvoiceCompensation),
-            application_fee: T.nilable(Models::Components::EntityBalanceTransactionApplicationFee),
-            split_payment: T.nilable(Models::Components::SplitPayment),
-            platform_payment_refund: T.nilable(Models::Components::PlatformPaymentRefund),
-            returned_platform_payment_refund: T.nilable(Models::Components::ReturnedPlatformPaymentRefund),
-            platform_payment_chargeback: T.nilable(Models::Components::PlatformPaymentChargeback),
-            reversed_platform_payment_chargeback: T.nilable(Models::Components::ReversedPlatformPaymentChargeback),
-            payment_commission: T.nilable(Models::Components::PaymentCommission),
-            reimbursement_fee: T.nilable(Models::Components::ReimbursementFee),
-            failed_payment_fee: T.nilable(Models::Components::FailedPaymentFee),
-            payment_fee: T.nilable(Models::Components::PaymentFee),
-            managed_fee: T.nilable(Models::Components::ManagedFee),
-            returned_managed_fee: T.nilable(Models::Components::ReturnedManagedFee),
-            post_payment_split_payment: T.nilable(Models::Components::PostPaymentSplitPayment)
+            payment_id: T.nilable(::String),
+            payment_description: T.nilable(::String),
+            capture_id: T.nilable(::String),
+            capture_description: T.nilable(::String),
+            refund_id: T.nilable(::String),
+            refund_description: T.nilable(::String),
+            chargeback_id: T.nilable(::String),
+            chargeback_description: T.nilable(::String),
+            transfer_id: T.nilable(::String),
+            settlement_id: T.nilable(::String),
+            invoice_id: T.nilable(::String),
+            paying_owner: T.nilable(::String),
+            payment_owner: T.nilable(::String),
+            organization_id: T.nilable(::String),
+            fee_type: T.nilable(::String),
+            fee_id: T.nilable(::String)
           )
             .void
         }
         def initialize(
-          payment: nil,
-          capture: nil,
-          capture_commision: nil,
-          capture_rolling_reserve_release: nil,
-          unauthorized_direct_debit: nil,
-          failed_payment: nil,
-          refund: nil,
-          refund_compensation: nil,
-          returned_refund: nil,
-          returned_refund_compensation: nil,
-          chargeback: nil,
-          chargeback_reversal: nil,
-          chargeback_compensation: nil,
-          reversed_chargeback_compensation: nil,
-          outgoing_transfer: nil,
-          canceled_outgoing_transfer: nil,
-          returned_transfer: nil,
-          invoice_compensation: nil,
-          application_fee: nil,
-          split_payment: nil,
-          platform_payment_refund: nil,
-          returned_platform_payment_refund: nil,
-          platform_payment_chargeback: nil,
-          reversed_platform_payment_chargeback: nil,
-          payment_commission: nil,
-          reimbursement_fee: nil,
-          failed_payment_fee: nil,
-          payment_fee: nil,
-          managed_fee: nil,
-          returned_managed_fee: nil,
-          post_payment_split_payment: nil
+          payment_id: nil,
+          payment_description: nil,
+          capture_id: nil,
+          capture_description: nil,
+          refund_id: nil,
+          refund_description: nil,
+          chargeback_id: nil,
+          chargeback_description: nil,
+          transfer_id: nil,
+          settlement_id: nil,
+          invoice_id: nil,
+          paying_owner: nil,
+          payment_owner: nil,
+          organization_id: nil,
+          fee_type: nil,
+          fee_id: nil
         )
-          @payment = payment
-          @capture = capture
-          @capture_commision = capture_commision
-          @capture_rolling_reserve_release = capture_rolling_reserve_release
-          @unauthorized_direct_debit = unauthorized_direct_debit
-          @failed_payment = failed_payment
-          @refund = refund
-          @refund_compensation = refund_compensation
-          @returned_refund = returned_refund
-          @returned_refund_compensation = returned_refund_compensation
-          @chargeback = chargeback
-          @chargeback_reversal = chargeback_reversal
-          @chargeback_compensation = chargeback_compensation
-          @reversed_chargeback_compensation = reversed_chargeback_compensation
-          @outgoing_transfer = outgoing_transfer
-          @canceled_outgoing_transfer = canceled_outgoing_transfer
-          @returned_transfer = returned_transfer
-          @invoice_compensation = invoice_compensation
-          @application_fee = application_fee
-          @split_payment = split_payment
-          @platform_payment_refund = platform_payment_refund
-          @returned_platform_payment_refund = returned_platform_payment_refund
-          @platform_payment_chargeback = platform_payment_chargeback
-          @reversed_platform_payment_chargeback = reversed_platform_payment_chargeback
-          @payment_commission = payment_commission
-          @reimbursement_fee = reimbursement_fee
-          @failed_payment_fee = failed_payment_fee
-          @payment_fee = payment_fee
-          @managed_fee = managed_fee
-          @returned_managed_fee = returned_managed_fee
-          @post_payment_split_payment = post_payment_split_payment
+          @payment_id = payment_id
+          @payment_description = payment_description
+          @capture_id = capture_id
+          @capture_description = capture_description
+          @refund_id = refund_id
+          @refund_description = refund_description
+          @chargeback_id = chargeback_id
+          @chargeback_description = chargeback_description
+          @transfer_id = transfer_id
+          @settlement_id = settlement_id
+          @invoice_id = invoice_id
+          @paying_owner = paying_owner
+          @payment_owner = payment_owner
+          @organization_id = organization_id
+          @fee_type = fee_type
+          @fee_id = fee_id
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
         def ==(other)
           return false unless other.is_a?(self.class)
-          return false unless @payment == other.payment
-          return false unless @capture == other.capture
-          return false unless @capture_commision == other.capture_commision
-          return false unless @capture_rolling_reserve_release == other.capture_rolling_reserve_release
-          return false unless @unauthorized_direct_debit == other.unauthorized_direct_debit
-          return false unless @failed_payment == other.failed_payment
-          return false unless @refund == other.refund
-          return false unless @refund_compensation == other.refund_compensation
-          return false unless @returned_refund == other.returned_refund
-          return false unless @returned_refund_compensation == other.returned_refund_compensation
-          return false unless @chargeback == other.chargeback
-          return false unless @chargeback_reversal == other.chargeback_reversal
-          return false unless @chargeback_compensation == other.chargeback_compensation
-          return false unless @reversed_chargeback_compensation == other.reversed_chargeback_compensation
-          return false unless @outgoing_transfer == other.outgoing_transfer
-          return false unless @canceled_outgoing_transfer == other.canceled_outgoing_transfer
-          return false unless @returned_transfer == other.returned_transfer
-          return false unless @invoice_compensation == other.invoice_compensation
-          return false unless @application_fee == other.application_fee
-          return false unless @split_payment == other.split_payment
-          return false unless @platform_payment_refund == other.platform_payment_refund
-          return false unless @returned_platform_payment_refund == other.returned_platform_payment_refund
-          return false unless @platform_payment_chargeback == other.platform_payment_chargeback
-          return false unless @reversed_platform_payment_chargeback == other.reversed_platform_payment_chargeback
-          return false unless @payment_commission == other.payment_commission
-          return false unless @reimbursement_fee == other.reimbursement_fee
-          return false unless @failed_payment_fee == other.failed_payment_fee
-          return false unless @payment_fee == other.payment_fee
-          return false unless @managed_fee == other.managed_fee
-          return false unless @returned_managed_fee == other.returned_managed_fee
-          return false unless @post_payment_split_payment == other.post_payment_split_payment
+          return false unless @payment_id == other.payment_id
+          return false unless @payment_description == other.payment_description
+          return false unless @capture_id == other.capture_id
+          return false unless @capture_description == other.capture_description
+          return false unless @refund_id == other.refund_id
+          return false unless @refund_description == other.refund_description
+          return false unless @chargeback_id == other.chargeback_id
+          return false unless @chargeback_description == other.chargeback_description
+          return false unless @transfer_id == other.transfer_id
+          return false unless @settlement_id == other.settlement_id
+          return false unless @invoice_id == other.invoice_id
+          return false unless @paying_owner == other.paying_owner
+          return false unless @payment_owner == other.payment_owner
+          return false unless @organization_id == other.organization_id
+          return false unless @fee_type == other.fee_type
+          return false unless @fee_id == other.fee_id
           true
         end
       end

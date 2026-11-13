@@ -11,7 +11,9 @@
 
 > 🚧 Beta feature
 >
-> This feature is currently in private beta, and the final specification may still change.
+> This feature is currently in beta.
+>
+> The `shipping` and `requiredCustomerDetails` properties are still in private beta.
 
 Create a Checkout Session to start a checkout process with Mollie Components.
 
@@ -65,6 +67,19 @@ res = s.checkout_sessions.create(idempotency_key: '123e4567-e89b-12d3-a456-426',
     city: 'Amsterdam',
     region: 'Noord-Holland',
     country: 'NL'
+  ),
+  shipping: Models::Components::SessionRequestShipping1.new(
+    options: [
+      Models::Components::SessionRequestOption1.new(
+        description: 'Next day delivery',
+        reference: 'express',
+        amount: Models::Components::Amount.new(
+          currency: 'EUR',
+          value: '10.00'
+        )
+      ),
+    ],
+    callback_url: 'https://example.org/shipping-options'
   ),
   customer_id: 'cst_5B8cwPMGnU',
   sequence_type: Models::Components::SessionSequenceType::ONEOFF,
@@ -131,6 +146,19 @@ res = s.checkout_sessions.create(idempotency_key: '123e4567-e89b-12d3-a456-426',
     region: 'Noord-Holland',
     country: 'NL'
   ),
+  shipping: Models::Components::SessionRequestShipping1.new(
+    options: [
+      Models::Components::SessionRequestOption1.new(
+        description: 'Next day delivery',
+        reference: 'express',
+        amount: Models::Components::Amount.new(
+          currency: 'EUR',
+          value: '10.00'
+        )
+      ),
+    ],
+    callback_url: 'https://example.org/shipping-options'
+  ),
   customer_id: 'cst_5B8cwPMGnU',
   sequence_type: Models::Components::SessionSequenceType::ONEOFF,
   payment: Models::Components::SessionRequestPayment.new(
@@ -195,6 +223,19 @@ res = s.checkout_sessions.create(idempotency_key: '123e4567-e89b-12d3-a456-426',
     city: 'Amsterdam',
     region: 'Noord-Holland',
     country: 'NL'
+  ),
+  shipping: Models::Components::SessionRequestShipping1.new(
+    options: [
+      Models::Components::SessionRequestOption1.new(
+        description: 'Next day delivery',
+        reference: 'express',
+        amount: Models::Components::Amount.new(
+          currency: 'EUR',
+          value: '10.00'
+        )
+      ),
+    ],
+    callback_url: 'https://example.org/shipping-options'
   ),
   customer_id: 'cst_5B8cwPMGnU',
   sequence_type: Models::Components::SessionSequenceType::ONEOFF,
@@ -261,6 +302,19 @@ res = s.checkout_sessions.create(idempotency_key: '123e4567-e89b-12d3-a456-426',
     region: 'Noord-Holland',
     country: 'NL'
   ),
+  shipping: Models::Components::SessionRequestShipping1.new(
+    options: [
+      Models::Components::SessionRequestOption1.new(
+        description: 'Next day delivery',
+        reference: 'express',
+        amount: Models::Components::Amount.new(
+          currency: 'EUR',
+          value: '10.00'
+        )
+      ),
+    ],
+    callback_url: 'https://example.org/shipping-options'
+  ),
   customer_id: 'cst_5B8cwPMGnU',
   sequence_type: Models::Components::SessionSequenceType::ONEOFF,
   payment: Models::Components::SessionRequestPayment.new(
@@ -298,7 +352,9 @@ end
 
 > 🚧 Beta feature
 >
-> This feature is currently in private beta, and the final specification may still change.
+> This feature is currently in beta.
+>
+> The `shipping` and `requiredCustomerDetails` properties are still in private beta.
 
 Retrieve a Checkout Session to view its details and status to inform your customers about the checkout process.
 

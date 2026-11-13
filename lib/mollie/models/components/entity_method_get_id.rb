@@ -26,6 +26,7 @@ module Mollie
           DIRECTDEBIT = new("directdebit")
           EPS = new("eps")
           GIFTCARD = new("giftcard")
+          GOOGLEPAY = new("googlepay")
           IDEAL = new("ideal")
           IN3 = new("in3")
           KBC = new("kbc")
@@ -47,14 +48,6 @@ module Mollie
           VIPPS = new("vipps")
           VOUCHER = new("voucher")
           WERO = new("wero")
-          # Deprecated, use 'klarna' instead
-          KLARNAPAYLATER = new("klarnapaylater")
-          # Deprecated, use 'klarna' instead
-          KLARNAPAYNOW = new("klarnapaynow")
-          # Deprecated, use 'klarna' instead
-          KLARNASLICEIT = new("klarnasliceit")
-          # No longer available
-          PAYCONIQ = new("payconiq")
         end
 
         open!

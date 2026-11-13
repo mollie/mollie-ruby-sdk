@@ -94,7 +94,7 @@ module Mollie
             Crystalline::Union.new(
               ::String,
               ::Float,
-              Crystalline::Hash.new(Symbol, ::Object),
+              Crystalline::Hash.new(::Symbol, ::Object),
               Crystalline::Array.new(::String)
             )
           ),
@@ -131,7 +131,7 @@ module Mollie
             profile_id: T.nilable(::String),
             times: T.nilable(::Integer),
             method: T.nilable(Models::Components::SubscriptionMethod),
-            metadata: T.nilable(T.any(::String, ::Float, T::Hash[Symbol, ::Object], T::Array[::String])),
+            metadata: T.nilable(T.any(::String, ::Float, T::Hash[::Symbol, ::Object], T::Array[::String])),
             webhook_url: T.nilable(::String),
             testmode: T.nilable(T::Boolean)
           )

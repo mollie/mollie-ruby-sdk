@@ -20,6 +20,7 @@ module Mollie
     attr_accessor(
       :oauth,
       :balances,
+      :reports,
       :settlements,
       :invoices,
       :permissions,
@@ -71,15 +72,15 @@ module Mollie
       params(
         client: T.nilable(Faraday::Connection),
         retry_config: T.nilable(::Mollie::Utils::RetryConfig),
-        timeout_ms: T.nilable(Integer),
+        timeout_ms: T.nilable(::Integer),
         security: T.nilable(Models::Components::Security),
         security_source: T.nilable(T.proc.returns(Models::Components::Security)),
         profile_id: T.nilable(::String),
         testmode: T.nilable(T::Boolean),
         custom_user_agent: T.nilable(::String),
-        server_idx: T.nilable(Integer),
-        server_url: T.nilable(String),
-        url_params: T.nilable(T::Hash[Symbol, String])
+        server_idx: T.nilable(::Integer),
+        server_url: T.nilable(::String),
+        url_params: T.nilable(T::Hash[::Symbol, ::String])
       )
         .void
     end
@@ -141,17 +142,6 @@ module Mollie
         server_idx,
         globals
       )
-
-      resolved_security = @sdk_configuration.security_source&.call
-      has_global_fields = SDKHooks::MollieAuthUtils.client_has_global_fields?(profile_id, testmode)
-      can_have_global_fields = SDKHooks::MollieAuthUtils.client_can_have_global_fields?(resolved_security)
-
-      if has_global_fields && !can_have_global_fields
-        Kernel.raise StandardError,
-                     "Invalid client configuration: global fields like testmode and profile_id can only be set " \
-                     "when using an advanced_access_token or o_auth credential."
-      end
-
       @sdk_configuration = hooks.sdk_init(config: @sdk_configuration)
       init_sdks
     end
@@ -160,6 +150,7 @@ module Mollie
     def init_sdks
       @oauth = Oauth.new(@sdk_configuration)
       @balances = Balances.new(@sdk_configuration)
+      @reports = Reports.new(@sdk_configuration)
       @settlements = Settlements.new(@sdk_configuration)
       @invoices = Invoices.new(@sdk_configuration)
       @permissions = Permissions.new(@sdk_configuration)
@@ -194,7 +185,11 @@ module Mollie
       @payouts = Payouts.new(@sdk_configuration)
     end
 
-    sig { params(base_url: String, url_variables: T.nilable(T::Hash[Symbol, T.any(String, T::Enum)])).returns(String) }
+    sig {
+      params(base_url: ::String, url_variables: T.nilable(T::Hash[::Symbol, T.any(::String, T::Enum)])).returns(
+        ::String
+      )
+    }
     def get_url(base_url:, url_variables: nil)
       sd_base_url, sd_options = @sdk_configuration.get_server_details
 
