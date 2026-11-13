@@ -46,28 +46,36 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.subscriptions.create(customer_id: 'cst_5B8cwPMGnU', idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Components::SubscriptionRequest.new(
-  amount: Models::Components::Amount.new(
-    currency: 'EUR',
-    value: '10.00'
-  ),
-  times: 6,
-  interval: '2 days',
-  start_date: '2025-01-01',
-  description: 'Subscription of streaming channel',
-  method: Models::Components::SubscriptionMethod::PAYPAL,
-  application_fee: Models::Components::SubscriptionRequestApplicationFee.new(
+
+req = Models::Operations::CreateSubscriptionRequest.new(
+  customer_id: 'cst_5B8cwPMGnU',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Components::SubscriptionRequest.new(
     amount: Models::Components::Amount.new(
       currency: 'EUR',
       value: '10.00'
     ),
-    description: 'Platform fee'
-  ),
-  webhook_url: 'https://example.com/webhook',
-  mandate_id: 'mdt_5B8cwPMGnU',
-  profile_id: 'pfl_5B8cwPMGnU',
-  testmode: false
-))
+    times: 6,
+    interval: '2 days',
+    start_date: '2025-01-01',
+    description: 'Subscription of streaming channel',
+    method: Models::Components::SubscriptionMethod::PAYPAL,
+    application_fee: Models::Components::SubscriptionRequestApplicationFee.new(
+      amount: Models::Components::Amount.new(
+        currency: 'EUR',
+        value: '10.00'
+      ),
+      description: 'Platform fee'
+    ),
+    webhook_url: 'https://example.com/webhook',
+    mandate_id: 'mdt_5B8cwPMGnU',
+    profile_id: 'pfl_5B8cwPMGnU',
+    testmode: false
+  )
+)
+res = s.subscriptions.create(request: req)
 
 unless res.subscription_response.nil?
   # handle response
@@ -77,11 +85,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                        | Type                                                                                             | Required                                                                                         | Description                                                                                      | Example                                                                                          |
-| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| `customer_id`                                                                                    | *::String*                                                                                       | :heavy_check_mark:                                                                               | Provide the ID of the related customer.                                                          | cst_5B8cwPMGnU                                                                                   |
-| `idempotency_key`                                                                                | *T.nilable(::String)*                                                                            | :heavy_minus_sign:                                                                               | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                 | 123e4567-e89b-12d3-a456-426                                                                      |
-| `body`                                                                                           | [T.nilable(Models::Components::SubscriptionRequest)](../../models/shared/subscriptionrequest.md) | :heavy_minus_sign:                                                                               | N/A                                                                                              |                                                                                                  |
+| Parameter                                                                                             | Type                                                                                                  | Required                                                                                              | Description                                                                                           |
+| ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `request`                                                                                             | [Models::Operations::CreateSubscriptionRequest](../../models/operations/createsubscriptionrequest.md) | :heavy_check_mark:                                                                                    | The request object to use for the request.                                                            |
 
 ### Response
 
@@ -119,7 +125,9 @@ req = Models::Operations::ListSubscriptionsRequest.new(
   from: 'sub_5B8cwPMGnU',
   limit: 50,
   sort: Models::Components::Sorting::DESC,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.subscriptions.list(request: req)
 
@@ -163,7 +171,15 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.subscriptions.get(customer_id: 'cst_5B8cwPMGnU', subscription_id: 'sub_5B8cwPMGnU', idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::GetSubscriptionRequest.new(
+  customer_id: 'cst_5B8cwPMGnU',
+  subscription_id: 'sub_5B8cwPMGnU',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.subscriptions.get(request: req)
 
 unless res.subscription_response.nil?
   # handle response
@@ -173,12 +189,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                                                                                                                                                                                                | Type                                                                                                                                                                                                                                                                                                                                                                                     | Required                                                                                                                                                                                                                                                                                                                                                                                 | Description                                                                                                                                                                                                                                                                                                                                                                              | Example                                                                                                                                                                                                                                                                                                                                                                                  |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `customer_id`                                                                                                                                                                                                                                                                                                                                                                            | *::String*                                                                                                                                                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                                                                                                                                                       | Provide the ID of the related customer.                                                                                                                                                                                                                                                                                                                                                  | cst_5B8cwPMGnU                                                                                                                                                                                                                                                                                                                                                                           |
-| `subscription_id`                                                                                                                                                                                                                                                                                                                                                                        | *::String*                                                                                                                                                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                                                                                                                                                       | Provide the ID of the related subscription.                                                                                                                                                                                                                                                                                                                                              | sub_5B8cwPMGnU                                                                                                                                                                                                                                                                                                                                                                           |
-| `testmode`                                                                                                                                                                                                                                                                                                                                                                               | *T.nilable(T::Boolean)*                                                                                                                                                                                                                                                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                       | Most API credentials are specifically created for either live mode or test mode. In those cases the `testmode` query<br/>parameter must not be sent. For organization-level credentials such as OAuth access tokens, you can enable test mode by<br/>setting the `testmode` query parameter to `true`.<br/><br/>Test entities cannot be retrieved when the endpoint is set to live mode, and vice versa. |                                                                                                                                                                                                                                                                                                                                                                                          |
-| `idempotency_key`                                                                                                                                                                                                                                                                                                                                                                        | *T.nilable(::String)*                                                                                                                                                                                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                       | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                                                                                                                                                                                                                                                                         | 123e4567-e89b-12d3-a456-426                                                                                                                                                                                                                                                                                                                                                              |
+| Parameter                                                                                       | Type                                                                                            | Required                                                                                        | Description                                                                                     |
+| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `request`                                                                                       | [Models::Operations::GetSubscriptionRequest](../../models/operations/getsubscriptionrequest.md) | :heavy_check_mark:                                                                              | The request object to use for the request.                                                      |
 
 ### Response
 
@@ -211,19 +224,28 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.subscriptions.update(customer_id: 'cst_5B8cwPMGnU', subscription_id: 'sub_5B8cwPMGnU', idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Operations::UpdateSubscriptionRequestBody.new(
-  amount: Models::Components::Amount.new(
-    currency: 'EUR',
-    value: '10.00'
-  ),
-  description: 'Subscription of streaming channel',
-  interval: '1 months',
-  start_date: '2025-01-01',
-  times: 6,
-  webhook_url: 'https://example.com/webhook',
-  mandate_id: 'mdt_5B8cwPMGnU',
-  testmode: false
-))
+
+req = Models::Operations::UpdateSubscriptionRequest.new(
+  customer_id: 'cst_5B8cwPMGnU',
+  subscription_id: 'sub_5B8cwPMGnU',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Operations::UpdateSubscriptionRequestBody.new(
+    amount: Models::Components::Amount.new(
+      currency: 'EUR',
+      value: '10.00'
+    ),
+    description: 'Subscription of streaming channel',
+    interval: '1 months',
+    start_date: '2025-01-01',
+    times: 6,
+    webhook_url: 'https://example.com/webhook',
+    mandate_id: 'mdt_5B8cwPMGnU',
+    testmode: false
+  )
+)
+res = s.subscriptions.update(request: req)
 
 unless res.subscription_response.nil?
   # handle response
@@ -242,19 +264,28 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.subscriptions.update(customer_id: 'cst_5B8cwPMGnU', subscription_id: 'sub_5B8cwPMGnU', idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Operations::UpdateSubscriptionRequestBody.new(
-  amount: Models::Components::Amount.new(
-    currency: 'EUR',
-    value: '10.00'
-  ),
-  description: 'Subscription of streaming channel',
-  interval: '1 months',
-  start_date: '2025-01-01',
-  times: 6,
-  webhook_url: 'https://example.com/webhook',
-  mandate_id: 'mdt_5B8cwPMGnU',
-  testmode: false
-))
+
+req = Models::Operations::UpdateSubscriptionRequest.new(
+  customer_id: 'cst_5B8cwPMGnU',
+  subscription_id: 'sub_5B8cwPMGnU',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Operations::UpdateSubscriptionRequestBody.new(
+    amount: Models::Components::Amount.new(
+      currency: 'EUR',
+      value: '10.00'
+    ),
+    description: 'Subscription of streaming channel',
+    interval: '1 months',
+    start_date: '2025-01-01',
+    times: 6,
+    webhook_url: 'https://example.com/webhook',
+    mandate_id: 'mdt_5B8cwPMGnU',
+    testmode: false
+  )
+)
+res = s.subscriptions.update(request: req)
 
 unless res.subscription_response.nil?
   # handle response
@@ -264,12 +295,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                | Type                                                                                                                     | Required                                                                                                                 | Description                                                                                                              | Example                                                                                                                  |
-| ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| `customer_id`                                                                                                            | *::String*                                                                                                               | :heavy_check_mark:                                                                                                       | Provide the ID of the related customer.                                                                                  | cst_5B8cwPMGnU                                                                                                           |
-| `subscription_id`                                                                                                        | *::String*                                                                                                               | :heavy_check_mark:                                                                                                       | Provide the ID of the related subscription.                                                                              | sub_5B8cwPMGnU                                                                                                           |
-| `idempotency_key`                                                                                                        | *T.nilable(::String)*                                                                                                    | :heavy_minus_sign:                                                                                                       | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                         | 123e4567-e89b-12d3-a456-426                                                                                              |
-| `body`                                                                                                                   | [T.nilable(Models::Operations::UpdateSubscriptionRequestBody)](../../models/operations/updatesubscriptionrequestbody.md) | :heavy_minus_sign:                                                                                                       | N/A                                                                                                                      |                                                                                                                          |
+| Parameter                                                                                             | Type                                                                                                  | Required                                                                                              | Description                                                                                           |
+| ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `request`                                                                                             | [Models::Operations::UpdateSubscriptionRequest](../../models/operations/updatesubscriptionrequest.md) | :heavy_check_mark:                                                                                    | The request object to use for the request.                                                            |
 
 ### Response
 
@@ -298,9 +326,18 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.subscriptions.cancel(customer_id: 'cst_5B8cwPMGnU', subscription_id: 'sub_5B8cwPMGnU', idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Operations::CancelSubscriptionRequestBody.new(
-  testmode: false
-))
+
+req = Models::Operations::CancelSubscriptionRequest.new(
+  customer_id: 'cst_5B8cwPMGnU',
+  subscription_id: 'sub_5B8cwPMGnU',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Operations::CancelSubscriptionRequestBody.new(
+    testmode: false
+  )
+)
+res = s.subscriptions.cancel(request: req)
 
 unless res.subscription_response.nil?
   # handle response
@@ -310,12 +347,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                | Type                                                                                                                     | Required                                                                                                                 | Description                                                                                                              | Example                                                                                                                  |
-| ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| `customer_id`                                                                                                            | *::String*                                                                                                               | :heavy_check_mark:                                                                                                       | Provide the ID of the related customer.                                                                                  | cst_5B8cwPMGnU                                                                                                           |
-| `subscription_id`                                                                                                        | *::String*                                                                                                               | :heavy_check_mark:                                                                                                       | Provide the ID of the related subscription.                                                                              | sub_5B8cwPMGnU                                                                                                           |
-| `idempotency_key`                                                                                                        | *T.nilable(::String)*                                                                                                    | :heavy_minus_sign:                                                                                                       | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                         | 123e4567-e89b-12d3-a456-426                                                                                              |
-| `body`                                                                                                                   | [T.nilable(Models::Operations::CancelSubscriptionRequestBody)](../../models/operations/cancelsubscriptionrequestbody.md) | :heavy_minus_sign:                                                                                                       | N/A                                                                                                                      |                                                                                                                          |
+| Parameter                                                                                             | Type                                                                                                  | Required                                                                                              | Description                                                                                           |
+| ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `request`                                                                                             | [Models::Operations::CancelSubscriptionRequest](../../models/operations/cancelsubscriptionrequest.md) | :heavy_check_mark:                                                                                    | The request object to use for the request.                                                            |
 
 ### Response
 
@@ -351,7 +385,9 @@ s = ::Mollie::Client.new(
 
 req = Models::Operations::ListAllSubscriptionsRequest.new(
   limit: 50,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.subscriptions.all(request: req)
 
@@ -405,7 +441,9 @@ req = Models::Operations::ListSubscriptionPaymentsRequest.new(
   from: 'tr_5B8cwPMGnU',
   limit: 50,
   sort: Models::Components::Sorting::DESC,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.subscriptions.list_payments(request: req)
 
@@ -435,7 +473,9 @@ req = Models::Operations::ListSubscriptionPaymentsRequest.new(
   from: 'tr_5B8cwPMGnU',
   limit: 50,
   sort: Models::Components::Sorting::DESC,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.subscriptions.list_payments(request: req)
 
@@ -465,7 +505,9 @@ req = Models::Operations::ListSubscriptionPaymentsRequest.new(
   from: 'tr_5B8cwPMGnU',
   limit: 50,
   sort: Models::Components::Sorting::DESC,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.subscriptions.list_payments(request: req)
 

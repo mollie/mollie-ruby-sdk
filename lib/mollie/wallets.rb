@@ -45,13 +45,23 @@ module Mollie
       params(
         body: T.nilable(Models::Operations::RequestApplePayPaymentSessionRequestBody),
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::RequestApplePayPaymentSessionResponse)
     }
-    def request_apple_pay_session(body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def request_apple_pay_session(
+      body: nil,
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # request_apple_pay_session - Request Apple Pay payment session
       # When integrating Apple Pay in your own checkout on the web, you need to
       # [provide merchant validation](https://developer.apple.com/documentation/apple_pay_on_the_web/apple_pay_js_api/providing_merchant_validation).
@@ -76,6 +86,8 @@ module Mollie
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
       request = Models::Operations::RequestApplePayPaymentSessionRequest.new(
         idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at,
         body: body
       )
       url, params = @sdk_configuration.get_server_details

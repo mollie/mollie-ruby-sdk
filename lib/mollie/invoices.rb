@@ -199,7 +199,9 @@ module Mollie
                 from: request.from,
                 limit: request.limit,
                 sort: request.sort,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers
@@ -274,13 +276,23 @@ module Mollie
       params(
         invoice_id: ::String,
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetInvoiceResponse)
     }
-    def get(invoice_id:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get(
+      invoice_id:,
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # get - Get invoice
       # Retrieve a single invoice by its ID.
       #
@@ -290,7 +302,9 @@ module Mollie
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
       request = Models::Operations::GetInvoiceRequest.new(
         invoice_id: invoice_id,
-        idempotency_key: idempotency_key
+        idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)

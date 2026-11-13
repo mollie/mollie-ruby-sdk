@@ -58,6 +58,7 @@ custom = WebhookEventTypes.deserialize("custom_value")
 | `BUSINESS_ACCOUNT_DRAFT_TRANSFER_CREATED`    | business-account-draft-transfer.created      |
 | `BUSINESS_ACCOUNT_DRAFT_TRANSFER_APPROVED`   | business-account-draft-transfer.approved     |
 | `BUSINESS_ACCOUNT_DRAFT_TRANSFER_DECLINED`   | business-account-draft-transfer.declined     |
+| `BUSINESS_ACCOUNT_CREATED`                   | business-account.created                     |
 | `UNMATCHED_CREDIT_TRANSFER_RECEIVED`         | unmatched-credit-transfer.received           |
 | `UNMATCHED_CREDIT_TRANSFER_MATCHED`          | unmatched-credit-transfer.matched            |
 | `UNMATCHED_CREDIT_TRANSFER_RETURNED`         | unmatched-credit-transfer.returned           |

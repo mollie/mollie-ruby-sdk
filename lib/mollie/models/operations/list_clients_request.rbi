@@ -12,6 +12,18 @@ class Mollie::Models::Operations::ListClientsRequest
   def idempotency_key=(str_)
   end
 
+  def x_client_signature
+  end
+
+  def x_client_signature=(str_)
+  end
+
+  def x_client_signed_at
+  end
+
+  def x_client_signed_at=(str_)
+  end
+
   def embed
   end
 

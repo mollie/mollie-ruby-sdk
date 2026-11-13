@@ -50,6 +50,7 @@ module Mollie
           BUSINESS_ACCOUNT_DRAFT_TRANSFER_CREATED = new("business-account-draft-transfer.created")
           BUSINESS_ACCOUNT_DRAFT_TRANSFER_APPROVED = new("business-account-draft-transfer.approved")
           BUSINESS_ACCOUNT_DRAFT_TRANSFER_DECLINED = new("business-account-draft-transfer.declined")
+          BUSINESS_ACCOUNT_CREATED = new("business-account.created")
           UNMATCHED_CREDIT_TRANSFER_RECEIVED = new("unmatched-credit-transfer.received")
           UNMATCHED_CREDIT_TRANSFER_MATCHED = new("unmatched-credit-transfer.matched")
           UNMATCHED_CREDIT_TRANSFER_RETURNED = new("unmatched-credit-transfer.returned")

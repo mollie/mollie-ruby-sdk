@@ -27,27 +27,35 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.refunds.create(payment_id: 'tr_5B8cwPMGnU', idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Components::RefundRequest.new(
-  description: 'Refunding a Chess Board',
-  amount: Models::Components::Amount.new(
-    currency: 'EUR',
-    value: '10.00'
-  ),
-  reverse_routing: false,
-  routing_reversals: [
-    Models::Components::RefundRequestRoutingReversal.new(
-      amount: Models::Components::Amount.new(
-        currency: 'EUR',
-        value: '10.00'
-      ),
-      source: Models::Components::RefundRequestSource.new(
-        type: Models::Components::RefundRequestType::ORGANIZATION,
-        organization_id: 'org_1234567'
-      )
+
+req = Models::Operations::CreateRefundRequest.new(
+  payment_id: 'tr_5B8cwPMGnU',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Components::RefundRequest.new(
+    description: 'Refunding a Chess Board',
+    amount: Models::Components::Amount.new(
+      currency: 'EUR',
+      value: '10.00'
     ),
-  ],
-  testmode: false
-))
+    reverse_routing: false,
+    routing_reversals: [
+      Models::Components::RefundRequestRoutingReversal.new(
+        amount: Models::Components::Amount.new(
+          currency: 'EUR',
+          value: '10.00'
+        ),
+        source: Models::Components::RefundRequestSource.new(
+          type: Models::Components::RefundRequestType::ORGANIZATION,
+          organization_id: 'org_1234567'
+        )
+      ),
+    ],
+    testmode: false
+  )
+)
+res = s.refunds.create(request: req)
 
 unless res.refund_response.nil?
   # handle response
@@ -66,27 +74,35 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.refunds.create(payment_id: 'tr_5B8cwPMGnU', idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Components::RefundRequest.new(
-  description: 'Refunding a Chess Board',
-  amount: Models::Components::Amount.new(
-    currency: 'EUR',
-    value: '10.00'
-  ),
-  reverse_routing: false,
-  routing_reversals: [
-    Models::Components::RefundRequestRoutingReversal.new(
-      amount: Models::Components::Amount.new(
-        currency: 'EUR',
-        value: '10.00'
-      ),
-      source: Models::Components::RefundRequestSource.new(
-        type: Models::Components::RefundRequestType::ORGANIZATION,
-        organization_id: 'org_1234567'
-      )
+
+req = Models::Operations::CreateRefundRequest.new(
+  payment_id: 'tr_5B8cwPMGnU',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Components::RefundRequest.new(
+    description: 'Refunding a Chess Board',
+    amount: Models::Components::Amount.new(
+      currency: 'EUR',
+      value: '10.00'
     ),
-  ],
-  testmode: false
-))
+    reverse_routing: false,
+    routing_reversals: [
+      Models::Components::RefundRequestRoutingReversal.new(
+        amount: Models::Components::Amount.new(
+          currency: 'EUR',
+          value: '10.00'
+        ),
+        source: Models::Components::RefundRequestSource.new(
+          type: Models::Components::RefundRequestType::ORGANIZATION,
+          organization_id: 'org_1234567'
+        )
+      ),
+    ],
+    testmode: false
+  )
+)
+res = s.refunds.create(request: req)
 
 unless res.refund_response.nil?
   # handle response
@@ -96,11 +112,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                            | Type                                                                                 | Required                                                                             | Description                                                                          | Example                                                                              |
-| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
-| `payment_id`                                                                         | *::String*                                                                           | :heavy_check_mark:                                                                   | Provide the ID of the related payment.                                               | tr_5B8cwPMGnU                                                                        |
-| `idempotency_key`                                                                    | *T.nilable(::String)*                                                                | :heavy_minus_sign:                                                                   | A unique key to ensure idempotent requests. This key should be a UUID v4 string.     | 123e4567-e89b-12d3-a456-426                                                          |
-| `body`                                                                               | [T.nilable(Models::Components::RefundRequest)](../../models/shared/refundrequest.md) | :heavy_minus_sign:                                                                   | N/A                                                                                  |                                                                                      |
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `request`                                                                                 | [Models::Operations::CreateRefundRequest](../../models/operations/createrefundrequest.md) | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
 
 ### Response
 
@@ -137,7 +151,9 @@ req = Models::Operations::ListRefundsRequest.new(
   payment_id: 'tr_5B8cwPMGnU',
   from: 're_5B8cwPMGnU',
   limit: 50,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.refunds.list(request: req)
 
@@ -185,7 +201,9 @@ s = ::Mollie::Client.new(
 req = Models::Operations::GetRefundRequest.new(
   payment_id: 'tr_5B8cwPMGnU',
   refund_id: 're_5B8cwPMGnU',
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.refunds.get(request: req)
 
@@ -233,7 +251,15 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.refunds.cancel(payment_id: 'tr_5B8cwPMGnU', refund_id: 're_5B8cwPMGnU', idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::CancelRefundRequest.new(
+  payment_id: 'tr_5B8cwPMGnU',
+  refund_id: 're_5B8cwPMGnU',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.refunds.cancel(request: req)
 
 if res.status_code == 200
   # handle response
@@ -243,12 +269,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                                                                                                                                                                                                | Type                                                                                                                                                                                                                                                                                                                                                                                     | Required                                                                                                                                                                                                                                                                                                                                                                                 | Description                                                                                                                                                                                                                                                                                                                                                                              | Example                                                                                                                                                                                                                                                                                                                                                                                  |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `payment_id`                                                                                                                                                                                                                                                                                                                                                                             | *::String*                                                                                                                                                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                                                                                                                                                       | Provide the ID of the related payment.                                                                                                                                                                                                                                                                                                                                                   | tr_5B8cwPMGnU                                                                                                                                                                                                                                                                                                                                                                            |
-| `refund_id`                                                                                                                                                                                                                                                                                                                                                                              | *::String*                                                                                                                                                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                                                                                                                                                       | Provide the ID of the related refund.                                                                                                                                                                                                                                                                                                                                                    | re_5B8cwPMGnU                                                                                                                                                                                                                                                                                                                                                                            |
-| `testmode`                                                                                                                                                                                                                                                                                                                                                                               | *T.nilable(T::Boolean)*                                                                                                                                                                                                                                                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                       | Most API credentials are specifically created for either live mode or test mode. In those cases the `testmode` query<br/>parameter must not be sent. For organization-level credentials such as OAuth access tokens, you can enable test mode by<br/>setting the `testmode` query parameter to `true`.<br/><br/>Test entities cannot be retrieved when the endpoint is set to live mode, and vice versa. |                                                                                                                                                                                                                                                                                                                                                                                          |
-| `idempotency_key`                                                                                                                                                                                                                                                                                                                                                                        | *T.nilable(::String)*                                                                                                                                                                                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                       | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                                                                                                                                                                                                                                                                         | 123e4567-e89b-12d3-a456-426                                                                                                                                                                                                                                                                                                                                                              |
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `request`                                                                                 | [Models::Operations::CancelRefundRequest](../../models/operations/cancelrefundrequest.md) | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
 
 ### Response
 
@@ -286,7 +309,9 @@ req = Models::Operations::ListAllRefundsRequest.new(
   from: 're_5B8cwPMGnU',
   limit: 50,
   sort: Models::Components::Sorting::DESC,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.refunds.all(request: req)
 

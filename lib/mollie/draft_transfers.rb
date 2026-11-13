@@ -46,13 +46,23 @@ module Mollie
       params(
         body: T.nilable(Models::Components::CreateDraftTransferRequest),
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CreateDraftTransferResponse)
     }
-    def create(body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def create(
+      body: nil,
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # create - Create draft transfer
       # > 🚧 Beta feature
       # >
@@ -85,6 +95,8 @@ module Mollie
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
       request = Models::Operations::CreateDraftTransferRequest.new(
         idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at,
         body: body
       )
       url, params = @sdk_configuration.get_server_details
@@ -428,7 +440,9 @@ module Mollie
                 limit: request.limit,
                 status: request.status,
                 testmode: request.testmode,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers
@@ -501,16 +515,14 @@ module Mollie
 
     sig {
       params(
-        draft_transfer_id: ::String,
-        testmode: T.nilable(T::Boolean),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::GetDraftTransferRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetDraftTransferResponse)
     }
-    def get(draft_transfer_id:, testmode: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # get - Get draft transfer
       # > 🚧 Beta feature
       # >
@@ -525,11 +537,6 @@ module Mollie
       # transfer](create-draft-transfer) for how to simulate `approved` and `declined` outcomes.
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
-      request = Models::Operations::GetDraftTransferRequest.new(
-        draft_transfer_id: draft_transfer_id,
-        testmode: testmode,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -710,16 +717,14 @@ module Mollie
 
     sig {
       params(
-        draft_transfer_id: ::String,
-        body: T.nilable(Models::Operations::CancelDraftTransferRequestBody),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::CancelDraftTransferRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CancelDraftTransferResponse)
     }
-    def cancel(draft_transfer_id:, body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def cancel(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # cancel - Cancel draft transfer
       # > 🚧 Beta feature
       # >
@@ -735,11 +740,6 @@ module Mollie
       # transfer](create-draft-transfer) for how to simulate `approved` and `declined` outcomes.
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
-      request = Models::Operations::CancelDraftTransferRequest.new(
-        draft_transfer_id: draft_transfer_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(

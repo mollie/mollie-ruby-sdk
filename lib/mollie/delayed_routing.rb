@@ -43,26 +43,19 @@ module Mollie
 
     sig {
       params(
-        payment_id: ::String,
-        body: T.nilable(Models::Components::RouteCreateRequest),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::PaymentCreateRouteRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::PaymentCreateRouteResponse)
     }
-    def create(payment_id:, body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def create(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # create - Create a delayed route
       # Create a route for a specific payment.
       # The routed amount is credited to the account of your customer.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::PaymentCreateRouteRequest.new(
-        payment_id: payment_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -248,25 +241,18 @@ module Mollie
 
     sig {
       params(
-        payment_id: ::String,
-        testmode: T.nilable(T::Boolean),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::PaymentListRoutesRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::PaymentListRoutesResponse)
     }
-    def list(payment_id:, testmode: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def list(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # list - List payment routes
       # Retrieve a list of all routes created for a specific payment.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::PaymentListRoutesRequest.new(
-        payment_id: payment_id,
-        testmode: testmode,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -450,25 +436,18 @@ module Mollie
 
     sig {
       params(
-        payment_id: ::String,
-        route_id: ::String,
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::PaymentGetRouteRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::PaymentGetRouteResponse)
     }
-    def get(payment_id:, route_id:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # get - Get a delayed route
       # Retrieve a single route created for a specific payment.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::PaymentGetRouteRequest.new(
-        payment_id: payment_id,
-        route_id: route_id,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(

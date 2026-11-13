@@ -46,13 +46,23 @@ module Mollie
       params(
         body: Models::Components::PayoutRequest,
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CreatePayoutResponse)
     }
-    def create(body:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def create(
+      body:,
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # create - Create payout
       # Request a payout from one of your balances to the balance's configured bank account.
       #
@@ -94,7 +104,9 @@ module Mollie
       # If set, this operation will use either `api_key` or `advanced_access_token` from the global security.
       request = Models::Operations::CreatePayoutRequest.new(
         body: body,
-        idempotency_key: idempotency_key
+        idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -434,7 +446,9 @@ module Mollie
                 limit: request.limit,
                 sort: request.sort,
                 testmode: request.testmode,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers
@@ -507,25 +521,18 @@ module Mollie
 
     sig {
       params(
-        payout_id: ::String,
-        testmode: T.nilable(T::Boolean),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::GetPayoutRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetPayoutResponse)
     }
-    def get(payout_id:, testmode: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # get - Get payout
       # Retrieve a single payout by its ID.
       #
       # If set, this operation will use either `api_key` or `advanced_access_token` from the global security.
-      request = Models::Operations::GetPayoutRequest.new(
-        payout_id: payout_id,
-        testmode: testmode,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -706,16 +713,14 @@ module Mollie
 
     sig {
       params(
-        payout_id: ::String,
-        testmode: T.nilable(T::Boolean),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::CancelPayoutRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CancelPayoutResponse)
     }
-    def cancel(payout_id:, testmode: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def cancel(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # cancel - Cancel payout
       # Cancel a payout. A payout can only be canceled while it has the status `requested`. Once the payout moves
       # to `initiated`, it is too late to cancel.
@@ -723,11 +728,6 @@ module Mollie
       # The canceled payout object is returned with the status set to `canceled`.
       #
       # If set, this operation will use either `api_key` or `advanced_access_token` from the global security.
-      request = Models::Operations::CancelPayoutRequest.new(
-        payout_id: payout_id,
-        testmode: testmode,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(

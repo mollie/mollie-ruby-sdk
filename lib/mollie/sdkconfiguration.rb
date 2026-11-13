@@ -98,9 +98,9 @@ module Mollie
       @globals = globals.nil? ? {} : globals
       @language = "ruby"
       @openapi_doc_version = "1.0.0"
-      @sdk_version = "0.0.1-alpha.8"
-      @gen_version = "2.960.8"
-      @user_agent = "speakeasy-sdk/ruby 0.0.1-alpha.8 2.960.8 1.0.0 mollie-ruby-sdk"
+      @sdk_version = "0.0.1-alpha.9"
+      @gen_version = "2.961.1"
+      @user_agent = "speakeasy-sdk/ruby 0.0.1-alpha.9 2.961.1 1.0.0 mollie-ruby-sdk"
     end
 
     sig { returns([::String, T::Hash[::Symbol, ::String]]) }

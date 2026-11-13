@@ -44,16 +44,14 @@ module Mollie
 
     sig {
       params(
-        customer_id: ::String,
-        body: T.nilable(Models::Components::SubscriptionRequest),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::CreateSubscriptionRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CreateSubscriptionResponse)
     }
-    def create(customer_id:, body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def create(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # create - Create subscription
       # With subscriptions, you can schedule recurring payments to take place at regular intervals.
       #
@@ -76,11 +74,6 @@ module Mollie
       # Your customer will be charged €10 on the last day of each month, starting in April 2018.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::CreateSubscriptionRequest.new(
-        customer_id: customer_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -429,7 +422,9 @@ module Mollie
                 limit: request.limit,
                 sort: request.sort,
                 testmode: request.testmode,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers
@@ -502,35 +497,18 @@ module Mollie
 
     sig {
       params(
-        customer_id: ::String,
-        subscription_id: ::String,
-        testmode: T.nilable(T::Boolean),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::GetSubscriptionRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetSubscriptionResponse)
     }
-    def get(
-      customer_id:,
-      subscription_id:,
-      testmode: nil,
-      idempotency_key: nil,
-      retries: nil,
-      timeout_ms: nil,
-      http_headers: nil
-    )
+    def get(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # get - Get subscription
       # Retrieve a single subscription by its ID and the ID of its parent customer.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::GetSubscriptionRequest.new(
-        customer_id: customer_id,
-        subscription_id: subscription_id,
-        testmode: testmode,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -711,25 +689,14 @@ module Mollie
 
     sig {
       params(
-        customer_id: ::String,
-        subscription_id: ::String,
-        body: T.nilable(Models::Operations::UpdateSubscriptionRequestBody),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::UpdateSubscriptionRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::UpdateSubscriptionResponse)
     }
-    def update(
-      customer_id:,
-      subscription_id:,
-      body: nil,
-      idempotency_key: nil,
-      retries: nil,
-      timeout_ms: nil,
-      http_headers: nil
-    )
+    def update(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # update - Update subscription
       # Update an existing subscription.
       #
@@ -738,12 +705,6 @@ module Mollie
       # For an in-depth explanation of each parameter, refer to the [Create subscription](create-subscription) endpoint.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::UpdateSubscriptionRequest.new(
-        customer_id: customer_id,
-        subscription_id: subscription_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -929,35 +890,18 @@ module Mollie
 
     sig {
       params(
-        customer_id: ::String,
-        subscription_id: ::String,
-        body: T.nilable(Models::Operations::CancelSubscriptionRequestBody),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::CancelSubscriptionRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CancelSubscriptionResponse)
     }
-    def cancel(
-      customer_id:,
-      subscription_id:,
-      body: nil,
-      idempotency_key: nil,
-      retries: nil,
-      timeout_ms: nil,
-      http_headers: nil
-    )
+    def cancel(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # cancel - Cancel subscription
       # Cancel an existing subscription. Canceling a subscription has no effect on the mandates of the customer.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::CancelSubscriptionRequest.new(
-        customer_id: customer_id,
-        subscription_id: subscription_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -1299,7 +1243,9 @@ module Mollie
                 limit: request.limit,
                 profile_id: request.profile_id,
                 testmode: request.testmode,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers
@@ -1537,7 +1483,9 @@ module Mollie
                 sort: request.sort,
                 profile_id: request.profile_id,
                 testmode: request.testmode,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers

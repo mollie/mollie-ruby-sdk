@@ -14,11 +14,11 @@ module Mollie
         # An array of business account objects.
         field(
           :business_accounts,
-          Crystalline::Nilable.new(Crystalline::Array.new(Models::Components::BusinessAccountResponse)),
+          Crystalline::Nilable.new(Crystalline::Array.new(Models::Components::ListBusinessAccountResponse)),
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("businessAccounts")}}
         )
 
-        sig { params(business_accounts: T.nilable(T::Array[Models::Components::BusinessAccountResponse])).void }
+        sig { params(business_accounts: T.nilable(T::Array[Models::Components::ListBusinessAccountResponse])).void }
         def initialize(business_accounts: nil)
           @business_accounts = business_accounts
         end

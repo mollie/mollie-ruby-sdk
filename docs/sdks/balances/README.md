@@ -33,7 +33,9 @@ s = ::Mollie::Client.new(
 req = Models::Operations::ListBalancesRequest.new(
   currency: 'EUR',
   limit: 50,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.balances.list(request: req)
 
@@ -59,7 +61,9 @@ s = ::Mollie::Client.new(
 req = Models::Operations::ListBalancesRequest.new(
   currency: 'EUR',
   limit: 50,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.balances.list(request: req)
 
@@ -117,7 +121,14 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.balances.get(balance_id: 'bal_gVMhHKqSSRYJyPsuoPNFH', idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::GetBalanceRequest.new(
+  balance_id: 'bal_gVMhHKqSSRYJyPsuoPNFH',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.balances.get(request: req)
 
 unless res.entity_balance.nil?
   # handle response
@@ -137,7 +148,14 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.balances.get(balance_id: 'bal_gVMhHKqSSRYJyPsuoPNFH', idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::GetBalanceRequest.new(
+  balance_id: 'bal_gVMhHKqSSRYJyPsuoPNFH',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.balances.get(request: req)
 
 unless res.entity_balance.nil?
   # handle response
@@ -147,11 +165,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                                                               | Type                                                                                                                                                                    | Required                                                                                                                                                                | Description                                                                                                                                                             | Example                                                                                                                                                                 |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `balance_id`                                                                                                                                                            | *::String*                                                                                                                                                              | :heavy_check_mark:                                                                                                                                                      | Provide the ID of the related balance.                                                                                                                                  | bal_gVMhHKqSSRYJyPsuoPNFH                                                                                                                                               |
-| `testmode`                                                                                                                                                              | *T.nilable(T::Boolean)*                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                      | You can enable test mode by setting the `testmode` query parameter to `true`.<br/><br/>Test entities cannot be retrieved when the endpoint is set to live mode, and vice versa. |                                                                                                                                                                         |
-| `idempotency_key`                                                                                                                                                       | *T.nilable(::String)*                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                      | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                                                        | 123e4567-e89b-12d3-a456-426                                                                                                                                             |
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `request`                                                                             | [Models::Operations::GetBalanceRequest](../../models/operations/getbalancerequest.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
 
 ### Response
 
@@ -184,7 +200,7 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.balances.get_primary(idempotency_key: '123e4567-e89b-12d3-a456-426')
+res = s.balances.get_primary(idempotency_key: '123e4567-e89b-12d3-a456-426', x_client_signature: 'MEUCIQDx8sJvK3z...', x_client_signed_at: '2025-01-01T12:00:00Z')
 
 unless res.entity_balance.nil?
   # handle response
@@ -194,9 +210,11 @@ end
 
 ### Parameters
 
-| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      | Example                                                                          |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `idempotency_key`                                                                | *T.nilable(::String)*                                                            | :heavy_minus_sign:                                                               | A unique key to ensure idempotent requests. This key should be a UUID v4 string. | 123e4567-e89b-12d3-a456-426                                                      |
+| Parameter                                                                                                                                                                               | Type                                                                                                                                                                                    | Required                                                                                                                                                                                | Description                                                                                                                                                                             | Example                                                                                                                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `idempotency_key`                                                                                                                                                                       | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                                                                        | 123e4567-e89b-12d3-a456-426                                                                                                                                                             |
+| `x_client_signature`                                                                                                                                                                    | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | A cryptographic signature of the request, used to verify that it was sent by you and hasn't been tampered with. Required if you've enabled request signing for your integration.        | MEUCIQDx8sJvK3z...                                                                                                                                                                      |
+| `x_client_signed_at`                                                                                                                                                                    | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | The timestamp, in ISO 8601 format, at which you generated the `X-Client-Signature`. Required together with `X-Client-Signature` if you've enabled request signing for your integration. | 2025-01-01T12:00:00Z                                                                                                                                                                    |
 
 ### Response
 
@@ -238,7 +256,9 @@ req = Models::Operations::GetBalanceReportRequest.new(
   from: '2024-01-01',
   until_: '2024-02-01',
   grouping: Models::Components::BalanceReportGrouping::STATUS_BALANCES,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.balances.get_report(request: req)
 
@@ -266,7 +286,9 @@ req = Models::Operations::GetBalanceReportRequest.new(
   from: '2024-01-01',
   until_: '2024-02-01',
   grouping: Models::Components::BalanceReportGrouping::STATUS_BALANCES,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.balances.get_report(request: req)
 
@@ -294,7 +316,9 @@ req = Models::Operations::GetBalanceReportRequest.new(
   from: '2024-01-01',
   until_: '2024-02-01',
   grouping: Models::Components::BalanceReportGrouping::STATUS_BALANCES,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.balances.get_report(request: req)
 
@@ -351,7 +375,9 @@ s = ::Mollie::Client.new(
 req = Models::Operations::ListBalanceTransactionsRequest.new(
   balance_id: 'bal_gVMhHKqSSRYJyPsuoPNFH',
   limit: 50,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.balances.list_transactions(request: req)
 
@@ -377,7 +403,9 @@ s = ::Mollie::Client.new(
 req = Models::Operations::ListBalanceTransactionsRequest.new(
   balance_id: 'bal_gVMhHKqSSRYJyPsuoPNFH',
   limit: 50,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.balances.list_transactions(request: req)
 

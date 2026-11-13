@@ -27,7 +27,7 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.webhooks.create(idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Operations::CreateWebhookRequestBody.new(
+res = s.webhooks.create(idempotency_key: '123e4567-e89b-12d3-a456-426', x_client_signature: 'MEUCIQDx8sJvK3z...', x_client_signed_at: '2025-01-01T12:00:00Z', body: Models::Operations::CreateWebhookRequestBody.new(
   name: 'Webhook #1',
   url: 'https://mollie.com/',
   event_types: Models::Components::WebhookEventTypes::PAYMENT_LINK_PAID,
@@ -42,10 +42,12 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                      | Type                                                                                                           | Required                                                                                                       | Description                                                                                                    | Example                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `idempotency_key`                                                                                              | *T.nilable(::String)*                                                                                          | :heavy_minus_sign:                                                                                             | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                               | 123e4567-e89b-12d3-a456-426                                                                                    |
-| `body`                                                                                                         | [T.nilable(Models::Operations::CreateWebhookRequestBody)](../../models/operations/createwebhookrequestbody.md) | :heavy_minus_sign:                                                                                             | N/A                                                                                                            |                                                                                                                |
+| Parameter                                                                                                                                                                               | Type                                                                                                                                                                                    | Required                                                                                                                                                                                | Description                                                                                                                                                                             | Example                                                                                                                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `idempotency_key`                                                                                                                                                                       | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                                                                        | 123e4567-e89b-12d3-a456-426                                                                                                                                                             |
+| `x_client_signature`                                                                                                                                                                    | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | A cryptographic signature of the request, used to verify that it was sent by you and hasn't been tampered with. Required if you've enabled request signing for your integration.        | MEUCIQDx8sJvK3z...                                                                                                                                                                      |
+| `x_client_signed_at`                                                                                                                                                                    | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | The timestamp, in ISO 8601 format, at which you generated the `X-Client-Signature`. Required together with `X-Client-Signature` if you've enabled request signing for your integration. | 2025-01-01T12:00:00Z                                                                                                                                                                    |
+| `body`                                                                                                                                                                                  | [T.nilable(Models::Operations::CreateWebhookRequestBody)](../../models/operations/createwebhookrequestbody.md)                                                                          | :heavy_minus_sign:                                                                                                                                                                      | N/A                                                                                                                                                                                     |                                                                                                                                                                                         |
 
 ### Response
 
@@ -80,7 +82,9 @@ req = Models::Operations::ListWebhooksRequest.new(
   limit: 50,
   sort: Models::Components::Sorting::DESC,
   event_types: Models::Components::WebhookEventTypes::PAYMENT_LINK_PAID,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.webhooks.list(request: req)
 
@@ -123,12 +127,20 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.webhooks.update(webhook_id: 'hook_1234567890', idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Operations::UpdateWebhookRequestBody.new(
-  name: 'Webhook #1',
-  url: 'https://mollie.com/',
-  event_types: Models::Components::WebhookEventTypes::PAYMENT_LINK_PAID,
-  testmode: false
-))
+
+req = Models::Operations::UpdateWebhookRequest.new(
+  webhook_id: 'hook_1234567890',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Operations::UpdateWebhookRequestBody.new(
+    name: 'Webhook #1',
+    url: 'https://mollie.com/',
+    event_types: Models::Components::WebhookEventTypes::PAYMENT_LINK_PAID,
+    testmode: false
+  )
+)
+res = s.webhooks.update(request: req)
 
 unless res.entity_webhook.nil?
   # handle response
@@ -147,12 +159,20 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.webhooks.update(webhook_id: 'hook_1234567890', idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Operations::UpdateWebhookRequestBody.new(
-  name: 'Webhook #1',
-  url: 'https://mollie.com/',
-  event_types: Models::Components::WebhookEventTypes::PAYMENT_LINK_PAID,
-  testmode: false
-))
+
+req = Models::Operations::UpdateWebhookRequest.new(
+  webhook_id: 'hook_1234567890',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Operations::UpdateWebhookRequestBody.new(
+    name: 'Webhook #1',
+    url: 'https://mollie.com/',
+    event_types: Models::Components::WebhookEventTypes::PAYMENT_LINK_PAID,
+    testmode: false
+  )
+)
+res = s.webhooks.update(request: req)
 
 unless res.entity_webhook.nil?
   # handle response
@@ -162,11 +182,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                      | Type                                                                                                           | Required                                                                                                       | Description                                                                                                    | Example                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `webhook_id`                                                                                                   | *::String*                                                                                                     | :heavy_check_mark:                                                                                             | Provide the ID of the related webhook.                                                                         | hook_1234567890                                                                                                |
-| `idempotency_key`                                                                                              | *T.nilable(::String)*                                                                                          | :heavy_minus_sign:                                                                                             | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                               | 123e4567-e89b-12d3-a456-426                                                                                    |
-| `body`                                                                                                         | [T.nilable(Models::Operations::UpdateWebhookRequestBody)](../../models/operations/updatewebhookrequestbody.md) | :heavy_minus_sign:                                                                                             | N/A                                                                                                            |                                                                                                                |
+| Parameter                                                                                   | Type                                                                                        | Required                                                                                    | Description                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `request`                                                                                   | [Models::Operations::UpdateWebhookRequest](../../models/operations/updatewebhookrequest.md) | :heavy_check_mark:                                                                          | The request object to use for the request.                                                  |
 
 ### Response
 
@@ -196,7 +214,14 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.webhooks.get(webhook_id: 'hook_1234567890', idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::GetWebhookRequest.new(
+  webhook_id: 'hook_1234567890',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.webhooks.get(request: req)
 
 unless res.entity_webhook.nil?
   # handle response
@@ -216,7 +241,14 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.webhooks.get(webhook_id: 'hook_1234567890', idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::GetWebhookRequest.new(
+  webhook_id: 'hook_1234567890',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.webhooks.get(request: req)
 
 unless res.entity_webhook.nil?
   # handle response
@@ -226,11 +258,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                                                               | Type                                                                                                                                                                    | Required                                                                                                                                                                | Description                                                                                                                                                             | Example                                                                                                                                                                 |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `webhook_id`                                                                                                                                                            | *::String*                                                                                                                                                              | :heavy_check_mark:                                                                                                                                                      | Provide the ID of the related webhook.                                                                                                                                  | hook_1234567890                                                                                                                                                         |
-| `testmode`                                                                                                                                                              | *T.nilable(T::Boolean)*                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                      | You can enable test mode by setting the `testmode` query parameter to `true`.<br/><br/>Test entities cannot be retrieved when the endpoint is set to live mode, and vice versa. |                                                                                                                                                                         |
-| `idempotency_key`                                                                                                                                                       | *T.nilable(::String)*                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                      | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                                                        | 123e4567-e89b-12d3-a456-426                                                                                                                                             |
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `request`                                                                             | [Models::Operations::GetWebhookRequest](../../models/operations/getwebhookrequest.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
 
 ### Response
 
@@ -259,9 +289,17 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.webhooks.delete(webhook_id: 'hook_1234567890', idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Operations::DeleteWebhookRequestBody.new(
-  testmode: false
-))
+
+req = Models::Operations::DeleteWebhookRequest.new(
+  webhook_id: 'hook_1234567890',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Operations::DeleteWebhookRequestBody.new(
+    testmode: false
+  )
+)
+res = s.webhooks.delete(request: req)
 
 if res.status_code == 200
   # handle response
@@ -271,11 +309,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                      | Type                                                                                                           | Required                                                                                                       | Description                                                                                                    | Example                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `webhook_id`                                                                                                   | *::String*                                                                                                     | :heavy_check_mark:                                                                                             | Provide the ID of the related webhook.                                                                         | hook_1234567890                                                                                                |
-| `idempotency_key`                                                                                              | *T.nilable(::String)*                                                                                          | :heavy_minus_sign:                                                                                             | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                               | 123e4567-e89b-12d3-a456-426                                                                                    |
-| `body`                                                                                                         | [T.nilable(Models::Operations::DeleteWebhookRequestBody)](../../models/operations/deletewebhookrequestbody.md) | :heavy_minus_sign:                                                                                             | N/A                                                                                                            |                                                                                                                |
+| Parameter                                                                                   | Type                                                                                        | Required                                                                                    | Description                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `request`                                                                                   | [Models::Operations::DeleteWebhookRequest](../../models/operations/deletewebhookrequest.md) | :heavy_check_mark:                                                                          | The request object to use for the request.                                                  |
 
 ### Response
 
@@ -304,9 +340,17 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.webhooks.test(webhook_id: 'hook_1234567890', idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Operations::TestWebhookRequestBody.new(
-  testmode: false
-))
+
+req = Models::Operations::TestWebhookRequest.new(
+  webhook_id: 'hook_1234567890',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Operations::TestWebhookRequestBody.new(
+    testmode: false
+  )
+)
+res = s.webhooks.test(request: req)
 
 if res.status_code == 200
   # handle response
@@ -316,11 +360,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                  | Type                                                                                                       | Required                                                                                                   | Description                                                                                                | Example                                                                                                    |
-| ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `webhook_id`                                                                                               | *::String*                                                                                                 | :heavy_check_mark:                                                                                         | Provide the ID of the related webhook.                                                                     | hook_1234567890                                                                                            |
-| `idempotency_key`                                                                                          | *T.nilable(::String)*                                                                                      | :heavy_minus_sign:                                                                                         | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                           | 123e4567-e89b-12d3-a456-426                                                                                |
-| `body`                                                                                                     | [T.nilable(Models::Operations::TestWebhookRequestBody)](../../models/operations/testwebhookrequestbody.md) | :heavy_minus_sign:                                                                                         | N/A                                                                                                        |                                                                                                            |
+| Parameter                                                                               | Type                                                                                    | Required                                                                                | Description                                                                             |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `request`                                                                               | [Models::Operations::TestWebhookRequest](../../models/operations/testwebhookrequest.md) | :heavy_check_mark:                                                                      | The request object to use for the request.                                              |
 
 ### Response
 

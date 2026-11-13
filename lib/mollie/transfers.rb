@@ -43,14 +43,25 @@ module Mollie
 
     sig {
       params(
-        request: Models::Operations::CreateTransferRequest,
+        x_client_signature: ::String,
+        x_client_signed_at: ::String,
+        idempotency_key: ::String,
+        body: T.nilable(Models::Components::TransferRequest),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CreateTransferResponse)
     }
-    def create(request:, retries: nil, timeout_ms: nil, http_headers: nil)
+    def create(
+      x_client_signature:,
+      x_client_signed_at:,
+      idempotency_key:,
+      body: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # create - Create transfer
       # > 🚧 Beta feature
       # >
@@ -79,6 +90,12 @@ module Mollie
       # | Other   | Default: transfer is processed                      | `business-account-transfer.requested` → `business-account-transfer.initiated` → `business-account-transfer.processed`                                              |
       #
       # If set, this operation will use `advanced_access_token` from the global security.
+      request = Models::Operations::CreateTransferRequest.new(
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at,
+        idempotency_key: idempotency_key,
+        body: body
+      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = "#{base_url}/v2/business-accounts/transfers"
@@ -280,23 +297,14 @@ module Mollie
 
     sig {
       params(
-        business_accounts_transfer_id: ::String,
-        testmode: T.nilable(T::Boolean),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::GetTransferRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetTransferResponse)
     }
-    def get(
-      business_accounts_transfer_id:,
-      testmode: nil,
-      idempotency_key: nil,
-      retries: nil,
-      timeout_ms: nil,
-      http_headers: nil
-    )
+    def get(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # get - Get transfer
       # > 🚧 Beta feature
       # >
@@ -306,11 +314,6 @@ module Mollie
       # and details of a previously created transfer.
       #
       # If set, this operation will use `advanced_access_token` from the global security.
-      request = Models::Operations::GetTransferRequest.new(
-        business_accounts_transfer_id: business_accounts_transfer_id,
-        testmode: testmode,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(

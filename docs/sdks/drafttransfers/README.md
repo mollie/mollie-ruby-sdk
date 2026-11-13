@@ -51,7 +51,7 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.draft_transfers.create(idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Components::CreateDraftTransferRequest.new(
+res = s.draft_transfers.create(idempotency_key: '123e4567-e89b-12d3-a456-426', x_client_signature: 'MEUCIQDx8sJvK3z...', x_client_signed_at: '2025-01-01T12:00:00Z', body: Models::Components::CreateDraftTransferRequest.new(
   debtor_iban: 'NL55MLLE0123456789',
   creditor: Models::Components::DraftTransferParty.new(
     full_name: 'Jan Jansen',
@@ -76,10 +76,12 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                      | Type                                                                                                           | Required                                                                                                       | Description                                                                                                    | Example                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `idempotency_key`                                                                                              | *T.nilable(::String)*                                                                                          | :heavy_minus_sign:                                                                                             | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                               | 123e4567-e89b-12d3-a456-426                                                                                    |
-| `body`                                                                                                         | [T.nilable(Models::Components::CreateDraftTransferRequest)](../../models/shared/createdrafttransferrequest.md) | :heavy_minus_sign:                                                                                             | N/A                                                                                                            |                                                                                                                |
+| Parameter                                                                                                                                                                               | Type                                                                                                                                                                                    | Required                                                                                                                                                                                | Description                                                                                                                                                                             | Example                                                                                                                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `idempotency_key`                                                                                                                                                                       | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                                                                        | 123e4567-e89b-12d3-a456-426                                                                                                                                                             |
+| `x_client_signature`                                                                                                                                                                    | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | A cryptographic signature of the request, used to verify that it was sent by you and hasn't been tampered with. Required if you've enabled request signing for your integration.        | MEUCIQDx8sJvK3z...                                                                                                                                                                      |
+| `x_client_signed_at`                                                                                                                                                                    | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | The timestamp, in ISO 8601 format, at which you generated the `X-Client-Signature`. Required together with `X-Client-Signature` if you've enabled request signing for your integration. | 2025-01-01T12:00:00Z                                                                                                                                                                    |
+| `body`                                                                                                                                                                                  | [T.nilable(Models::Components::CreateDraftTransferRequest)](../../models/shared/createdrafttransferrequest.md)                                                                          | :heavy_minus_sign:                                                                                                                                                                      | N/A                                                                                                                                                                                     |                                                                                                                                                                                         |
 
 ### Response
 
@@ -121,7 +123,9 @@ s = ::Mollie::Client.new(
 req = Models::Operations::ListDraftTransfersRequest.new(
   limit: 50,
   status: Models::Components::DraftTransferStatus::PENDING_REVIEW,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.draft_transfers.list(request: req)
 
@@ -175,7 +179,14 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.draft_transfers.get(draft_transfer_id: 'badrt_87GByBuj4UCcUTEbs6aGJ', idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::GetDraftTransferRequest.new(
+  draft_transfer_id: 'badrt_87GByBuj4UCcUTEbs6aGJ',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.draft_transfers.get(request: req)
 
 unless res.draft_transfer_response.nil?
   # handle response
@@ -195,7 +206,14 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.draft_transfers.get(draft_transfer_id: 'badrt_87GByBuj4UCcUTEbs6aGJ', idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::GetDraftTransferRequest.new(
+  draft_transfer_id: 'badrt_87GByBuj4UCcUTEbs6aGJ',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.draft_transfers.get(request: req)
 
 unless res.draft_transfer_response.nil?
   # handle response
@@ -215,7 +233,14 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.draft_transfers.get(draft_transfer_id: 'badrt_87GByBuj4UCcUTEbs6aGJ', idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::GetDraftTransferRequest.new(
+  draft_transfer_id: 'badrt_87GByBuj4UCcUTEbs6aGJ',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.draft_transfers.get(request: req)
 
 unless res.draft_transfer_response.nil?
   # handle response
@@ -225,11 +250,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                                                                                                                                                                                                | Type                                                                                                                                                                                                                                                                                                                                                                                     | Required                                                                                                                                                                                                                                                                                                                                                                                 | Description                                                                                                                                                                                                                                                                                                                                                                              | Example                                                                                                                                                                                                                                                                                                                                                                                  |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `draft_transfer_id`                                                                                                                                                                                                                                                                                                                                                                      | *::String*                                                                                                                                                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                                                                                                                                                       | Provide the ID of the related draft transfer.                                                                                                                                                                                                                                                                                                                                            | badrt_87GByBuj4UCcUTEbs6aGJ                                                                                                                                                                                                                                                                                                                                                              |
-| `testmode`                                                                                                                                                                                                                                                                                                                                                                               | *T.nilable(T::Boolean)*                                                                                                                                                                                                                                                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                       | Most API credentials are specifically created for either live mode or test mode. In those cases the `testmode` query<br/>parameter must not be sent. For organization-level credentials such as OAuth access tokens, you can enable test mode by<br/>setting the `testmode` query parameter to `true`.<br/><br/>Test entities cannot be retrieved when the endpoint is set to live mode, and vice versa. |                                                                                                                                                                                                                                                                                                                                                                                          |
-| `idempotency_key`                                                                                                                                                                                                                                                                                                                                                                        | *T.nilable(::String)*                                                                                                                                                                                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                       | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                                                                                                                                                                                                                                                                         | 123e4567-e89b-12d3-a456-426                                                                                                                                                                                                                                                                                                                                                              |
+| Parameter                                                                                         | Type                                                                                              | Required                                                                                          | Description                                                                                       |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `request`                                                                                         | [Models::Operations::GetDraftTransferRequest](../../models/operations/getdrafttransferrequest.md) | :heavy_check_mark:                                                                                | The request object to use for the request.                                                        |
 
 ### Response
 
@@ -269,9 +292,17 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.draft_transfers.cancel(draft_transfer_id: 'badrt_87GByBuj4UCcUTEbs6aGJ', idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Operations::CancelDraftTransferRequestBody.new(
-  testmode: false
-))
+
+req = Models::Operations::CancelDraftTransferRequest.new(
+  draft_transfer_id: 'badrt_87GByBuj4UCcUTEbs6aGJ',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Operations::CancelDraftTransferRequestBody.new(
+    testmode: false
+  )
+)
+res = s.draft_transfers.cancel(request: req)
 
 unless res.draft_transfer_response.nil?
   # handle response
@@ -281,11 +312,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                  | Type                                                                                                                       | Required                                                                                                                   | Description                                                                                                                | Example                                                                                                                    |
-| -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `draft_transfer_id`                                                                                                        | *::String*                                                                                                                 | :heavy_check_mark:                                                                                                         | Provide the ID of the related draft transfer.                                                                              | badrt_87GByBuj4UCcUTEbs6aGJ                                                                                                |
-| `idempotency_key`                                                                                                          | *T.nilable(::String)*                                                                                                      | :heavy_minus_sign:                                                                                                         | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                           | 123e4567-e89b-12d3-a456-426                                                                                                |
-| `body`                                                                                                                     | [T.nilable(Models::Operations::CancelDraftTransferRequestBody)](../../models/operations/canceldrafttransferrequestbody.md) | :heavy_minus_sign:                                                                                                         | N/A                                                                                                                        |                                                                                                                            |
+| Parameter                                                                                               | Type                                                                                                    | Required                                                                                                | Description                                                                                             |
+| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                               | [Models::Operations::CancelDraftTransferRequest](../../models/operations/canceldrafttransferrequest.md) | :heavy_check_mark:                                                                                      | The request object to use for the request.                                                              |
 
 ### Response
 

@@ -40,8 +40,7 @@ Developer-friendly & type-safe Ruby SDK specifically catered to leverage *mollie
 The SDK can be installed using [RubyGems](https://rubygems.org/):
 
 ```bash
-gem install specific_install
-gem specific_install https://github.com/mollie/mollie-ruby-sdk 
+gem install mollie-ruby-sdk
 ```
 <!-- End SDK Installation [installation] -->
 
@@ -104,7 +103,9 @@ s = ::Mollie::Client.new(
 req = Models::Operations::ListBalancesRequest.new(
   currency: "EUR",
   limit: 50,
-  idempotency_key: "123e4567-e89b-12d3-a456-426"
+  idempotency_key: "123e4567-e89b-12d3-a456-426",
+  x_client_signature: "MEUCIQDx8sJvK3z...",
+  x_client_signed_at: "2025-01-01T12:00:00Z"
 )
 res = s.balances.list(request: req)
 
@@ -151,6 +152,7 @@ end
 
 ### [Accounts](docs/sdks/accounts/README.md)
 
+* [create_account](docs/sdks/accounts/README.md#create_account) - Create business account
 * [list_accounts](docs/sdks/accounts/README.md#list_accounts) - List business accounts
 * [get_account](docs/sdks/accounts/README.md#get_account) - Get business account
 * [list](docs/sdks/accounts/README.md#list) - List transactions
@@ -423,7 +425,9 @@ s = ::Mollie::Client.new(
 req = Models::Operations::ListBalancesRequest.new(
   currency: "EUR",
   limit: 50,
-  idempotency_key: "123e4567-e89b-12d3-a456-426"
+  idempotency_key: "123e4567-e89b-12d3-a456-426",
+  x_client_signature: "MEUCIQDx8sJvK3z...",
+  x_client_signed_at: "2025-01-01T12:00:00Z"
 )
 res = s.balances.list(request: req)
 

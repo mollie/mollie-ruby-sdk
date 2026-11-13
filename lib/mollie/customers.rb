@@ -46,13 +46,23 @@ module Mollie
       params(
         body: T.nilable(Models::Components::EntityCustomer),
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CreateCustomerResponse)
     }
-    def create(body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def create(
+      body: nil,
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # create - Create customer
       # Creates a simple minimal representation of a customer. Payments, recurring mandates, and subscriptions can be linked
       # to this customer object, which simplifies management of recurring payments.
@@ -62,6 +72,8 @@ module Mollie
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
       request = Models::Operations::CreateCustomerRequest.new(
         idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at,
         body: body
       )
       url, params = @sdk_configuration.get_server_details
@@ -396,7 +408,9 @@ module Mollie
                 limit: request.limit,
                 sort: request.sort,
                 testmode: request.testmode,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers
@@ -469,25 +483,18 @@ module Mollie
 
     sig {
       params(
-        customer_id: ::String,
-        testmode: T.nilable(T::Boolean),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::GetCustomerRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetCustomerResponse)
     }
-    def get(customer_id:, testmode: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # get - Get customer
       # Retrieve a single customer by its ID.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::GetCustomerRequest.new(
-        customer_id: customer_id,
-        testmode: testmode,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -668,27 +675,20 @@ module Mollie
 
     sig {
       params(
-        customer_id: ::String,
-        body: T.nilable(Models::Operations::UpdateCustomerRequestBody),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::UpdateCustomerRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::UpdateCustomerResponse)
     }
-    def update(customer_id:, body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def update(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # update - Update customer
       # Update an existing customer.
       #
       # For an in-depth explanation of each parameter, refer to the [Create customer](create-customer) endpoint.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::UpdateCustomerRequest.new(
-        customer_id: customer_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -874,25 +874,18 @@ module Mollie
 
     sig {
       params(
-        customer_id: ::String,
-        body: T.nilable(Models::Operations::DeleteCustomerRequestBody),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::DeleteCustomerRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::DeleteCustomerResponse)
     }
-    def delete(customer_id:, body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def delete(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # delete - Delete customer
       # Delete a customer. All mandates and subscriptions created for this customer will be canceled as well.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::DeleteCustomerRequest.new(
-        customer_id: customer_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -1062,16 +1055,14 @@ module Mollie
 
     sig {
       params(
-        customer_id: ::String,
-        body: T.nilable(Models::Components::PaymentRequest),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::CreateCustomerPaymentRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CreateCustomerPaymentResponse)
     }
-    def create_payment(customer_id:, body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def create_payment(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # create_payment - Create customer payment
       # Creates a payment for the customer.
       #
@@ -1086,11 +1077,6 @@ module Mollie
       # parameter predefined.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::CreateCustomerPaymentRequest.new(
-        customer_id: customer_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -1460,7 +1446,9 @@ module Mollie
                 sort: request.sort,
                 profile_id: request.profile_id,
                 testmode: request.testmode,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers

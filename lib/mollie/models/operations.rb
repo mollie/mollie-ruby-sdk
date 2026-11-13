@@ -22,6 +22,7 @@ module Mollie
       autoload :CancelSubscriptionResponse, "mollie/models/operations/cancel_subscription_response.rb"
       autoload :Client, "mollie/models/operations/client.rb"
       autoload :ClientEmbedded, "mollie/models/operations/client_embedded.rb"
+      autoload :CreateBusinessAccountRequest, "mollie/models/operations/create_business_account_request.rb"
       autoload :CreateCaptureRequest, "mollie/models/operations/create_capture_request.rb"
       autoload :CreateClientLinkRequest, "mollie/models/operations/create_client_link_request.rb"
       autoload(
@@ -43,6 +44,8 @@ module Mollie
       autoload :CreateSubscriptionRequest, "mollie/models/operations/create_subscription_request.rb"
       autoload :CreateTransferRequest, "mollie/models/operations/create_transfer_request.rb"
       autoload :CreateWebhookRequest, "mollie/models/operations/create_webhook_request.rb"
+      autoload :CreateBusinessAccountRequestBody, "mollie/models/operations/create_business_account_requestbody.rb"
+      autoload :CreateBusinessAccountResponse, "mollie/models/operations/create_business_account_response.rb"
       autoload :CreateCaptureResponse, "mollie/models/operations/create_capture_response.rb"
       autoload :CreateClientLinkResponse, "mollie/models/operations/create_client_link_response.rb"
       autoload(

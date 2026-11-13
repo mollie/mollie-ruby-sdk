@@ -21,19 +21,35 @@ module Mollie
           Crystalline::Nilable.new(::String),
           {'header': {'field_name': "idempotency-key", 'style': "simple", 'explode': false}}
         )
+        # A cryptographic signature of the request, used to verify that it was sent by you and hasn't been tampered with. Required if you've enabled request signing for your integration.
+        field(
+          :x_client_signature,
+          Crystalline::Nilable.new(::String),
+          {'header': {'field_name': "X-Client-Signature", 'style': "simple", 'explode': false}}
+        )
+        # The timestamp, in ISO 8601 format, at which you generated the `X-Client-Signature`. Required together with `X-Client-Signature` if you've enabled request signing for your integration.
+        field(
+          :x_client_signed_at,
+          Crystalline::Nilable.new(::String),
+          {'header': {'field_name': "X-Client-Signed-At", 'style': "simple", 'explode': false}}
+        )
 
         sig {
           params(
             profile_id: ::String,
             body: Models::Operations::UpdateProfileRequestBody,
-            idempotency_key: T.nilable(::String)
+            idempotency_key: T.nilable(::String),
+            x_client_signature: T.nilable(::String),
+            x_client_signed_at: T.nilable(::String)
           )
             .void
         }
-        def initialize(profile_id:, body:, idempotency_key: nil)
+        def initialize(profile_id:, body:, idempotency_key: nil, x_client_signature: nil, x_client_signed_at: nil)
           @profile_id = profile_id
           @body = body
           @idempotency_key = idempotency_key
+          @x_client_signature = x_client_signature
+          @x_client_signed_at = x_client_signed_at
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -42,6 +58,8 @@ module Mollie
           return false unless @profile_id == other.profile_id
           return false unless @body == other.body
           return false unless @idempotency_key == other.idempotency_key
+          return false unless @x_client_signature == other.x_client_signature
+          return false unless @x_client_signed_at == other.x_client_signed_at
           true
         end
       end

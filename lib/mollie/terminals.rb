@@ -197,7 +197,9 @@ module Mollie
                 limit: request.limit,
                 sort: request.sort,
                 testmode: request.testmode,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers
@@ -270,25 +272,18 @@ module Mollie
 
     sig {
       params(
-        terminal_id: ::String,
-        testmode: T.nilable(T::Boolean),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::GetTerminalRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetTerminalResponse)
     }
-    def get(terminal_id:, testmode: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # get - Get terminal
       # Retrieve a single terminal by its ID.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::GetTerminalRequest.new(
-        terminal_id: terminal_id,
-        testmode: testmode,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -469,23 +464,14 @@ module Mollie
 
     sig {
       params(
-        body: T.nilable(Models::Operations::TerminalsRequestPairingCodeRequestBody),
-        include: T.nilable(::String),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::TerminalsRequestPairingCodeRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::TerminalsRequestPairingCodeResponse)
     }
-    def terminals_request_pairing_code(
-      body: nil,
-      include: nil,
-      idempotency_key: nil,
-      retries: nil,
-      timeout_ms: nil,
-      http_headers: nil
-    )
+    def terminals_request_pairing_code(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # terminals_request_pairing_code - Request terminal pairing code
       # > ℹ️ **Test mode**
       # >
@@ -499,11 +485,6 @@ module Mollie
       # Pairing codes expire after 90 days (see `expiresAt`) and can be used multiple times.
       #
       # If set, this operation will use either `api_key` or `o_auth` from the global security.
-      request = Models::Operations::TerminalsRequestPairingCodeRequest.new(
-        include: include,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = "#{base_url}/v2/terminals/pairing-codes"
@@ -886,23 +867,14 @@ module Mollie
 
     sig {
       params(
-        pairing_code_id: ::String,
-        include: T.nilable(::String),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::TerminalsGetPairingCodeRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::TerminalsGetPairingCodeResponse)
     }
-    def terminals_get_pairing_code(
-      pairing_code_id:,
-      include: nil,
-      idempotency_key: nil,
-      retries: nil,
-      timeout_ms: nil,
-      http_headers: nil
-    )
+    def terminals_get_pairing_code(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # terminals_get_pairing_code - Get terminal pairing code
       # > ℹ️ **Test mode**
       # >
@@ -917,11 +889,6 @@ module Mollie
       # returns a 404. Active pairing codes are never deleted.
       #
       # If set, this operation will use either `api_key` or `o_auth` from the global security.
-      request = Models::Operations::TerminalsGetPairingCodeRequest.new(
-        pairing_code_id: pairing_code_id,
-        include: include,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -1104,6 +1071,8 @@ module Mollie
       params(
         pairing_code_id: ::String,
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
@@ -1113,6 +1082,8 @@ module Mollie
     def terminals_revoke_pairing_code(
       pairing_code_id:,
       idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
       retries: nil,
       timeout_ms: nil,
       http_headers: nil
@@ -1131,7 +1102,9 @@ module Mollie
       # If set, this operation will use either `api_key` or `o_auth` from the global security.
       request = Models::Operations::TerminalsRevokePairingCodeRequest.new(
         pairing_code_id: pairing_code_id,
-        idempotency_key: idempotency_key
+        idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)

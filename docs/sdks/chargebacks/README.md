@@ -32,7 +32,9 @@ req = Models::Operations::ListChargebacksRequest.new(
   payment_id: 'tr_5B8cwPMGnU',
   from: 'chb_xFzwUN4ci8HAmSGUACS4J',
   limit: 50,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.chargebacks.list(request: req)
 
@@ -59,7 +61,9 @@ req = Models::Operations::ListChargebacksRequest.new(
   payment_id: 'tr_5B8cwPMGnU',
   from: 'chb_xFzwUN4ci8HAmSGUACS4J',
   limit: 50,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.chargebacks.list(request: req)
 
@@ -86,7 +90,9 @@ req = Models::Operations::ListChargebacksRequest.new(
   payment_id: 'tr_5B8cwPMGnU',
   from: 'chb_xFzwUN4ci8HAmSGUACS4J',
   limit: 50,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.chargebacks.list(request: req)
 
@@ -134,7 +140,9 @@ s = ::Mollie::Client.new(
 req = Models::Operations::GetChargebackRequest.new(
   payment_id: 'tr_5B8cwPMGnU',
   chargeback_id: 'chb_xFzwUN4ci8HAmSGUACS4J',
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.chargebacks.get(request: req)
 
@@ -160,7 +168,9 @@ s = ::Mollie::Client.new(
 req = Models::Operations::GetChargebackRequest.new(
   payment_id: 'tr_5B8cwPMGnU',
   chargeback_id: 'chb_xFzwUN4ci8HAmSGUACS4J',
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.chargebacks.get(request: req)
 
@@ -212,7 +222,9 @@ req = Models::Operations::ListAllChargebacksRequest.new(
   from: 'chb_xFzwUN4ci8HAmSGUACS4J',
   limit: 50,
   sort: Models::Components::Sorting::DESC,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.chargebacks.all(request: req)
 
@@ -240,7 +252,9 @@ req = Models::Operations::ListAllChargebacksRequest.new(
   from: 'chb_xFzwUN4ci8HAmSGUACS4J',
   limit: 50,
   sort: Models::Components::Sorting::DESC,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.chargebacks.all(request: req)
 
@@ -268,7 +282,9 @@ req = Models::Operations::ListAllChargebacksRequest.new(
   from: 'chb_xFzwUN4ci8HAmSGUACS4J',
   limit: 50,
   sort: Models::Components::Sorting::DESC,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.chargebacks.all(request: req)
 

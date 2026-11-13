@@ -63,6 +63,12 @@ module Mollie
           ::String,
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("createdAt"), required: true}}
         )
+        # An object with several relevant URLs. Every URL object will contain an `href` and a `type` field.
+        field(
+          :links,
+          Models::Components::BusinessAccountResponseLinks,
+          {'format_json': {'letter_case': ::Mollie::Utils.field_name("_links"), required: true}}
+        )
 
         sig {
           params(
@@ -72,11 +78,12 @@ module Mollie
             balance: Models::Components::Balance,
             status: Models::Components::AccountStatus,
             mode: Models::Components::Mode,
-            created_at: ::String
+            created_at: ::String,
+            links: Models::Components::BusinessAccountResponseLinks
           )
             .void
         }
-        def initialize(resource:, id:, account_details:, balance:, status:, mode:, created_at:)
+        def initialize(resource:, id:, account_details:, balance:, status:, mode:, created_at:, links:)
           @resource = resource
           @id = id
           @account_details = account_details
@@ -84,6 +91,7 @@ module Mollie
           @status = status
           @mode = mode
           @created_at = created_at
+          @links = links
         end
 
         sig { params(other: T.untyped).returns(T::Boolean) }
@@ -96,6 +104,7 @@ module Mollie
           return false unless @status == other.status
           return false unless @mode == other.mode
           return false unless @created_at == other.created_at
+          return false unless @links == other.links
           true
         end
       end

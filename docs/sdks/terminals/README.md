@@ -35,7 +35,9 @@ req = Models::Operations::ListTerminalsRequest.new(
   from: 'term_vytxeTZskVKR7C7WgdSP3d',
   limit: 50,
   sort: Models::Components::Sorting::DESC,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.terminals.list(request: req)
 
@@ -62,7 +64,9 @@ req = Models::Operations::ListTerminalsRequest.new(
   from: 'term_vytxeTZskVKR7C7WgdSP3d',
   limit: 50,
   sort: Models::Components::Sorting::DESC,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.terminals.list(request: req)
 
@@ -106,7 +110,14 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.terminals.get(terminal_id: 'term_vytxeTZskVKR7C7WgdSP3d', idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::GetTerminalRequest.new(
+  terminal_id: 'term_vytxeTZskVKR7C7WgdSP3d',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.terminals.get(request: req)
 
 unless res.entity_terminal.nil?
   # handle response
@@ -116,11 +127,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                                                                                                                                                                                                | Type                                                                                                                                                                                                                                                                                                                                                                                     | Required                                                                                                                                                                                                                                                                                                                                                                                 | Description                                                                                                                                                                                                                                                                                                                                                                              | Example                                                                                                                                                                                                                                                                                                                                                                                  |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `terminal_id`                                                                                                                                                                                                                                                                                                                                                                            | *::String*                                                                                                                                                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                                                                                                                                                       | Provide the ID of the related terminal.                                                                                                                                                                                                                                                                                                                                                  | term_vytxeTZskVKR7C7WgdSP3d                                                                                                                                                                                                                                                                                                                                                              |
-| `testmode`                                                                                                                                                                                                                                                                                                                                                                               | *T.nilable(T::Boolean)*                                                                                                                                                                                                                                                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                       | Most API credentials are specifically created for either live mode or test mode. In those cases the `testmode` query<br/>parameter must not be sent. For organization-level credentials such as OAuth access tokens, you can enable test mode by<br/>setting the `testmode` query parameter to `true`.<br/><br/>Test entities cannot be retrieved when the endpoint is set to live mode, and vice versa. |                                                                                                                                                                                                                                                                                                                                                                                          |
-| `idempotency_key`                                                                                                                                                                                                                                                                                                                                                                        | *T.nilable(::String)*                                                                                                                                                                                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                       | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                                                                                                                                                                                                                                                                         | 123e4567-e89b-12d3-a456-426                                                                                                                                                                                                                                                                                                                                                              |
+| Parameter                                                                               | Type                                                                                    | Required                                                                                | Description                                                                             |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `request`                                                                               | [Models::Operations::GetTerminalRequest](../../models/operations/getterminalrequest.md) | :heavy_check_mark:                                                                      | The request object to use for the request.                                              |
 
 ### Response
 
@@ -158,9 +167,16 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.terminals.terminals_request_pairing_code(idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Operations::TerminalsRequestPairingCodeRequestBody.new(
-  profile_id: 'pfl_jA9bC4DkFj3G'
-))
+
+req = Models::Operations::TerminalsRequestPairingCodeRequest.new(
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Operations::TerminalsRequestPairingCodeRequestBody.new(
+    profile_id: 'pfl_jA9bC4DkFj3G'
+  )
+)
+res = s.terminals.terminals_request_pairing_code(request: req)
 
 unless res.entity_pairing_code.nil?
   # handle response
@@ -170,11 +186,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                                  | Type                                                                                                                                       | Required                                                                                                                                   | Description                                                                                                                                | Example                                                                                                                                    |
-| ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| `include`                                                                                                                                  | *T.nilable(::String)*                                                                                                                      | :heavy_minus_sign:                                                                                                                         | Include additional information in the response.                                                                                            |                                                                                                                                            |
-| `idempotency_key`                                                                                                                          | *T.nilable(::String)*                                                                                                                      | :heavy_minus_sign:                                                                                                                         | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                           | 123e4567-e89b-12d3-a456-426                                                                                                                |
-| `body`                                                                                                                                     | [T.nilable(Models::Operations::TerminalsRequestPairingCodeRequestBody)](../../models/operations/terminalsrequestpairingcoderequestbody.md) | :heavy_minus_sign:                                                                                                                         | N/A                                                                                                                                        |                                                                                                                                            |
+| Parameter                                                                                                               | Type                                                                                                                    | Required                                                                                                                | Description                                                                                                             |
+| ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                                               | [Models::Operations::TerminalsRequestPairingCodeRequest](../../models/operations/terminalsrequestpairingcoderequest.md) | :heavy_check_mark:                                                                                                      | The request object to use for the request.                                                                              |
 
 ### Response
 
@@ -215,7 +229,9 @@ s = ::Mollie::Client.new(
 req = Models::Operations::TerminalsListPairingCodesRequest.new(
   limit: 50,
   sort: Models::Components::Sorting::DESC,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.terminals.terminals_list_pairing_codes(request: req)
 
@@ -268,7 +284,14 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.terminals.terminals_get_pairing_code(pairing_code_id: 'termpc_R7gX5Ea9bC4DkFj3G', idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::TerminalsGetPairingCodeRequest.new(
+  pairing_code_id: 'termpc_R7gX5Ea9bC4DkFj3G',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.terminals.terminals_get_pairing_code(request: req)
 
 unless res.entity_pairing_code.nil?
   # handle response
@@ -278,11 +301,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      | Example                                                                          |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `pairing_code_id`                                                                | *::String*                                                                       | :heavy_check_mark:                                                               | Provide the ID of the terminal pairing code.                                     | termpc_R7gX5Ea9bC4DkFj3G                                                         |
-| `include`                                                                        | *T.nilable(::String)*                                                            | :heavy_minus_sign:                                                               | Include additional information in the response.                                  |                                                                                  |
-| `idempotency_key`                                                                | *T.nilable(::String)*                                                            | :heavy_minus_sign:                                                               | A unique key to ensure idempotent requests. This key should be a UUID v4 string. | 123e4567-e89b-12d3-a456-426                                                      |
+| Parameter                                                                                                       | Type                                                                                                            | Required                                                                                                        | Description                                                                                                     |
+| --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                                       | [Models::Operations::TerminalsGetPairingCodeRequest](../../models/operations/terminalsgetpairingcoderequest.md) | :heavy_check_mark:                                                                                              | The request object to use for the request.                                                                      |
 
 ### Response
 
@@ -319,7 +340,7 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.terminals.terminals_revoke_pairing_code(pairing_code_id: 'termpc_R7gX5Ea9bC4DkFj3G', idempotency_key: '123e4567-e89b-12d3-a456-426')
+res = s.terminals.terminals_revoke_pairing_code(pairing_code_id: 'termpc_R7gX5Ea9bC4DkFj3G', idempotency_key: '123e4567-e89b-12d3-a456-426', x_client_signature: 'MEUCIQDx8sJvK3z...', x_client_signed_at: '2025-01-01T12:00:00Z')
 
 unless res.entity_pairing_code.nil?
   # handle response
@@ -329,10 +350,12 @@ end
 
 ### Parameters
 
-| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      | Example                                                                          |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `pairing_code_id`                                                                | *::String*                                                                       | :heavy_check_mark:                                                               | Provide the ID of the terminal pairing code.                                     | termpc_R7gX5Ea9bC4DkFj3G                                                         |
-| `idempotency_key`                                                                | *T.nilable(::String)*                                                            | :heavy_minus_sign:                                                               | A unique key to ensure idempotent requests. This key should be a UUID v4 string. | 123e4567-e89b-12d3-a456-426                                                      |
+| Parameter                                                                                                                                                                               | Type                                                                                                                                                                                    | Required                                                                                                                                                                                | Description                                                                                                                                                                             | Example                                                                                                                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pairing_code_id`                                                                                                                                                                       | *::String*                                                                                                                                                                              | :heavy_check_mark:                                                                                                                                                                      | Provide the ID of the terminal pairing code.                                                                                                                                            | termpc_R7gX5Ea9bC4DkFj3G                                                                                                                                                                |
+| `idempotency_key`                                                                                                                                                                       | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                                                                        | 123e4567-e89b-12d3-a456-426                                                                                                                                                             |
+| `x_client_signature`                                                                                                                                                                    | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | A cryptographic signature of the request, used to verify that it was sent by you and hasn't been tampered with. Required if you've enabled request signing for your integration.        | MEUCIQDx8sJvK3z...                                                                                                                                                                      |
+| `x_client_signed_at`                                                                                                                                                                    | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | The timestamp, in ISO 8601 format, at which you generated the `X-Client-Signature`. Required together with `X-Client-Signature` if you've enabled request signing for your integration. | 2025-01-01T12:00:00Z                                                                                                                                                                    |
 
 ### Response
 

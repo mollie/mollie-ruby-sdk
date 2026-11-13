@@ -43,25 +43,18 @@ module Mollie
 
     sig {
       params(
-        webhook_event_id: ::String,
-        testmode: T.nilable(T::Boolean),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::GetWebhookEventRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetWebhookEventResponse)
     }
-    def get(webhook_event_id:, testmode: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # get - Get a Webhook Event
       # Retrieve a single webhook event object by its event ID.
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
-      request = Models::Operations::GetWebhookEventRequest.new(
-        webhook_event_id: webhook_event_id,
-        testmode: testmode,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(

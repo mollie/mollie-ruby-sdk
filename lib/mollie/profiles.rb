@@ -46,13 +46,23 @@ module Mollie
       params(
         body: Models::Components::ProfileRequest,
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CreateProfileResponse)
     }
-    def create(body:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def create(
+      body:,
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # create - Create profile
       # Create a profile to process payments on.
       #
@@ -62,7 +72,9 @@ module Mollie
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
       request = Models::Operations::CreateProfileRequest.new(
         body: body,
-        idempotency_key: idempotency_key
+        idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -244,9 +256,7 @@ module Mollie
 
     sig {
       params(
-        from: T.nilable(::String),
-        limit: T.nilable(::Integer),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::ListProfilesRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         url_override: T.nilable(::String),
@@ -254,26 +264,13 @@ module Mollie
       )
         .returns(Models::Operations::ListProfilesResponse)
     }
-    def list(
-      from: nil,
-      limit: nil,
-      idempotency_key: nil,
-      retries: nil,
-      timeout_ms: nil,
-      url_override: nil,
-      http_headers: nil
-    )
+    def list(request:, retries: nil, timeout_ms: nil, url_override: nil, http_headers: nil)
       # list - List profiles
       # Retrieve a list of all of your profiles.
       #
       # The results are paginated.
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
-      request = Models::Operations::ListProfilesRequest.new(
-        from: from,
-        limit: limit,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = "#{base_url}/v2/profiles"
@@ -407,9 +404,13 @@ module Mollie
             end
 
             sdk.list(
-              from: request.from,
-              limit: request.limit,
-              idempotency_key: request.idempotency_key,
+              request: Models::Operations::ListProfilesRequest.new(
+                from: request.from,
+                limit: request.limit,
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
+              ),
               url_override: next_url,
               http_headers: http_headers
             )
@@ -481,25 +482,18 @@ module Mollie
 
     sig {
       params(
-        profile_id: ::String,
-        testmode: T.nilable(T::Boolean),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::GetProfileRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetProfileResponse)
     }
-    def get(profile_id:, testmode: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # get - Get profile
       # Retrieve a single profile by its ID.
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
-      request = Models::Operations::GetProfileRequest.new(
-        profile_id: profile_id,
-        testmode: testmode,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -680,16 +674,14 @@ module Mollie
 
     sig {
       params(
-        body: Models::Operations::UpdateProfileRequestBody,
-        profile_id: ::String,
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::UpdateProfileRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::UpdateProfileResponse)
     }
-    def update(body:, profile_id:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def update(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # update - Update profile
       # Update an existing profile.
       #
@@ -697,11 +689,6 @@ module Mollie
       # Alternatively, you can use this endpoint to automate profile management.
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
-      request = Models::Operations::UpdateProfileRequest.new(
-        profile_id: profile_id,
-        body: body,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -890,20 +877,32 @@ module Mollie
       params(
         profile_id: ::String,
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::DeleteProfileResponse)
     }
-    def delete(profile_id:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def delete(
+      profile_id:,
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # delete - Delete profile
       # Delete a profile. A deleted profile and its related credentials can no longer be used for accepting payments.
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
       request = Models::Operations::DeleteProfileRequest.new(
         profile_id: profile_id,
-        idempotency_key: idempotency_key
+        idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -1063,13 +1062,22 @@ module Mollie
     sig {
       params(
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetCurrentProfileResponse)
     }
-    def get_current(idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get_current(
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # get_current - Get current profile
       # Retrieve the currently authenticated profile. A convenient alias of the [Get profile](get-profile)
       # endpoint.
@@ -1079,7 +1087,9 @@ module Mollie
       #
       # If set, this operation will use `api_key` from the global security.
       request = Models::Operations::GetCurrentProfileRequest.new(
-        idempotency_key: idempotency_key
+        idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)

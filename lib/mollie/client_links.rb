@@ -45,13 +45,23 @@ module Mollie
       params(
         body: T.nilable(Models::Components::ClientLinkRequest),
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CreateClientLinkResponse)
     }
-    def create(body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def create(
+      body: nil,
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # create - Create client link
       # Link a new or existing organization to your OAuth application, in effect creating a new client. The response
       # contains a `clientLink` where you should redirect your customer to.
@@ -110,6 +120,8 @@ module Mollie
       # If set, this operation will use `advanced_access_token` from the global security.
       request = Models::Operations::CreateClientLinkRequest.new(
         idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at,
         body: body
       )
       url, params = @sdk_configuration.get_server_details

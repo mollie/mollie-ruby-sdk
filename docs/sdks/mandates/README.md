@@ -29,19 +29,27 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.mandates.create(customer_id: 'cst_5B8cwPMGnU', idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Components::MandateRequest.new(
-  id: 'mdt_5B8cwPMGnU',
-  method: Models::Components::MandateMethod::DIRECTDEBIT,
-  consumer_name: 'John Doe',
-  consumer_account: 'NL55INGB0000000000',
-  consumer_bic: 'BANKBIC',
-  consumer_email: 'example@email.com',
-  signature_date: '2025-01-01',
-  mandate_reference: 'ID-1023892',
-  paypal_billing_agreement_id: 'B-12A34567B8901234CD',
-  pay_pal_vault_id: '8kk8451t',
-  testmode: false
-))
+
+req = Models::Operations::CreateMandateRequest.new(
+  customer_id: 'cst_5B8cwPMGnU',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Components::MandateRequest.new(
+    id: 'mdt_5B8cwPMGnU',
+    method: Models::Components::MandateMethod::DIRECTDEBIT,
+    consumer_name: 'John Doe',
+    consumer_account: 'NL55INGB0000000000',
+    consumer_bic: 'BANKBIC',
+    consumer_email: 'example@email.com',
+    signature_date: '2025-01-01',
+    mandate_reference: 'ID-1023892',
+    paypal_billing_agreement_id: 'B-12A34567B8901234CD',
+    pay_pal_vault_id: '8kk8451t',
+    testmode: false
+  )
+)
+res = s.mandates.create(request: req)
 
 unless res.mandate_response.nil?
   # handle response
@@ -60,19 +68,27 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.mandates.create(customer_id: 'cst_5B8cwPMGnU', idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Components::MandateRequest.new(
-  id: 'mdt_5B8cwPMGnU',
-  method: Models::Components::MandateMethod::DIRECTDEBIT,
-  consumer_name: 'John Doe',
-  consumer_account: 'NL55INGB0000000000',
-  consumer_bic: 'BANKBIC',
-  consumer_email: 'example@email.com',
-  signature_date: '2025-01-01',
-  mandate_reference: 'ID-1023892',
-  paypal_billing_agreement_id: 'B-12A34567B8901234CD',
-  pay_pal_vault_id: '8kk8451t',
-  testmode: false
-))
+
+req = Models::Operations::CreateMandateRequest.new(
+  customer_id: 'cst_5B8cwPMGnU',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Components::MandateRequest.new(
+    id: 'mdt_5B8cwPMGnU',
+    method: Models::Components::MandateMethod::DIRECTDEBIT,
+    consumer_name: 'John Doe',
+    consumer_account: 'NL55INGB0000000000',
+    consumer_bic: 'BANKBIC',
+    consumer_email: 'example@email.com',
+    signature_date: '2025-01-01',
+    mandate_reference: 'ID-1023892',
+    paypal_billing_agreement_id: 'B-12A34567B8901234CD',
+    pay_pal_vault_id: '8kk8451t',
+    testmode: false
+  )
+)
+res = s.mandates.create(request: req)
 
 unless res.mandate_response.nil?
   # handle response
@@ -82,11 +98,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                              | Type                                                                                   | Required                                                                               | Description                                                                            | Example                                                                                |
-| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `customer_id`                                                                          | *::String*                                                                             | :heavy_check_mark:                                                                     | Provide the ID of the related customer.                                                | cst_5B8cwPMGnU                                                                         |
-| `idempotency_key`                                                                      | *T.nilable(::String)*                                                                  | :heavy_minus_sign:                                                                     | A unique key to ensure idempotent requests. This key should be a UUID v4 string.       | 123e4567-e89b-12d3-a456-426                                                            |
-| `body`                                                                                 | [T.nilable(Models::Components::MandateRequest)](../../models/shared/mandaterequest.md) | :heavy_minus_sign:                                                                     | N/A                                                                                    |                                                                                        |
+| Parameter                                                                                   | Type                                                                                        | Required                                                                                    | Description                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `request`                                                                                   | [Models::Operations::CreateMandateRequest](../../models/operations/createmandaterequest.md) | :heavy_check_mark:                                                                          | The request object to use for the request.                                                  |
 
 ### Response
 
@@ -127,7 +141,9 @@ req = Models::Operations::ListMandatesRequest.new(
   scopes: [
     Models::Components::MandateScopes::CUSTOMER_PRESENT,
   ],
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.mandates.list(request: req)
 
@@ -172,7 +188,15 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.mandates.get(customer_id: 'cst_5B8cwPMGnU', mandate_id: 'mdt_5B8cwPMGnU', idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::GetMandateRequest.new(
+  customer_id: 'cst_5B8cwPMGnU',
+  mandate_id: 'mdt_5B8cwPMGnU',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.mandates.get(request: req)
 
 unless res.mandate_response.nil?
   # handle response
@@ -182,12 +206,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                                                                                                                                                                                                | Type                                                                                                                                                                                                                                                                                                                                                                                     | Required                                                                                                                                                                                                                                                                                                                                                                                 | Description                                                                                                                                                                                                                                                                                                                                                                              | Example                                                                                                                                                                                                                                                                                                                                                                                  |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `customer_id`                                                                                                                                                                                                                                                                                                                                                                            | *::String*                                                                                                                                                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                                                                                                                                                       | Provide the ID of the related customer.                                                                                                                                                                                                                                                                                                                                                  | cst_5B8cwPMGnU                                                                                                                                                                                                                                                                                                                                                                           |
-| `mandate_id`                                                                                                                                                                                                                                                                                                                                                                             | *::String*                                                                                                                                                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                                                                                                                                                       | Provide the ID of the related mandate.                                                                                                                                                                                                                                                                                                                                                   | mdt_5B8cwPMGnU                                                                                                                                                                                                                                                                                                                                                                           |
-| `testmode`                                                                                                                                                                                                                                                                                                                                                                               | *T.nilable(T::Boolean)*                                                                                                                                                                                                                                                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                       | Most API credentials are specifically created for either live mode or test mode. In those cases the `testmode` query<br/>parameter must not be sent. For organization-level credentials such as OAuth access tokens, you can enable test mode by<br/>setting the `testmode` query parameter to `true`.<br/><br/>Test entities cannot be retrieved when the endpoint is set to live mode, and vice versa. |                                                                                                                                                                                                                                                                                                                                                                                          |
-| `idempotency_key`                                                                                                                                                                                                                                                                                                                                                                        | *T.nilable(::String)*                                                                                                                                                                                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                       | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                                                                                                                                                                                                                                                                         | 123e4567-e89b-12d3-a456-426                                                                                                                                                                                                                                                                                                                                                              |
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `request`                                                                             | [Models::Operations::GetMandateRequest](../../models/operations/getmandaterequest.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
 
 ### Response
 
@@ -217,9 +238,18 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.mandates.revoke(customer_id: 'cst_5B8cwPMGnU', mandate_id: 'mdt_5B8cwPMGnU', idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Operations::RevokeMandateRequestBody.new(
-  testmode: false
-))
+
+req = Models::Operations::RevokeMandateRequest.new(
+  customer_id: 'cst_5B8cwPMGnU',
+  mandate_id: 'mdt_5B8cwPMGnU',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Operations::RevokeMandateRequestBody.new(
+    testmode: false
+  )
+)
+res = s.mandates.revoke(request: req)
 
 if res.status_code == 200
   # handle response
@@ -229,12 +259,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                      | Type                                                                                                           | Required                                                                                                       | Description                                                                                                    | Example                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| `customer_id`                                                                                                  | *::String*                                                                                                     | :heavy_check_mark:                                                                                             | Provide the ID of the related customer.                                                                        | cst_5B8cwPMGnU                                                                                                 |
-| `mandate_id`                                                                                                   | *::String*                                                                                                     | :heavy_check_mark:                                                                                             | Provide the ID of the related mandate.                                                                         | mdt_5B8cwPMGnU                                                                                                 |
-| `idempotency_key`                                                                                              | *T.nilable(::String)*                                                                                          | :heavy_minus_sign:                                                                                             | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                               | 123e4567-e89b-12d3-a456-426                                                                                    |
-| `body`                                                                                                         | [T.nilable(Models::Operations::RevokeMandateRequestBody)](../../models/operations/revokemandaterequestbody.md) | :heavy_minus_sign:                                                                                             | N/A                                                                                                            |                                                                                                                |
+| Parameter                                                                                   | Type                                                                                        | Required                                                                                    | Description                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `request`                                                                                   | [Models::Operations::RevokeMandateRequest](../../models/operations/revokemandaterequest.md) | :heavy_check_mark:                                                                          | The request object to use for the request.                                                  |
 
 ### Response
 

@@ -46,13 +46,23 @@ module Mollie
       params(
         body: T.nilable(Models::Components::EntityBalanceTransfer),
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CreateConnectBalanceTransferResponse)
     }
-    def create(body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def create(
+      body: nil,
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # create - Create a Connect balance transfer
       # This API endpoint allows you to create a balance transfer from your organization's balance to a connected organization's balance, or vice versa.
       # You can also create a balance transfer between two connected organizations.
@@ -62,6 +72,8 @@ module Mollie
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
       request = Models::Operations::CreateConnectBalanceTransferRequest.new(
         idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at,
         body: body
       )
       url, params = @sdk_configuration.get_server_details
@@ -400,7 +412,9 @@ module Mollie
                 limit: request.limit,
                 sort: request.sort,
                 testmode: request.testmode,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers
@@ -473,25 +487,18 @@ module Mollie
 
     sig {
       params(
-        balance_transfer_id: ::String,
-        testmode: T.nilable(T::Boolean),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::GetConnectBalanceTransferRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetConnectBalanceTransferResponse)
     }
-    def get(balance_transfer_id:, testmode: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # get - Get a Connect balance transfer
       # Retrieve a single Connect balance transfer object by its ID.
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
-      request = Models::Operations::GetConnectBalanceTransferRequest.new(
-        balance_transfer_id: balance_transfer_id,
-        testmode: testmode,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(

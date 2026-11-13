@@ -44,10 +44,7 @@ module Mollie
 
     sig {
       params(
-        embed: T.nilable(::String),
-        from: T.nilable(::String),
-        limit: T.nilable(::Integer),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::ListClientsRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         url_override: T.nilable(::String),
@@ -55,28 +52,13 @@ module Mollie
       )
         .returns(Models::Operations::ListClientsResponse)
     }
-    def list(
-      embed: nil,
-      from: nil,
-      limit: nil,
-      idempotency_key: nil,
-      retries: nil,
-      timeout_ms: nil,
-      url_override: nil,
-      http_headers: nil
-    )
+    def list(request:, retries: nil, timeout_ms: nil, url_override: nil, http_headers: nil)
       # list - List clients
       # Retrieve a list of all clients linked to your account.
       #
       # The results are paginated.
       #
       # If set, this operation will use `advanced_access_token` from the global security.
-      request = Models::Operations::ListClientsRequest.new(
-        embed: embed,
-        from: from,
-        limit: limit,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = "#{base_url}/v2/clients"
@@ -210,10 +192,14 @@ module Mollie
             end
 
             sdk.list(
-              embed: request.embed,
-              from: request.from,
-              limit: request.limit,
-              idempotency_key: request.idempotency_key,
+              request: Models::Operations::ListClientsRequest.new(
+                embed: request.embed,
+                from: request.from,
+                limit: request.limit,
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
+              ),
               url_override: next_url,
               http_headers: http_headers
             )
@@ -285,25 +271,18 @@ module Mollie
 
     sig {
       params(
-        organization_id: ::String,
-        embed: T.nilable(::String),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::GetClientRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetClientResponse)
     }
-    def get(organization_id:, embed: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # get - Get client
       # Retrieve a single client by its ID.
       #
       # If set, this operation will use `advanced_access_token` from the global security.
-      request = Models::Operations::GetClientRequest.new(
-        organization_id: organization_id,
-        embed: embed,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(

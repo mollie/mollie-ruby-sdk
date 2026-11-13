@@ -30,6 +30,18 @@ module Mollie
           Crystalline::Nilable.new(::String),
           {'header': {'field_name': "idempotency-key", 'style': "simple", 'explode': false}}
         )
+        # A cryptographic signature of the request, used to verify that it was sent by you and hasn't been tampered with. Required if you've enabled request signing for your integration.
+        field(
+          :x_client_signature,
+          Crystalline::Nilable.new(::String),
+          {'header': {'field_name': "X-Client-Signature", 'style': "simple", 'explode': false}}
+        )
+        # The timestamp, in ISO 8601 format, at which you generated the `X-Client-Signature`. Required together with `X-Client-Signature` if you've enabled request signing for your integration.
+        field(
+          :x_client_signed_at,
+          Crystalline::Nilable.new(::String),
+          {'header': {'field_name': "X-Client-Signed-At", 'style': "simple", 'explode': false}}
+        )
         # The maximum number of items to return. Defaults to 50 items.
         field(
           :limit,
@@ -49,15 +61,27 @@ module Mollie
             settlement_id: ::String,
             from: T.nilable(::String),
             idempotency_key: T.nilable(::String),
+            x_client_signature: T.nilable(::String),
+            x_client_signed_at: T.nilable(::String),
             limit: T.nilable(::Integer),
             embed: T.nilable(::String)
           )
             .void
         }
-        def initialize(settlement_id:, from: nil, idempotency_key: nil, limit: nil, embed: nil)
+        def initialize(
+          settlement_id:,
+          from: nil,
+          idempotency_key: nil,
+          x_client_signature: nil,
+          x_client_signed_at: nil,
+          limit: nil,
+          embed: nil
+        )
           @settlement_id = settlement_id
           @from = from
           @idempotency_key = idempotency_key
+          @x_client_signature = x_client_signature
+          @x_client_signed_at = x_client_signed_at
           @limit = limit
           @embed = embed
         end
@@ -68,6 +92,8 @@ module Mollie
           return false unless @settlement_id == other.settlement_id
           return false unless @from == other.from
           return false unless @idempotency_key == other.idempotency_key
+          return false unless @x_client_signature == other.x_client_signature
+          return false unless @x_client_signed_at == other.x_client_signed_at
           return false unless @limit == other.limit
           return false unless @embed == other.embed
           true

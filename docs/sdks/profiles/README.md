@@ -41,7 +41,7 @@ res = s.profiles.create(body: Models::Components::ProfileRequest.new(
     'GB',
   ],
   business_category: 'OTHER_MERCHANDISE'
-), idempotency_key: '123e4567-e89b-12d3-a456-426')
+), idempotency_key: '123e4567-e89b-12d3-a456-426', x_client_signature: 'MEUCIQDx8sJvK3z...', x_client_signed_at: '2025-01-01T12:00:00Z')
 
 unless res.profile_response.nil?
   # handle response
@@ -71,7 +71,7 @@ res = s.profiles.create(body: Models::Components::ProfileRequest.new(
     'GB',
   ],
   business_category: 'OTHER_MERCHANDISE'
-), idempotency_key: '123e4567-e89b-12d3-a456-426')
+), idempotency_key: '123e4567-e89b-12d3-a456-426', x_client_signature: 'MEUCIQDx8sJvK3z...', x_client_signed_at: '2025-01-01T12:00:00Z')
 
 unless res.profile_response.nil?
   # handle response
@@ -81,10 +81,12 @@ end
 
 ### Parameters
 
-| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      | Example                                                                          |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `body`                                                                           | [Models::Components::ProfileRequest](../../models/shared/profilerequest.md)      | :heavy_check_mark:                                                               | N/A                                                                              |                                                                                  |
-| `idempotency_key`                                                                | *T.nilable(::String)*                                                            | :heavy_minus_sign:                                                               | A unique key to ensure idempotent requests. This key should be a UUID v4 string. | 123e4567-e89b-12d3-a456-426                                                      |
+| Parameter                                                                                                                                                                               | Type                                                                                                                                                                                    | Required                                                                                                                                                                                | Description                                                                                                                                                                             | Example                                                                                                                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `body`                                                                                                                                                                                  | [Models::Components::ProfileRequest](../../models/shared/profilerequest.md)                                                                                                             | :heavy_check_mark:                                                                                                                                                                      | N/A                                                                                                                                                                                     |                                                                                                                                                                                         |
+| `idempotency_key`                                                                                                                                                                       | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                                                                        | 123e4567-e89b-12d3-a456-426                                                                                                                                                             |
+| `x_client_signature`                                                                                                                                                                    | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | A cryptographic signature of the request, used to verify that it was sent by you and hasn't been tampered with. Required if you've enabled request signing for your integration.        | MEUCIQDx8sJvK3z...                                                                                                                                                                      |
+| `x_client_signed_at`                                                                                                                                                                    | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | The timestamp, in ISO 8601 format, at which you generated the `X-Client-Signature`. Required together with `X-Client-Signature` if you've enabled request signing for your integration. | 2025-01-01T12:00:00Z                                                                                                                                                                    |
 
 ### Response
 
@@ -115,7 +117,14 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.profiles.list(limit: 50, idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::ListProfilesRequest.new(
+  limit: 50,
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.profiles.list(request: req)
 
 unless res.object.nil?
   # handle response
@@ -125,11 +134,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                      | Type                                                                                                                           | Required                                                                                                                       | Description                                                                                                                    | Example                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
-| `from`                                                                                                                         | *T.nilable(::String)*                                                                                                          | :heavy_minus_sign:                                                                                                             | Provide an ID to start the result set from the item with the given ID and onwards. This allows you to paginate the<br/>result set. |                                                                                                                                |
-| `limit`                                                                                                                        | *T.nilable(::Integer)*                                                                                                         | :heavy_minus_sign:                                                                                                             | The maximum number of items to return. Defaults to 50 items.                                                                   | 50                                                                                                                             |
-| `idempotency_key`                                                                                                              | *T.nilable(::String)*                                                                                                          | :heavy_minus_sign:                                                                                                             | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                               | 123e4567-e89b-12d3-a456-426                                                                                                    |
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `request`                                                                                 | [Models::Operations::ListProfilesRequest](../../models/operations/listprofilesrequest.md) | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
 
 ### Response
 
@@ -159,7 +166,14 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.profiles.get(profile_id: 'pfl_5B8cwPMGnU', idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::GetProfileRequest.new(
+  profile_id: 'pfl_5B8cwPMGnU',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.profiles.get(request: req)
 
 unless res.profile_response.nil?
   # handle response
@@ -169,11 +183,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                                                               | Type                                                                                                                                                                    | Required                                                                                                                                                                | Description                                                                                                                                                             | Example                                                                                                                                                                 |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `profile_id`                                                                                                                                                            | *::String*                                                                                                                                                              | :heavy_check_mark:                                                                                                                                                      | Provide the ID of the related profile.                                                                                                                                  | pfl_5B8cwPMGnU                                                                                                                                                          |
-| `testmode`                                                                                                                                                              | *T.nilable(T::Boolean)*                                                                                                                                                 | :heavy_minus_sign:                                                                                                                                                      | You can enable test mode by setting the `testmode` query parameter to `true`.<br/><br/>Test entities cannot be retrieved when the endpoint is set to live mode, and vice versa. |                                                                                                                                                                         |
-| `idempotency_key`                                                                                                                                                       | *T.nilable(::String)*                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                      | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                                                        | 123e4567-e89b-12d3-a456-426                                                                                                                                             |
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `request`                                                                             | [Models::Operations::GetProfileRequest](../../models/operations/getprofilerequest.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
 
 ### Response
 
@@ -205,18 +217,26 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.profiles.update(profile_id: 'pfl_5B8cwPMGnU', body: Models::Operations::UpdateProfileRequestBody.new(
-  name: 'My new website name',
-  website: 'https://example.com',
-  email: 'test@mollie.com',
-  phone: '+31208202071',
-  description: 'My website description',
-  countries_of_activity: [
-    'NL',
-    'GB',
-  ],
-  business_category: 'OTHER_MERCHANDISE'
-), idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::UpdateProfileRequest.new(
+  profile_id: 'pfl_5B8cwPMGnU',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Operations::UpdateProfileRequestBody.new(
+    name: 'My new website name',
+    website: 'https://example.com',
+    email: 'test@mollie.com',
+    phone: '+31208202071',
+    description: 'My website description',
+    countries_of_activity: [
+      'NL',
+      'GB',
+    ],
+    business_category: 'OTHER_MERCHANDISE'
+  )
+)
+res = s.profiles.update(request: req)
 
 unless res.profile_response.nil?
   # handle response
@@ -235,18 +255,26 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.profiles.update(profile_id: 'pfl_5B8cwPMGnU', body: Models::Operations::UpdateProfileRequestBody.new(
-  name: 'My new website name',
-  website: 'https://example.com',
-  email: 'test@mollie.com',
-  phone: '+31208202071',
-  description: 'My website description',
-  countries_of_activity: [
-    'NL',
-    'GB',
-  ],
-  business_category: 'OTHER_MERCHANDISE'
-), idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::UpdateProfileRequest.new(
+  profile_id: 'pfl_5B8cwPMGnU',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Operations::UpdateProfileRequestBody.new(
+    name: 'My new website name',
+    website: 'https://example.com',
+    email: 'test@mollie.com',
+    phone: '+31208202071',
+    description: 'My website description',
+    countries_of_activity: [
+      'NL',
+      'GB',
+    ],
+    business_category: 'OTHER_MERCHANDISE'
+  )
+)
+res = s.profiles.update(request: req)
 
 unless res.profile_response.nil?
   # handle response
@@ -256,11 +284,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                           | Type                                                                                                | Required                                                                                            | Description                                                                                         | Example                                                                                             |
-| --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `profile_id`                                                                                        | *::String*                                                                                          | :heavy_check_mark:                                                                                  | Provide the ID of the related profile.                                                              | pfl_5B8cwPMGnU                                                                                      |
-| `body`                                                                                              | [Models::Operations::UpdateProfileRequestBody](../../models/operations/updateprofilerequestbody.md) | :heavy_check_mark:                                                                                  | N/A                                                                                                 |                                                                                                     |
-| `idempotency_key`                                                                                   | *T.nilable(::String)*                                                                               | :heavy_minus_sign:                                                                                  | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                    | 123e4567-e89b-12d3-a456-426                                                                         |
+| Parameter                                                                                   | Type                                                                                        | Required                                                                                    | Description                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `request`                                                                                   | [Models::Operations::UpdateProfileRequest](../../models/operations/updateprofilerequest.md) | :heavy_check_mark:                                                                          | The request object to use for the request.                                                  |
 
 ### Response
 
@@ -289,7 +315,7 @@ s = ::Mollie::Client.new(
     advanced_access_token: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.profiles.delete(profile_id: 'pfl_5B8cwPMGnU', idempotency_key: '123e4567-e89b-12d3-a456-426')
+res = s.profiles.delete(profile_id: 'pfl_5B8cwPMGnU', idempotency_key: '123e4567-e89b-12d3-a456-426', x_client_signature: 'MEUCIQDx8sJvK3z...', x_client_signed_at: '2025-01-01T12:00:00Z')
 
 if res.status_code == 200
   # handle response
@@ -299,10 +325,12 @@ end
 
 ### Parameters
 
-| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      | Example                                                                          |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `profile_id`                                                                     | *::String*                                                                       | :heavy_check_mark:                                                               | Provide the ID of the related profile.                                           | pfl_5B8cwPMGnU                                                                   |
-| `idempotency_key`                                                                | *T.nilable(::String)*                                                            | :heavy_minus_sign:                                                               | A unique key to ensure idempotent requests. This key should be a UUID v4 string. | 123e4567-e89b-12d3-a456-426                                                      |
+| Parameter                                                                                                                                                                               | Type                                                                                                                                                                                    | Required                                                                                                                                                                                | Description                                                                                                                                                                             | Example                                                                                                                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `profile_id`                                                                                                                                                                            | *::String*                                                                                                                                                                              | :heavy_check_mark:                                                                                                                                                                      | Provide the ID of the related profile.                                                                                                                                                  | pfl_5B8cwPMGnU                                                                                                                                                                          |
+| `idempotency_key`                                                                                                                                                                       | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                                                                        | 123e4567-e89b-12d3-a456-426                                                                                                                                                             |
+| `x_client_signature`                                                                                                                                                                    | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | A cryptographic signature of the request, used to verify that it was sent by you and hasn't been tampered with. Required if you've enabled request signing for your integration.        | MEUCIQDx8sJvK3z...                                                                                                                                                                      |
+| `x_client_signed_at`                                                                                                                                                                    | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | The timestamp, in ISO 8601 format, at which you generated the `X-Client-Signature`. Required together with `X-Client-Signature` if you've enabled request signing for your integration. | 2025-01-01T12:00:00Z                                                                                                                                                                    |
 
 ### Response
 
@@ -335,7 +363,7 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.profiles.get_current(idempotency_key: '123e4567-e89b-12d3-a456-426')
+res = s.profiles.get_current(idempotency_key: '123e4567-e89b-12d3-a456-426', x_client_signature: 'MEUCIQDx8sJvK3z...', x_client_signed_at: '2025-01-01T12:00:00Z')
 
 unless res.profile_response.nil?
   # handle response
@@ -345,9 +373,11 @@ end
 
 ### Parameters
 
-| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      | Example                                                                          |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `idempotency_key`                                                                | *T.nilable(::String)*                                                            | :heavy_minus_sign:                                                               | A unique key to ensure idempotent requests. This key should be a UUID v4 string. | 123e4567-e89b-12d3-a456-426                                                      |
+| Parameter                                                                                                                                                                               | Type                                                                                                                                                                                    | Required                                                                                                                                                                                | Description                                                                                                                                                                             | Example                                                                                                                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `idempotency_key`                                                                                                                                                                       | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                                                                        | 123e4567-e89b-12d3-a456-426                                                                                                                                                             |
+| `x_client_signature`                                                                                                                                                                    | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | A cryptographic signature of the request, used to verify that it was sent by you and hasn't been tampered with. Required if you've enabled request signing for your integration.        | MEUCIQDx8sJvK3z...                                                                                                                                                                      |
+| `x_client_signed_at`                                                                                                                                                                    | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | The timestamp, in ISO 8601 format, at which you generated the `X-Client-Signature`. Required together with `X-Client-Signature` if you've enabled request signing for your integration. | 2025-01-01T12:00:00Z                                                                                                                                                                    |
 
 ### Response
 

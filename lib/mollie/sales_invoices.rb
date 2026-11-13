@@ -46,19 +46,31 @@ module Mollie
       params(
         body: T.nilable(Models::Components::SalesInvoiceRequest),
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CreateSalesInvoiceResponse)
     }
-    def create(body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def create(
+      body: nil,
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # create - Create sales invoice
       # With the Sales Invoice API you can generate sales invoices to send to your customers.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
       request = Models::Operations::CreateSalesInvoiceRequest.new(
         idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at,
         body: body
       )
       url, params = @sdk_configuration.get_server_details
@@ -240,10 +252,7 @@ module Mollie
 
     sig {
       params(
-        from: T.nilable(::String),
-        limit: T.nilable(::Integer),
-        testmode: T.nilable(T::Boolean),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::ListSalesInvoicesRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         url_override: T.nilable(::String),
@@ -251,28 +260,13 @@ module Mollie
       )
         .returns(Models::Operations::ListSalesInvoicesResponse)
     }
-    def list(
-      from: nil,
-      limit: nil,
-      testmode: nil,
-      idempotency_key: nil,
-      retries: nil,
-      timeout_ms: nil,
-      url_override: nil,
-      http_headers: nil
-    )
+    def list(request:, retries: nil, timeout_ms: nil, url_override: nil, http_headers: nil)
       # list - List sales invoices
       # Retrieve a list of all sales invoices created through the API.
       #
       # The results are paginated.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::ListSalesInvoicesRequest.new(
-        from: from,
-        limit: limit,
-        testmode: testmode,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = "#{base_url}/v2/sales-invoices"
@@ -409,10 +403,14 @@ module Mollie
             end
 
             sdk.list(
-              from: request.from,
-              limit: request.limit,
-              testmode: request.testmode,
-              idempotency_key: request.idempotency_key,
+              request: Models::Operations::ListSalesInvoicesRequest.new(
+                from: request.from,
+                limit: request.limit,
+                testmode: request.testmode,
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
+              ),
               url_override: next_url,
               http_headers: http_headers
             )
@@ -484,25 +482,18 @@ module Mollie
 
     sig {
       params(
-        sales_invoice_id: ::String,
-        testmode: T.nilable(T::Boolean),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::GetSalesInvoiceRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetSalesInvoiceResponse)
     }
-    def get(sales_invoice_id:, testmode: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # get - Get sales invoice
       # Retrieve a single sales invoice by its ID.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::GetSalesInvoiceRequest.new(
-        sales_invoice_id: sales_invoice_id,
-        testmode: testmode,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -683,27 +674,20 @@ module Mollie
 
     sig {
       params(
-        sales_invoice_id: ::String,
-        body: T.nilable(Models::Operations::UpdateSalesInvoiceRequestBody),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::UpdateSalesInvoiceRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::UpdateSalesInvoiceResponse)
     }
-    def update(sales_invoice_id:, body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def update(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # update - Update sales invoice
       # Certain details of an existing sales invoice can be updated. For `draft` it is all values listed below, but for
       # statuses `paid` and `issued` there are certain additional requirements (`paymentDetails` and `emailDetails`,
       # respectively).
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::UpdateSalesInvoiceRequest.new(
-        sales_invoice_id: sales_invoice_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -889,26 +873,19 @@ module Mollie
 
     sig {
       params(
-        sales_invoice_id: ::String,
-        body: T.nilable(Models::Components::DeleteValuesSalesInvoice),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::DeleteSalesInvoiceRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::DeleteSalesInvoiceResponse)
     }
-    def delete(sales_invoice_id:, body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def delete(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # delete - Delete sales invoice
       # Sales invoices which are in status `draft` can be deleted. For all other statuses, please use the
       # [Update sales invoice](update-sales-invoice) endpoint instead.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::DeleteSalesInvoiceRequest.new(
-        sales_invoice_id: sales_invoice_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(

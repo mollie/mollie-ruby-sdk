@@ -59,7 +59,9 @@ req = Models::Operations::ListMethodsRequest.new(
   billing_country: 'DE',
   include_wallets: Models::Components::MethodIncludeWalletsParameter::APPLEPAY,
   order_line_categories: Models::Components::LineCategories::ECO,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.methods.list(request: req)
 
@@ -93,7 +95,9 @@ req = Models::Operations::ListMethodsRequest.new(
   billing_country: 'DE',
   include_wallets: Models::Components::MethodIncludeWalletsParameter::APPLEPAY,
   order_line_categories: Models::Components::LineCategories::ECO,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.methods.list(request: req)
 
@@ -127,7 +131,9 @@ req = Models::Operations::ListMethodsRequest.new(
   billing_country: 'DE',
   include_wallets: Models::Components::MethodIncludeWalletsParameter::APPLEPAY,
   order_line_categories: Models::Components::LineCategories::ECO,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.methods.list(request: req)
 
@@ -186,7 +192,9 @@ req = Models::Operations::ListAllMethodsRequest.new(
     value: '10.00'
   ),
   sequence_type: Models::Components::SequenceType::ONEOFF,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.methods.all(request: req)
 
@@ -217,7 +225,9 @@ req = Models::Operations::ListAllMethodsRequest.new(
     value: '10.00'
   ),
   sequence_type: Models::Components::SequenceType::ONEOFF,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.methods.all(request: req)
 
@@ -248,7 +258,9 @@ req = Models::Operations::ListAllMethodsRequest.new(
     value: '10.00'
   ),
   sequence_type: Models::Components::SequenceType::ONEOFF,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.methods.all(request: req)
 
@@ -279,7 +291,9 @@ req = Models::Operations::ListAllMethodsRequest.new(
     value: '10.00'
   ),
   sequence_type: Models::Components::SequenceType::ONEOFF,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.methods.all(request: req)
 
@@ -341,7 +355,9 @@ req = Models::Operations::GetMethodRequest.new(
   locale: Models::Components::Locale::EN_US,
   currency: 'EUR',
   sequence_type: Models::Components::SequenceType::ONEOFF,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.methods.get(request: req)
 
@@ -393,7 +409,15 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.methods.enable(profile_id: 'pfl_5B8cwPMGnU', method_id: Models::Components::MethodId::IDEAL, idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::EnableMethodRequest.new(
+  profile_id: 'pfl_5B8cwPMGnU',
+  method_id: Models::Components::MethodId::IDEAL,
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.methods.enable(request: req)
 
 unless res.entity_method_get.nil?
   # handle response
@@ -412,7 +436,15 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.methods.enable(profile_id: 'pfl_5B8cwPMGnU', method_id: Models::Components::MethodId::IDEAL, idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::EnableMethodRequest.new(
+  profile_id: 'pfl_5B8cwPMGnU',
+  method_id: Models::Components::MethodId::IDEAL,
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.methods.enable(request: req)
 
 unless res.entity_method_get.nil?
   # handle response
@@ -431,7 +463,15 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.methods.enable(profile_id: 'pfl_5B8cwPMGnU', method_id: Models::Components::MethodId::IDEAL, idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::EnableMethodRequest.new(
+  profile_id: 'pfl_5B8cwPMGnU',
+  method_id: Models::Components::MethodId::IDEAL,
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.methods.enable(request: req)
 
 unless res.entity_method_get.nil?
   # handle response
@@ -441,11 +481,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      | Example                                                                          |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `profile_id`                                                                     | *::String*                                                                       | :heavy_check_mark:                                                               | Provide the ID of the related profile.                                           | pfl_5B8cwPMGnU                                                                   |
-| `method_id`                                                                      | [T.nilable(Models::Components::MethodId)](../../models/shared/methodid.md)       | :heavy_check_mark:                                                               | Provide the ID of the related payment method.                                    | ideal                                                                            |
-| `idempotency_key`                                                                | *T.nilable(::String)*                                                            | :heavy_minus_sign:                                                               | A unique key to ensure idempotent requests. This key should be a UUID v4 string. | 123e4567-e89b-12d3-a456-426                                                      |
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `request`                                                                                 | [Models::Operations::EnableMethodRequest](../../models/operations/enablemethodrequest.md) | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
 
 ### Response
 
@@ -477,7 +515,15 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.methods.disable(profile_id: 'pfl_5B8cwPMGnU', method_id: Models::Components::MethodId::IDEAL, idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::DisableMethodRequest.new(
+  profile_id: 'pfl_5B8cwPMGnU',
+  method_id: Models::Components::MethodId::IDEAL,
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.methods.disable(request: req)
 
 if res.status_code == 200
   # handle response
@@ -487,11 +533,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                        | Type                                                                             | Required                                                                         | Description                                                                      | Example                                                                          |
-| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `profile_id`                                                                     | *::String*                                                                       | :heavy_check_mark:                                                               | Provide the ID of the related profile.                                           | pfl_5B8cwPMGnU                                                                   |
-| `method_id`                                                                      | [T.nilable(Models::Components::MethodId)](../../models/shared/methodid.md)       | :heavy_check_mark:                                                               | Provide the ID of the related payment method.                                    | ideal                                                                            |
-| `idempotency_key`                                                                | *T.nilable(::String)*                                                            | :heavy_minus_sign:                                                               | A unique key to ensure idempotent requests. This key should be a UUID v4 string. | 123e4567-e89b-12d3-a456-426                                                      |
+| Parameter                                                                                   | Type                                                                                        | Required                                                                                    | Description                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `request`                                                                                   | [Models::Operations::DisableMethodRequest](../../models/operations/disablemethodrequest.md) | :heavy_check_mark:                                                                          | The request object to use for the request.                                                  |
 
 ### Response
 
@@ -531,6 +575,8 @@ req = Models::Operations::EnableMethodIssuerRequest.new(
   method_id: Models::Components::MethodIdWithIssuer::VOUCHER,
   issuer_id: 'edenred-france-sports',
   idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
   body: Models::Operations::EnableMethodIssuerRequestBody.new(
     contract_id: 'ideal'
   )
@@ -581,7 +627,16 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.methods.disable_issuer(profile_id: 'pfl_5B8cwPMGnU', method_id: Models::Components::MethodIdWithIssuer::VOUCHER, issuer_id: 'edenred-france-sports', idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::DisableMethodIssuerRequest.new(
+  profile_id: 'pfl_5B8cwPMGnU',
+  method_id: Models::Components::MethodIdWithIssuer::VOUCHER,
+  issuer_id: 'edenred-france-sports',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.methods.disable_issuer(request: req)
 
 if res.status_code == 200
   # handle response
@@ -591,12 +646,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         | Example                                                                             |
-| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `profile_id`                                                                        | *::String*                                                                          | :heavy_check_mark:                                                                  | Provide the ID of the related profile.                                              | pfl_5B8cwPMGnU                                                                      |
-| `method_id`                                                                         | [Models::Components::MethodIdWithIssuer](../../models/shared/methodidwithissuer.md) | :heavy_check_mark:                                                                  | Provide the ID of the related payment method.                                       | voucher                                                                             |
-| `issuer_id`                                                                         | *::String*                                                                          | :heavy_check_mark:                                                                  | Provide the ID of the related issuer.                                               | edenred-france-sports                                                               |
-| `idempotency_key`                                                                   | *T.nilable(::String)*                                                               | :heavy_minus_sign:                                                                  | A unique key to ensure idempotent requests. This key should be a UUID v4 string.    | 123e4567-e89b-12d3-a456-426                                                         |
+| Parameter                                                                                               | Type                                                                                                    | Required                                                                                                | Description                                                                                             |
+| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                               | [Models::Operations::DisableMethodIssuerRequest](../../models/operations/disablemethodissuerrequest.md) | :heavy_check_mark:                                                                                      | The request object to use for the request.                                                              |
 
 ### Response
 

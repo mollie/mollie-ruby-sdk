@@ -45,13 +45,23 @@ module Mollie
       params(
         body: Models::Components::CreateReportRequest,
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CreateReportResponse)
     }
-    def create(body:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def create(
+      body:,
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # create - Create report
       # > 🚧 Beta feature
       # >
@@ -68,7 +78,9 @@ module Mollie
       # If set, this operation will use `advanced_access_token` from the global security.
       request = Models::Operations::CreateReportRequest.new(
         body: body,
-        idempotency_key: idempotency_key
+        idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -236,13 +248,23 @@ module Mollie
       params(
         report_id: ::String,
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetReportResponse)
     }
-    def get(report_id:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get(
+      report_id:,
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # get - Get report
       # > 🚧 Beta feature
       # >
@@ -259,7 +281,9 @@ module Mollie
       # If set, this operation will use `advanced_access_token` from the global security.
       request = Models::Operations::GetReportRequest.new(
         report_id: report_id,
-        idempotency_key: idempotency_key
+        idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)

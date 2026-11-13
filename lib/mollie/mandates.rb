@@ -44,16 +44,14 @@ module Mollie
 
     sig {
       params(
-        customer_id: ::String,
-        body: T.nilable(Models::Components::MandateRequest),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::CreateMandateRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CreateMandateResponse)
     }
-    def create(customer_id:, body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def create(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # create - Create mandate
       # Create a mandate for a specific customer. Mandates allow you to charge a customer's card, PayPal account or bank
       # account recurrently.
@@ -62,11 +60,6 @@ module Mollie
       # mandates for cards, your customers need to perform a 'first payment' with their card.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::CreateMandateRequest.new(
-        customer_id: customer_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -413,7 +406,9 @@ module Mollie
                 sort: request.sort,
                 scopes: request.scopes,
                 testmode: request.testmode,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers
@@ -486,36 +481,19 @@ module Mollie
 
     sig {
       params(
-        customer_id: ::String,
-        mandate_id: ::String,
-        testmode: T.nilable(T::Boolean),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::GetMandateRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetMandateResponse)
     }
-    def get(
-      customer_id:,
-      mandate_id:,
-      testmode: nil,
-      idempotency_key: nil,
-      retries: nil,
-      timeout_ms: nil,
-      http_headers: nil
-    )
+    def get(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # get - Get mandate
       # Retrieve a single mandate by its ID. Depending on the type of mandate, the object will contain the customer's bank
       # account details, card details, or PayPal account details.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::GetMandateRequest.new(
-        customer_id: customer_id,
-        mandate_id: mandate_id,
-        testmode: testmode,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -696,36 +674,19 @@ module Mollie
 
     sig {
       params(
-        customer_id: ::String,
-        mandate_id: ::String,
-        body: T.nilable(Models::Operations::RevokeMandateRequestBody),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::RevokeMandateRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::RevokeMandateResponse)
     }
-    def revoke(
-      customer_id:,
-      mandate_id:,
-      body: nil,
-      idempotency_key: nil,
-      retries: nil,
-      timeout_ms: nil,
-      http_headers: nil
-    )
+    def revoke(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # revoke - Revoke mandate
       # Revoke a customer's mandate. You will no longer be able to charge the customer's bank account or card with this
       # mandate, and all connected subscriptions will be canceled.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::RevokeMandateRequest.new(
-        customer_id: customer_id,
-        mandate_id: mandate_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(

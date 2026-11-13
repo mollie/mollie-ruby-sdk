@@ -46,13 +46,23 @@ module Mollie
       params(
         body: T.nilable(Models::Operations::CreatePaymentLinkRequestBody),
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CreatePaymentLinkResponse)
     }
-    def create(body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def create(
+      body: nil,
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # create - Create payment link
       # With the Payment links API you can generate payment links that by default, unlike regular payments, do not expire.
       # The payment link can be shared with your customers and will redirect them to them the payment page where they can
@@ -61,6 +71,8 @@ module Mollie
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
       request = Models::Operations::CreatePaymentLinkRequest.new(
         idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at,
         body: body
       )
       url, params = @sdk_configuration.get_server_details
@@ -242,10 +254,7 @@ module Mollie
 
     sig {
       params(
-        from: T.nilable(::String),
-        limit: T.nilable(::Integer),
-        testmode: T.nilable(T::Boolean),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::ListPaymentLinksRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         url_override: T.nilable(::String),
@@ -253,28 +262,13 @@ module Mollie
       )
         .returns(Models::Operations::ListPaymentLinksResponse)
     }
-    def list(
-      from: nil,
-      limit: nil,
-      testmode: nil,
-      idempotency_key: nil,
-      retries: nil,
-      timeout_ms: nil,
-      url_override: nil,
-      http_headers: nil
-    )
+    def list(request:, retries: nil, timeout_ms: nil, url_override: nil, http_headers: nil)
       # list - List payment links
       # Retrieve a list of all payment links.
       #
       # The results are paginated.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::ListPaymentLinksRequest.new(
-        from: from,
-        limit: limit,
-        testmode: testmode,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = "#{base_url}/v2/payment-links"
@@ -411,10 +405,14 @@ module Mollie
             end
 
             sdk.list(
-              from: request.from,
-              limit: request.limit,
-              testmode: request.testmode,
-              idempotency_key: request.idempotency_key,
+              request: Models::Operations::ListPaymentLinksRequest.new(
+                from: request.from,
+                limit: request.limit,
+                testmode: request.testmode,
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
+              ),
               url_override: next_url,
               http_headers: http_headers
             )
@@ -486,25 +484,18 @@ module Mollie
 
     sig {
       params(
-        payment_link_id: ::String,
-        testmode: T.nilable(T::Boolean),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::GetPaymentLinkRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetPaymentLinkResponse)
     }
-    def get(payment_link_id:, testmode: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # get - Get payment link
       # Retrieve a single payment link by its ID.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::GetPaymentLinkRequest.new(
-        payment_link_id: payment_link_id,
-        testmode: testmode,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -685,25 +676,18 @@ module Mollie
 
     sig {
       params(
-        payment_link_id: ::String,
-        body: T.nilable(Models::Operations::UpdatePaymentLinkRequestBody),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::UpdatePaymentLinkRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::UpdatePaymentLinkResponse)
     }
-    def update(payment_link_id:, body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def update(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # update - Update payment link
       # Certain details of an existing payment link can be updated.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::UpdatePaymentLinkRequest.new(
-        payment_link_id: payment_link_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -889,16 +873,14 @@ module Mollie
 
     sig {
       params(
-        payment_link_id: ::String,
-        body: T.nilable(Models::Operations::DeletePaymentLinkRequestBody),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::DeletePaymentLinkRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::DeletePaymentLinkResponse)
     }
-    def delete(payment_link_id:, body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def delete(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # delete - Delete payment link
       # Payment links which have not been opened and no payments have been made yet can be deleted entirely.
       # This can be useful for removing payment links that have been incorrectly configured or that are no longer relevant.
@@ -909,11 +891,6 @@ module Mollie
       # [Update payment link](update-payment-link) endpoint instead.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::DeletePaymentLinkRequest.new(
-        payment_link_id: payment_link_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -1246,7 +1223,9 @@ module Mollie
                 limit: request.limit,
                 sort: request.sort,
                 testmode: request.testmode,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers

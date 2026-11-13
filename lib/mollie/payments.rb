@@ -44,16 +44,14 @@ module Mollie
 
     sig {
       params(
-        body: T.nilable(Models::Components::PaymentRequest),
-        include: T.nilable(::String),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::CreatePaymentRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CreatePaymentResponse)
     }
-    def create(body: nil, include: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def create(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # create - Create payment
       # Payment creation is elemental to the Mollie API: this is where most payment
       # implementations start off.
@@ -69,11 +67,6 @@ module Mollie
       # guide on [method-specific parameters](extra-payment-parameters).
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::CreatePaymentRequest.new(
-        include: include,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = "#{base_url}/v2/payments"
@@ -436,7 +429,9 @@ module Mollie
                 sort: request.sort,
                 profile_id: request.profile_id,
                 testmode: request.testmode,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers
@@ -701,27 +696,20 @@ module Mollie
 
     sig {
       params(
-        payment_id: ::String,
-        body: T.nilable(Models::Operations::UpdatePaymentRequestBody),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::UpdatePaymentRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::UpdatePaymentResponse)
     }
-    def update(payment_id:, body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def update(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # update - Update payment
       # Certain details of an existing payment can be updated.
       #
       # Updating the payment details will not result in a webhook call.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::UpdatePaymentRequest.new(
-        payment_id: payment_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -907,16 +895,14 @@ module Mollie
 
     sig {
       params(
-        payment_id: ::String,
-        body: T.nilable(Models::Operations::CancelPaymentRequestBody),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::CancelPaymentRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CancelPaymentResponse)
     }
-    def cancel(payment_id:, body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def cancel(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # cancel - Cancel payment
       # Depending on the payment method, you may be able to cancel a payment for a certain amount of time — usually until
       # the next business day or as long as the payment status is open.
@@ -926,11 +912,6 @@ module Mollie
       # The `isCancelable` property on the [Payment object](get-payment) will indicate if the payment can be canceled.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::CancelPaymentRequest.new(
-        payment_id: payment_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -1116,23 +1097,14 @@ module Mollie
 
     sig {
       params(
-        payment_id: ::String,
-        body: T.nilable(Models::Operations::ReleaseAuthorizationRequestBody),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::ReleaseAuthorizationRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::ReleaseAuthorizationResponse)
     }
-    def release_authorization(
-      payment_id:,
-      body: nil,
-      idempotency_key: nil,
-      retries: nil,
-      timeout_ms: nil,
-      http_headers: nil
-    )
+    def release_authorization(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # release_authorization - Release payment authorization
       # Releases the full remaining authorized amount. Call this endpoint when you will not be making any additional
       # captures. Payment authorizations may also be released manually from the Mollie Dashboard.
@@ -1144,11 +1116,6 @@ module Mollie
       # If there is a successful capture, the payment will transition to `paid`.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::ReleaseAuthorizationRequest.new(
-        payment_id: payment_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(

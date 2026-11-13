@@ -31,14 +31,22 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.captures.create(payment_id: 'tr_5B8cwPMGnU', idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Components::EntityCapture.new(
-  description: 'Capture for cart #12345',
-  amount: Models::Components::AmountNullable.new(
-    currency: 'EUR',
-    value: '10.00'
-  ),
-  testmode: false
-))
+
+req = Models::Operations::CreateCaptureRequest.new(
+  payment_id: 'tr_5B8cwPMGnU',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Components::EntityCapture.new(
+    description: 'Capture for cart #12345',
+    amount: Models::Components::AmountNullable.new(
+      currency: 'EUR',
+      value: '10.00'
+    ),
+    testmode: false
+  )
+)
+res = s.captures.create(request: req)
 
 unless res.capture_response.nil?
   # handle response
@@ -57,14 +65,22 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.captures.create(payment_id: 'tr_5B8cwPMGnU', idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Components::EntityCapture.new(
-  description: 'Capture for cart #12345',
-  amount: Models::Components::AmountNullable.new(
-    currency: 'EUR',
-    value: '10.00'
-  ),
-  testmode: false
-))
+
+req = Models::Operations::CreateCaptureRequest.new(
+  payment_id: 'tr_5B8cwPMGnU',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Components::EntityCapture.new(
+    description: 'Capture for cart #12345',
+    amount: Models::Components::AmountNullable.new(
+      currency: 'EUR',
+      value: '10.00'
+    ),
+    testmode: false
+  )
+)
+res = s.captures.create(request: req)
 
 unless res.capture_response.nil?
   # handle response
@@ -74,11 +90,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                            | Type                                                                                 | Required                                                                             | Description                                                                          | Example                                                                              |
-| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
-| `payment_id`                                                                         | *::String*                                                                           | :heavy_check_mark:                                                                   | Provide the ID of the related payment.                                               | tr_5B8cwPMGnU                                                                        |
-| `idempotency_key`                                                                    | *T.nilable(::String)*                                                                | :heavy_minus_sign:                                                                   | A unique key to ensure idempotent requests. This key should be a UUID v4 string.     | 123e4567-e89b-12d3-a456-426                                                          |
-| `body`                                                                               | [T.nilable(Models::Components::EntityCapture)](../../models/shared/entitycapture.md) | :heavy_minus_sign:                                                                   | N/A                                                                                  |                                                                                      |
+| Parameter                                                                                   | Type                                                                                        | Required                                                                                    | Description                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `request`                                                                                   | [Models::Operations::CreateCaptureRequest](../../models/operations/createcapturerequest.md) | :heavy_check_mark:                                                                          | The request object to use for the request.                                                  |
 
 ### Response
 
@@ -115,7 +129,9 @@ req = Models::Operations::ListCapturesRequest.new(
   payment_id: 'tr_5B8cwPMGnU',
   from: 'cpt_vytxeTZskVKR7C7WgdSP3d',
   limit: 50,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.captures.list(request: req)
 
@@ -142,7 +158,9 @@ req = Models::Operations::ListCapturesRequest.new(
   payment_id: 'tr_5B8cwPMGnU',
   from: 'cpt_vytxeTZskVKR7C7WgdSP3d',
   limit: 50,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.captures.list(request: req)
 
@@ -191,7 +209,9 @@ s = ::Mollie::Client.new(
 req = Models::Operations::GetCaptureRequest.new(
   payment_id: 'tr_5B8cwPMGnU',
   capture_id: 'cpt_vytxeTZskVKR7C7WgdSP3d',
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.captures.get(request: req)
 
@@ -217,7 +237,9 @@ s = ::Mollie::Client.new(
 req = Models::Operations::GetCaptureRequest.new(
   payment_id: 'tr_5B8cwPMGnU',
   capture_id: 'cpt_vytxeTZskVKR7C7WgdSP3d',
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.captures.get(request: req)
 

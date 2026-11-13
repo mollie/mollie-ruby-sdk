@@ -44,16 +44,14 @@ module Mollie
 
     sig {
       params(
-        payment_id: ::String,
-        body: T.nilable(Models::Components::EntityCapture),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::CreateCaptureRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CreateCaptureResponse)
     }
-    def create(payment_id:, body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def create(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # create - Create capture
       # Capture an *authorized* payment.
       #
@@ -65,11 +63,6 @@ module Mollie
       # having collected the customer's authorization.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::CreateCaptureRequest.new(
-        payment_id: payment_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -415,7 +408,9 @@ module Mollie
                 limit: request.limit,
                 embed: request.embed,
                 testmode: request.testmode,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers

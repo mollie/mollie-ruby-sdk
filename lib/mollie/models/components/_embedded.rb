@@ -23,7 +23,8 @@ module Mollie
               Models::Components::EntityPayoutResponse,
               Models::Components::SalesInvoiceResponse,
               Models::Components::TransferResponse,
-              Models::Components::DraftTransferResponse
+              Models::Components::DraftTransferResponse,
+              Models::Components::BusinessAccountResponse
             )
           ),
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("entity")}}
@@ -41,7 +42,8 @@ module Mollie
                 Models::Components::EntityPayoutResponse,
                 Models::Components::SalesInvoiceResponse,
                 Models::Components::TransferResponse,
-                Models::Components::DraftTransferResponse
+                Models::Components::DraftTransferResponse,
+                Models::Components::BusinessAccountResponse
               )
             )
           )

@@ -44,13 +44,22 @@ module Mollie
     sig {
       params(
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::ListCapabilitiesResponse)
     }
-    def list(idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def list(
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # list - List capabilities
       # > 🚧 Beta feature
       # >
@@ -71,7 +80,9 @@ module Mollie
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
       request = Models::Operations::ListCapabilitiesRequest.new(
-        idempotency_key: idempotency_key
+        idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)

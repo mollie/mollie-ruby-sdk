@@ -24,12 +24,6 @@ class Mollie::Models::Operations::CreateTransferRequest
   def idempotency_key=(str_)
   end
 
-  def idempotency_key1
-  end
-
-  def idempotency_key1=(str_)
-  end
-
   def body
   end
 

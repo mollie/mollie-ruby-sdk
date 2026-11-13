@@ -8,6 +8,7 @@ module Mollie
     module Components
       autoload :Security, "mollie/models/components/security.rb"
       autoload :Embedded, "mollie/models/components/_embedded.rb"
+      autoload :AccountCurrency, "mollie/models/components/account_currency.rb"
       autoload :AccountDetails, "mollie/models/components/account_details.rb"
       autoload :AccountNumberFormat, "mollie/models/components/account_number_format.rb"
       autoload :AccountNumberFormatResponse, "mollie/models/components/account_number_format_response.rb"
@@ -38,6 +39,7 @@ module Mollie
       )
       autoload :BillingAddress, "mollie/models/components/billingaddress.rb"
       autoload :BusinessAccountResponse, "mollie/models/components/business_account_response.rb"
+      autoload :BusinessAccountResponseLinks, "mollie/models/components/business_account_response_links.rb"
       autoload :CapabilityRequirementStatus, "mollie/models/components/capability_requirement_status.rb"
       autoload :CapabilityStatus, "mollie/models/components/capability_status.rb"
       autoload :CapabilityStatusReason, "mollie/models/components/capability_status_reason.rb"
@@ -194,6 +196,8 @@ module Mollie
       autoload :GiftcardStatus, "mollie/models/components/giftcard_status.rb"
       autoload :LineCategories, "mollie/models/components/line_categories.rb"
       autoload :LineCategoriesResponse, "mollie/models/components/line_categories_response.rb"
+      autoload :ListBusinessAccountResponse, "mollie/models/components/list_business_account_response.rb"
+      autoload :ListBusinessAccountResponseLinks, "mollie/models/components/list_business_account_response_links.rb"
       autoload :ListCaptureResponse, "mollie/models/components/list_capture_response.rb"
       autoload :ListCaptureResponseLinks, "mollie/models/components/list_capture_response_links.rb"
       autoload :ListCaptureResponseStatus, "mollie/models/components/list_capture_response_status.rb"

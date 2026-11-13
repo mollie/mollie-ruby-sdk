@@ -43,16 +43,14 @@ module Mollie
 
     sig {
       params(
-        organization_id: ::String,
-        testmode: T.nilable(T::Boolean),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::GetOrganizationRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetOrganizationResponse)
     }
-    def get(organization_id:, testmode: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # get - Get organization
       # Retrieve a single organization by its ID.
       #
@@ -62,11 +60,6 @@ module Mollie
       # If you have a *partner account*', you can retrieve organization details of connected organizations.
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
-      request = Models::Operations::GetOrganizationRequest.new(
-        organization_id: organization_id,
-        testmode: testmode,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -248,13 +241,22 @@ module Mollie
     sig {
       params(
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetCurrentOrganizationResponse)
     }
-    def get_current(idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get_current(
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # get_current - Get current organization
       # Retrieve the currently authenticated organization. A convenient alias of the [Get organization](get-organization)
       # endpoint.
@@ -264,7 +266,9 @@ module Mollie
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
       request = Models::Operations::GetCurrentOrganizationRequest.new(
-        idempotency_key: idempotency_key
+        idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -434,20 +438,31 @@ module Mollie
     sig {
       params(
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetPartnerStatusResponse)
     }
-    def get_partner(idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get_partner(
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # get_partner - Get partner status
       # Retrieve partnership details about the currently authenticated organization. Only relevant for so-called *partner
       # accounts*.
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
       request = Models::Operations::GetPartnerStatusRequest.new(
-        idempotency_key: idempotency_key
+        idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)

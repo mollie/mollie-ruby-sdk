@@ -35,12 +35,6 @@ module Mollie
           ::String,
           {'header': {'field_name': "Idempotency-Key", 'style': "simple", 'explode': false}}
         )
-        # A unique key to ensure idempotent requests. This key should be a UUID v4 string.
-        field(
-          :idempotency_key1,
-          Crystalline::Nilable.new(::String),
-          {'header': {'field_name': "idempotency-key", 'style': "simple", 'explode': false}}
-        )
 
         field(
           :body,
@@ -53,16 +47,14 @@ module Mollie
             x_client_signature: ::String,
             x_client_signed_at: ::String,
             idempotency_key: ::String,
-            idempotency_key1: T.nilable(::String),
             body: T.nilable(Models::Components::TransferRequest)
           )
             .void
         }
-        def initialize(x_client_signature:, x_client_signed_at:, idempotency_key:, idempotency_key1: nil, body: nil)
+        def initialize(x_client_signature:, x_client_signed_at:, idempotency_key:, body: nil)
           @x_client_signature = x_client_signature
           @x_client_signed_at = x_client_signed_at
           @idempotency_key = idempotency_key
-          @idempotency_key1 = idempotency_key1
           @body = body
         end
 
@@ -72,7 +64,6 @@ module Mollie
           return false unless @x_client_signature == other.x_client_signature
           return false unless @x_client_signed_at == other.x_client_signed_at
           return false unless @idempotency_key == other.idempotency_key
-          return false unless @idempotency_key1 == other.idempotency_key1
           return false unless @body == other.body
           true
         end

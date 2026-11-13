@@ -47,4 +47,10 @@ class Mollie::Models::Components::BusinessAccountResponse
 
   def created_at=(str_)
   end
+
+  def links
+  end
+
+  def links=(str_)
+  end
 end

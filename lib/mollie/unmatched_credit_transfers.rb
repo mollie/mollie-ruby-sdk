@@ -44,9 +44,7 @@ module Mollie
 
     sig {
       params(
-        from: T.nilable(::String),
-        limit: T.nilable(::Integer),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::ListUnmatchedCreditTransfersRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         url_override: T.nilable(::String),
@@ -54,15 +52,7 @@ module Mollie
       )
         .returns(Models::Operations::ListUnmatchedCreditTransfersResponse)
     }
-    def list(
-      from: nil,
-      limit: nil,
-      idempotency_key: nil,
-      retries: nil,
-      timeout_ms: nil,
-      url_override: nil,
-      http_headers: nil
-    )
+    def list(request:, retries: nil, timeout_ms: nil, url_override: nil, http_headers: nil)
       # list - List unmatched credit transfers
       # > 🚧 Beta feature
       # >
@@ -73,11 +63,6 @@ module Mollie
       # The results are paginated.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::ListUnmatchedCreditTransfersRequest.new(
-        from: from,
-        limit: limit,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = "#{base_url}/v2/unmatched-credit-transfers"
@@ -214,9 +199,13 @@ module Mollie
             end
 
             sdk.list(
-              from: request.from,
-              limit: request.limit,
-              idempotency_key: request.idempotency_key,
+              request: Models::Operations::ListUnmatchedCreditTransfersRequest.new(
+                from: request.from,
+                limit: request.limit,
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
+              ),
               url_override: next_url,
               http_headers: http_headers
             )
@@ -290,13 +279,23 @@ module Mollie
       params(
         unmatched_credit_transfer_id: ::String,
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetUnmatchedCreditTransferResponse)
     }
-    def get(unmatched_credit_transfer_id:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get(
+      unmatched_credit_transfer_id:,
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # get - Get unmatched credit transfer
       # > 🚧 Beta feature
       # >
@@ -307,7 +306,9 @@ module Mollie
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
       request = Models::Operations::GetUnmatchedCreditTransferRequest.new(
         unmatched_credit_transfer_id: unmatched_credit_transfer_id,
-        idempotency_key: idempotency_key
+        idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -485,23 +486,14 @@ module Mollie
 
     sig {
       params(
-        unmatched_credit_transfer_id: ::String,
-        body: T.nilable(Models::Components::UnmatchedCreditTransferMatchRequest),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::MatchUnmatchedCreditTransferRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::MatchUnmatchedCreditTransferResponse)
     }
-    def match(
-      unmatched_credit_transfer_id:,
-      body: nil,
-      idempotency_key: nil,
-      retries: nil,
-      timeout_ms: nil,
-      http_headers: nil
-    )
+    def match(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # match - Match unmatched credit transfer
       # > 🚧 Beta feature
       # >
@@ -510,11 +502,6 @@ module Mollie
       # Matches an unmatched credit transfer to one or more payments, settling the funds accordingly.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::MatchUnmatchedCreditTransferRequest.new(
-        unmatched_credit_transfer_id: unmatched_credit_transfer_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -705,13 +692,23 @@ module Mollie
       params(
         unmatched_credit_transfer_id: ::String,
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::ReturnUnmatchedCreditTransferResponse)
     }
-    def return(unmatched_credit_transfer_id:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def return(
+      unmatched_credit_transfer_id:,
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # return - Return unmatched credit transfer
       # > 🚧 Beta feature
       # >
@@ -722,7 +719,9 @@ module Mollie
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
       request = Models::Operations::ReturnUnmatchedCreditTransferRequest.new(
         unmatched_credit_transfer_id: unmatched_credit_transfer_id,
-        idempotency_key: idempotency_key
+        idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)

@@ -46,19 +46,31 @@ module Mollie
       params(
         body: T.nilable(Models::Operations::CreateWebhookRequestBody),
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::CreateWebhookResponse)
     }
-    def create(body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def create(
+      body: nil,
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # create - Create a webhook
       # A webhook must have a name, an url and a list of event types. You can also create webhooks in the webhooks settings section of the Dashboard.
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
       request = Models::Operations::CreateWebhookRequest.new(
         idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at,
         body: body
       )
       url, params = @sdk_configuration.get_server_details
@@ -392,7 +404,9 @@ module Mollie
                 sort: request.sort,
                 event_types: request.event_types,
                 testmode: request.testmode,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers
@@ -465,25 +479,18 @@ module Mollie
 
     sig {
       params(
-        webhook_id: ::String,
-        body: T.nilable(Models::Operations::UpdateWebhookRequestBody),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::UpdateWebhookRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::UpdateWebhookResponse)
     }
-    def update(webhook_id:, body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def update(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # update - Update a webhook
       # Updates the webhook. You may edit the name, url and the list of subscribed event types.
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
-      request = Models::Operations::UpdateWebhookRequest.new(
-        webhook_id: webhook_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -669,25 +676,18 @@ module Mollie
 
     sig {
       params(
-        webhook_id: ::String,
-        testmode: T.nilable(T::Boolean),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::GetWebhookRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetWebhookResponse)
     }
-    def get(webhook_id:, testmode: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # get - Get a webhook
       # Retrieve a single webhook object by its ID.
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
-      request = Models::Operations::GetWebhookRequest.new(
-        webhook_id: webhook_id,
-        testmode: testmode,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -868,25 +868,18 @@ module Mollie
 
     sig {
       params(
-        webhook_id: ::String,
-        body: T.nilable(Models::Operations::DeleteWebhookRequestBody),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::DeleteWebhookRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::DeleteWebhookResponse)
     }
-    def delete(webhook_id:, body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def delete(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # delete - Delete a webhook
       # Delete a single webhook object by its webhook ID.
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
-      request = Models::Operations::DeleteWebhookRequest.new(
-        webhook_id: webhook_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -1056,25 +1049,18 @@ module Mollie
 
     sig {
       params(
-        webhook_id: ::String,
-        body: T.nilable(Models::Operations::TestWebhookRequestBody),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::TestWebhookRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::TestWebhookResponse)
     }
-    def test(webhook_id:, body: nil, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def test(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # test - Test a webhook
       # Sends a test event to the webhook to verify the endpoint is working as expected.
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
-      request = Models::Operations::TestWebhookRequest.new(
-        webhook_id: webhook_id,
-        idempotency_key: idempotency_key,
-        body: body
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(

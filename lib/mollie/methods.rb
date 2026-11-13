@@ -642,16 +642,14 @@ module Mollie
 
     sig {
       params(
-        profile_id: ::String,
-        method_id: T.nilable(Models::Components::MethodId),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::EnableMethodRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::EnableMethodResponse)
     }
-    def enable(profile_id:, method_id:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def enable(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # enable - Enable payment method
       # Enable a payment method on a specific profile.
       #
@@ -665,11 +663,6 @@ module Mollie
       # To enable voucher or gift card issuers, refer to the [Enable payment method issuer](enable-method-issuer) endpoint.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::EnableMethodRequest.new(
-        profile_id: profile_id,
-        method_id: method_id,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -843,16 +836,14 @@ module Mollie
 
     sig {
       params(
-        profile_id: ::String,
-        method_id: T.nilable(Models::Components::MethodId),
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::DisableMethodRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::DisableMethodResponse)
     }
-    def disable(profile_id:, method_id:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def disable(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # disable - Disable payment method
       # Disable a payment method on a specific profile.
       #
@@ -860,11 +851,6 @@ module Mollie
       # instead of the profile ID to refer to the current profile.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::DisableMethodRequest.new(
-        profile_id: profile_id,
-        method_id: method_id,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(
@@ -1227,25 +1213,14 @@ module Mollie
 
     sig {
       params(
-        profile_id: ::String,
-        method_id: Models::Components::MethodIdWithIssuer,
-        issuer_id: ::String,
-        idempotency_key: T.nilable(::String),
+        request: Models::Operations::DisableMethodIssuerRequest,
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::DisableMethodIssuerResponse)
     }
-    def disable_issuer(
-      profile_id:,
-      method_id:,
-      issuer_id:,
-      idempotency_key: nil,
-      retries: nil,
-      timeout_ms: nil,
-      http_headers: nil
-    )
+    def disable_issuer(request:, retries: nil, timeout_ms: nil, http_headers: nil)
       # disable_issuer - Disable payment method issuer
       # Disable an issuer for a payment method on a specific profile.
       #
@@ -1255,12 +1230,6 @@ module Mollie
       # current profile.
       #
       # If set, this operation will use one of `api_key`, `advanced_access_token`, or `o_auth` from the global security.
-      request = Models::Operations::DisableMethodIssuerRequest.new(
-        profile_id: profile_id,
-        method_id: method_id,
-        issuer_id: issuer_id,
-        idempotency_key: idempotency_key
-      )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
       url = Utils.generate_url(

@@ -29,7 +29,7 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.payment_links.create(idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Operations::CreatePaymentLinkRequestBody.new(
+res = s.payment_links.create(idempotency_key: '123e4567-e89b-12d3-a456-426', x_client_signature: 'MEUCIQDx8sJvK3z...', x_client_signed_at: '2025-01-01T12:00:00Z', body: Models::Operations::CreatePaymentLinkRequestBody.new(
   description: 'Chess Board',
   amount: Models::Components::AmountNullable.new(
     currency: 'EUR',
@@ -134,7 +134,7 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.payment_links.create(idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Operations::CreatePaymentLinkRequestBody.new(
+res = s.payment_links.create(idempotency_key: '123e4567-e89b-12d3-a456-426', x_client_signature: 'MEUCIQDx8sJvK3z...', x_client_signed_at: '2025-01-01T12:00:00Z', body: Models::Operations::CreatePaymentLinkRequestBody.new(
   description: 'Chess Board',
   amount: Models::Components::AmountNullable.new(
     currency: 'EUR',
@@ -239,7 +239,7 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.payment_links.create(idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Operations::CreatePaymentLinkRequestBody.new(
+res = s.payment_links.create(idempotency_key: '123e4567-e89b-12d3-a456-426', x_client_signature: 'MEUCIQDx8sJvK3z...', x_client_signed_at: '2025-01-01T12:00:00Z', body: Models::Operations::CreatePaymentLinkRequestBody.new(
   description: 'Chess Board',
   amount: Models::Components::AmountNullable.new(
     currency: 'EUR',
@@ -344,7 +344,7 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.payment_links.create(idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Operations::CreatePaymentLinkRequestBody.new(
+res = s.payment_links.create(idempotency_key: '123e4567-e89b-12d3-a456-426', x_client_signature: 'MEUCIQDx8sJvK3z...', x_client_signed_at: '2025-01-01T12:00:00Z', body: Models::Operations::CreatePaymentLinkRequestBody.new(
   description: 'Chess Board',
   amount: Models::Components::AmountNullable.new(
     currency: 'EUR',
@@ -440,10 +440,12 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                              | Type                                                                                                                   | Required                                                                                                               | Description                                                                                                            | Example                                                                                                                |
-| ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `idempotency_key`                                                                                                      | *T.nilable(::String)*                                                                                                  | :heavy_minus_sign:                                                                                                     | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                       | 123e4567-e89b-12d3-a456-426                                                                                            |
-| `body`                                                                                                                 | [T.nilable(Models::Operations::CreatePaymentLinkRequestBody)](../../models/operations/createpaymentlinkrequestbody.md) | :heavy_minus_sign:                                                                                                     | N/A                                                                                                                    |                                                                                                                        |
+| Parameter                                                                                                                                                                               | Type                                                                                                                                                                                    | Required                                                                                                                                                                                | Description                                                                                                                                                                             | Example                                                                                                                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `idempotency_key`                                                                                                                                                                       | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                                                                        | 123e4567-e89b-12d3-a456-426                                                                                                                                                             |
+| `x_client_signature`                                                                                                                                                                    | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | A cryptographic signature of the request, used to verify that it was sent by you and hasn't been tampered with. Required if you've enabled request signing for your integration.        | MEUCIQDx8sJvK3z...                                                                                                                                                                      |
+| `x_client_signed_at`                                                                                                                                                                    | *T.nilable(::String)*                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                      | The timestamp, in ISO 8601 format, at which you generated the `X-Client-Signature`. Required together with `X-Client-Signature` if you've enabled request signing for your integration. | 2025-01-01T12:00:00Z                                                                                                                                                                    |
+| `body`                                                                                                                                                                                  | [T.nilable(Models::Operations::CreatePaymentLinkRequestBody)](../../models/operations/createpaymentlinkrequestbody.md)                                                                  | :heavy_minus_sign:                                                                                                                                                                      | N/A                                                                                                                                                                                     |                                                                                                                                                                                         |
 
 ### Response
 
@@ -475,7 +477,15 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.payment_links.list(from: 'pl_d9fQur83kFdhH8hIhaZfq', limit: 50, idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::ListPaymentLinksRequest.new(
+  from: 'pl_d9fQur83kFdhH8hIhaZfq',
+  limit: 50,
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.payment_links.list(request: req)
 
 unless res.object.nil?
   # handle response
@@ -495,7 +505,15 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.payment_links.list(from: 'pl_d9fQur83kFdhH8hIhaZfq', limit: 50, idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::ListPaymentLinksRequest.new(
+  from: 'pl_d9fQur83kFdhH8hIhaZfq',
+  limit: 50,
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.payment_links.list(request: req)
 
 unless res.object.nil?
   # handle response
@@ -505,12 +523,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                                                                                                                                                                                                | Type                                                                                                                                                                                                                                                                                                                                                                                     | Required                                                                                                                                                                                                                                                                                                                                                                                 | Description                                                                                                                                                                                                                                                                                                                                                                              | Example                                                                                                                                                                                                                                                                                                                                                                                  |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `from`                                                                                                                                                                                                                                                                                                                                                                                   | *T.nilable(::String)*                                                                                                                                                                                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                       | Provide an ID to start the result set from the item with the given ID and onwards. This allows you to paginate the<br/>result set.                                                                                                                                                                                                                                                       | pl_d9fQur83kFdhH8hIhaZfq                                                                                                                                                                                                                                                                                                                                                                 |
-| `limit`                                                                                                                                                                                                                                                                                                                                                                                  | *T.nilable(::Integer)*                                                                                                                                                                                                                                                                                                                                                                   | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                       | The maximum number of items to return. Defaults to 50 items.                                                                                                                                                                                                                                                                                                                             | 50                                                                                                                                                                                                                                                                                                                                                                                       |
-| `testmode`                                                                                                                                                                                                                                                                                                                                                                               | *T.nilable(T::Boolean)*                                                                                                                                                                                                                                                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                       | Most API credentials are specifically created for either live mode or test mode. In those cases the `testmode` query<br/>parameter must not be sent. For organization-level credentials such as OAuth access tokens, you can enable test mode by<br/>setting the `testmode` query parameter to `true`.<br/><br/>Test entities cannot be retrieved when the endpoint is set to live mode, and vice versa. |                                                                                                                                                                                                                                                                                                                                                                                          |
-| `idempotency_key`                                                                                                                                                                                                                                                                                                                                                                        | *T.nilable(::String)*                                                                                                                                                                                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                       | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                                                                                                                                                                                                                                                                         | 123e4567-e89b-12d3-a456-426                                                                                                                                                                                                                                                                                                                                                              |
+| Parameter                                                                                         | Type                                                                                              | Required                                                                                          | Description                                                                                       |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `request`                                                                                         | [Models::Operations::ListPaymentLinksRequest](../../models/operations/listpaymentlinksrequest.md) | :heavy_check_mark:                                                                                | The request object to use for the request.                                                        |
 
 ### Response
 
@@ -540,7 +555,14 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.payment_links.get(payment_link_id: 'pl_d9fQur83kFdhH8hIhaZfq', idempotency_key: '123e4567-e89b-12d3-a456-426')
+
+req = Models::Operations::GetPaymentLinkRequest.new(
+  payment_link_id: 'pl_d9fQur83kFdhH8hIhaZfq',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
+)
+res = s.payment_links.get(request: req)
 
 unless res.payment_link_response.nil?
   # handle response
@@ -550,11 +572,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                                                                                                                                                                                                                                                                                                | Type                                                                                                                                                                                                                                                                                                                                                                                     | Required                                                                                                                                                                                                                                                                                                                                                                                 | Description                                                                                                                                                                                                                                                                                                                                                                              | Example                                                                                                                                                                                                                                                                                                                                                                                  |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `payment_link_id`                                                                                                                                                                                                                                                                                                                                                                        | *::String*                                                                                                                                                                                                                                                                                                                                                                               | :heavy_check_mark:                                                                                                                                                                                                                                                                                                                                                                       | Provide the ID of the related payment link.                                                                                                                                                                                                                                                                                                                                              | pl_d9fQur83kFdhH8hIhaZfq                                                                                                                                                                                                                                                                                                                                                                 |
-| `testmode`                                                                                                                                                                                                                                                                                                                                                                               | *T.nilable(T::Boolean)*                                                                                                                                                                                                                                                                                                                                                                  | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                       | Most API credentials are specifically created for either live mode or test mode. In those cases the `testmode` query<br/>parameter must not be sent. For organization-level credentials such as OAuth access tokens, you can enable test mode by<br/>setting the `testmode` query parameter to `true`.<br/><br/>Test entities cannot be retrieved when the endpoint is set to live mode, and vice versa. |                                                                                                                                                                                                                                                                                                                                                                                          |
-| `idempotency_key`                                                                                                                                                                                                                                                                                                                                                                        | *T.nilable(::String)*                                                                                                                                                                                                                                                                                                                                                                    | :heavy_minus_sign:                                                                                                                                                                                                                                                                                                                                                                       | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                                                                                                                                                                                                                                                                                         | 123e4567-e89b-12d3-a456-426                                                                                                                                                                                                                                                                                                                                                              |
+| Parameter                                                                                     | Type                                                                                          | Required                                                                                      | Description                                                                                   |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `request`                                                                                     | [Models::Operations::GetPaymentLinkRequest](../../models/operations/getpaymentlinkrequest.md) | :heavy_check_mark:                                                                            | The request object to use for the request.                                                    |
 
 ### Response
 
@@ -583,47 +603,55 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.payment_links.update(payment_link_id: 'pl_d9fQur83kFdhH8hIhaZfq', idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Operations::UpdatePaymentLinkRequestBody.new(
-  description: 'Chess Board',
-  minimum_amount: Models::Components::Amount.new(
-    currency: 'EUR',
-    value: '10.00'
-  ),
-  archived: false,
-  allowed_methods: [
-    Models::Components::PaymentLinkMethod::IDEAL,
-  ],
-  lines: nil,
-  billing_address: Models::Components::PaymentAddress.new(
-    title: 'Mr.',
-    given_name: 'Piet',
-    family_name: 'Mondriaan',
-    organization_name: 'Mollie B.V.',
-    street_and_number: 'Keizersgracht 126',
-    street_additional: 'Apt. 1',
-    postal_code: '1234AB',
-    email: 'piet@example.org',
-    phone: '31208202070',
-    city: 'Amsterdam',
-    region: 'Noord-Holland',
-    country: 'NL'
-  ),
-  shipping_address: Models::Components::PaymentAddress.new(
-    title: 'Mr.',
-    given_name: 'Piet',
-    family_name: 'Mondriaan',
-    organization_name: 'Mollie B.V.',
-    street_and_number: 'Keizersgracht 126',
-    street_additional: 'Apt. 1',
-    postal_code: '1234AB',
-    email: 'piet@example.org',
-    phone: '31208202070',
-    city: 'Amsterdam',
-    region: 'Noord-Holland',
-    country: 'NL'
-  ),
-  testmode: false
-))
+
+req = Models::Operations::UpdatePaymentLinkRequest.new(
+  payment_link_id: 'pl_d9fQur83kFdhH8hIhaZfq',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Operations::UpdatePaymentLinkRequestBody.new(
+    description: 'Chess Board',
+    minimum_amount: Models::Components::Amount.new(
+      currency: 'EUR',
+      value: '10.00'
+    ),
+    archived: false,
+    allowed_methods: [
+      Models::Components::PaymentLinkMethod::IDEAL,
+    ],
+    lines: nil,
+    billing_address: Models::Components::PaymentAddress.new(
+      title: 'Mr.',
+      given_name: 'Piet',
+      family_name: 'Mondriaan',
+      organization_name: 'Mollie B.V.',
+      street_and_number: 'Keizersgracht 126',
+      street_additional: 'Apt. 1',
+      postal_code: '1234AB',
+      email: 'piet@example.org',
+      phone: '31208202070',
+      city: 'Amsterdam',
+      region: 'Noord-Holland',
+      country: 'NL'
+    ),
+    shipping_address: Models::Components::PaymentAddress.new(
+      title: 'Mr.',
+      given_name: 'Piet',
+      family_name: 'Mondriaan',
+      organization_name: 'Mollie B.V.',
+      street_and_number: 'Keizersgracht 126',
+      street_additional: 'Apt. 1',
+      postal_code: '1234AB',
+      email: 'piet@example.org',
+      phone: '31208202070',
+      city: 'Amsterdam',
+      region: 'Noord-Holland',
+      country: 'NL'
+    ),
+    testmode: false
+  )
+)
+res = s.payment_links.update(request: req)
 
 unless res.payment_link_response.nil?
   # handle response
@@ -633,11 +661,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                              | Type                                                                                                                   | Required                                                                                                               | Description                                                                                                            | Example                                                                                                                |
-| ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `payment_link_id`                                                                                                      | *::String*                                                                                                             | :heavy_check_mark:                                                                                                     | Provide the ID of the related payment link.                                                                            | pl_d9fQur83kFdhH8hIhaZfq                                                                                               |
-| `idempotency_key`                                                                                                      | *T.nilable(::String)*                                                                                                  | :heavy_minus_sign:                                                                                                     | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                       | 123e4567-e89b-12d3-a456-426                                                                                            |
-| `body`                                                                                                                 | [T.nilable(Models::Operations::UpdatePaymentLinkRequestBody)](../../models/operations/updatepaymentlinkrequestbody.md) | :heavy_minus_sign:                                                                                                     | N/A                                                                                                                    |                                                                                                                        |
+| Parameter                                                                                           | Type                                                                                                | Required                                                                                            | Description                                                                                         |
+| --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `request`                                                                                           | [Models::Operations::UpdatePaymentLinkRequest](../../models/operations/updatepaymentlinkrequest.md) | :heavy_check_mark:                                                                                  | The request object to use for the request.                                                          |
 
 ### Response
 
@@ -672,9 +698,17 @@ s = ::Mollie::Client.new(
     api_key: '<YOUR_BEARER_TOKEN_HERE>'
   )
 )
-res = s.payment_links.delete(payment_link_id: 'pl_d9fQur83kFdhH8hIhaZfq', idempotency_key: '123e4567-e89b-12d3-a456-426', body: Models::Operations::DeletePaymentLinkRequestBody.new(
-  testmode: false
-))
+
+req = Models::Operations::DeletePaymentLinkRequest.new(
+  payment_link_id: 'pl_d9fQur83kFdhH8hIhaZfq',
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z',
+  body: Models::Operations::DeletePaymentLinkRequestBody.new(
+    testmode: false
+  )
+)
+res = s.payment_links.delete(request: req)
 
 if res.status_code == 200
   # handle response
@@ -684,11 +718,9 @@ end
 
 ### Parameters
 
-| Parameter                                                                                                              | Type                                                                                                                   | Required                                                                                                               | Description                                                                                                            | Example                                                                                                                |
-| ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `payment_link_id`                                                                                                      | *::String*                                                                                                             | :heavy_check_mark:                                                                                                     | Provide the ID of the related payment link.                                                                            | pl_d9fQur83kFdhH8hIhaZfq                                                                                               |
-| `idempotency_key`                                                                                                      | *T.nilable(::String)*                                                                                                  | :heavy_minus_sign:                                                                                                     | A unique key to ensure idempotent requests. This key should be a UUID v4 string.                                       | 123e4567-e89b-12d3-a456-426                                                                                            |
-| `body`                                                                                                                 | [T.nilable(Models::Operations::DeletePaymentLinkRequestBody)](../../models/operations/deletepaymentlinkrequestbody.md) | :heavy_minus_sign:                                                                                                     | N/A                                                                                                                    |                                                                                                                        |
+| Parameter                                                                                           | Type                                                                                                | Required                                                                                            | Description                                                                                         |
+| --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `request`                                                                                           | [Models::Operations::DeletePaymentLinkRequest](../../models/operations/deletepaymentlinkrequest.md) | :heavy_check_mark:                                                                                  | The request object to use for the request.                                                          |
 
 ### Response
 
@@ -726,7 +758,9 @@ req = Models::Operations::GetPaymentLinkPaymentsRequest.new(
   from: 'tr_5B8cwPMGnU',
   limit: 50,
   sort: Models::Components::Sorting::DESC,
-  idempotency_key: '123e4567-e89b-12d3-a456-426'
+  idempotency_key: '123e4567-e89b-12d3-a456-426',
+  x_client_signature: 'MEUCIQDx8sJvK3z...',
+  x_client_signed_at: '2025-01-01T12:00:00Z'
 )
 res = s.payment_links.list_payments(request: req)
 

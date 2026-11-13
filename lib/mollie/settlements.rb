@@ -199,7 +199,9 @@ module Mollie
                 year: request.year,
                 month: request.month,
                 currencies: request.currencies,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers
@@ -274,13 +276,23 @@ module Mollie
       params(
         settlement_id: ::String,
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetSettlementResponse)
     }
-    def get(settlement_id:, idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get(
+      settlement_id:,
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # get - Get settlement
       # Retrieve a single settlement by its ID.
       #
@@ -298,7 +310,9 @@ module Mollie
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
       request = Models::Operations::GetSettlementRequest.new(
         settlement_id: settlement_id,
-        idempotency_key: idempotency_key
+        idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -474,13 +488,22 @@ module Mollie
     sig {
       params(
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetOpenSettlementResponse)
     }
-    def get_open(idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get_open(
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # get_open - Get open settlement
       # Retrieve the details of the open balance of the organization. This will return a settlement object representing your
       # organization's balance.
@@ -493,7 +516,9 @@ module Mollie
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
       request = Models::Operations::GetOpenSettlementRequest.new(
-        idempotency_key: idempotency_key
+        idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -666,13 +691,22 @@ module Mollie
     sig {
       params(
         idempotency_key: T.nilable(::String),
+        x_client_signature: T.nilable(::String),
+        x_client_signed_at: T.nilable(::String),
         retries: T.nilable(Utils::RetryConfig),
         timeout_ms: T.nilable(::Integer),
         http_headers: T.nilable(T::Hash[T.any(::String, ::Symbol), ::String])
       )
         .returns(Models::Operations::GetNextSettlementResponse)
     }
-    def get_next(idempotency_key: nil, retries: nil, timeout_ms: nil, http_headers: nil)
+    def get_next(
+      idempotency_key: nil,
+      x_client_signature: nil,
+      x_client_signed_at: nil,
+      retries: nil,
+      timeout_ms: nil,
+      http_headers: nil
+    )
       # get_next - Get next settlement
       # Retrieve the details of the current settlement, that has not yet been paid out.
       #
@@ -684,7 +718,9 @@ module Mollie
       #
       # If set, this operation will use either `advanced_access_token` or `o_auth` from the global security.
       request = Models::Operations::GetNextSettlementRequest.new(
-        idempotency_key: idempotency_key
+        idempotency_key: idempotency_key,
+        x_client_signature: x_client_signature,
+        x_client_signed_at: x_client_signed_at
       )
       url, params = @sdk_configuration.get_server_details
       base_url = Utils.template_url(url, params)
@@ -1022,7 +1058,9 @@ module Mollie
                 limit: request.limit,
                 sort: request.sort,
                 profile_id: request.profile_id,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers
@@ -1257,7 +1295,9 @@ module Mollie
                 from: request.from,
                 limit: request.limit,
                 embed: request.embed,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers
@@ -1492,7 +1532,9 @@ module Mollie
                 from: request.from,
                 limit: request.limit,
                 embed: request.embed,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers
@@ -1728,7 +1770,9 @@ module Mollie
                 limit: request.limit,
                 embed: request.embed,
                 testmode: request.testmode,
-                idempotency_key: request.idempotency_key
+                idempotency_key: request.idempotency_key,
+                x_client_signature: request.x_client_signature,
+                x_client_signed_at: request.x_client_signed_at
               ),
               url_override: next_url,
               http_headers: http_headers
