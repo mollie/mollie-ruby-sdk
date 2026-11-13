@@ -11,8 +11,8 @@ module Mollie
         include ::Crystalline::Enum
         enums do
           GENERATION_FAILED = new("generation-failed")
+          VALIDATION_FAILED = new("validation-failed")
           EMPTY_REPORT = new("empty-report")
-          REPORT_VALIDATION_FAILED = new("report-validation-failed")
         end
 
         open!

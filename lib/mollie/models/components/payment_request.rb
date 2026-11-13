@@ -125,8 +125,7 @@ module Mollie
           Crystalline::Nilable.new(::String),
           {'format_json': {'letter_case': ::Mollie::Utils.field_name("googlePayPaymentToken")}}
         )
-        # The card token you received from the card component of Mollie Components. The token represents the customer's
-        # card information needed to complete the payment.
+        # Number of the voucher.
         field(
           :voucher_number,
           Crystalline::Nilable.new(::String),

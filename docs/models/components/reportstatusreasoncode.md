@@ -16,8 +16,8 @@ custom = ReportStatusReasonCode.deserialize("custom_value")
 
 ## Values
 
-| Name                       | Value                      |
-| -------------------------- | -------------------------- |
-| `GENERATION_FAILED`        | generation-failed          |
-| `EMPTY_REPORT`             | empty-report               |
-| `REPORT_VALIDATION_FAILED` | report-validation-failed   |
+| Name                | Value               |
+| ------------------- | ------------------- |
+| `GENERATION_FAILED` | generation-failed   |
+| `VALIDATION_FAILED` | validation-failed   |
+| `EMPTY_REPORT`      | empty-report        |

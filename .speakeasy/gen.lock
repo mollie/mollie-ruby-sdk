@@ -1,18 +1,18 @@
 lockVersion: 2.0.0
 id: a76ce462-91f2-4777-a0d1-dbc0a271cee2
 management:
-  docChecksum: 324dec8ae0ce5b77fbcbe920fc8e6877
+  docChecksum: 2a10a1ad200bf087fda261562c4f3940
   docVersion: 1.0.0
   speakeasyVersion: 1.808.1
   generationVersion: 2.960.8
-  releaseVersion: 0.0.1-alpha.7
-  configChecksum: c826f73d58fff617237b7ad0a69d28ab
+  releaseVersion: 0.0.1-alpha.8
+  configChecksum: c900d1dca0072cbac4c90f24ec2011d4
   repoURL: https://github.com/mollie/mollie-ruby-sdk.git
   installationURL: https://github.com/mollie/mollie-ruby-sdk
 persistentEdits:
-  generation_id: 56de66da-da94-42ae-81a3-4f2fbb63fc4e
-  pristine_commit_hash: c9f747944c58af7c709cbc520fd3efc7c15b17ce
-  pristine_tree_hash: 0b4e7081d5ca73b782a153dbf6460da17c3e3043
+  generation_id: 09f69cd8-7026-4fc8-ba4f-af3cea775be9
+  pristine_commit_hash: 143e47c2e5e908e6ae0699f7c4cd20fbe4740714
+  pristine_tree_hash: 95d292288c6814c1a09ccc09dc9d9b27292007dc
 features:
   ruby:
     core: 3.11.38
@@ -50,8 +50,8 @@ trackedFiles:
     pristine_git_object: b0ea40558f3ca80dcf7d30b159d34a1e5ab33440
   Gemfile.lock:
     id: 21fb5836b499
-    last_write_checksum: sha1:9dfc2eac5aa3e4c5cde162b9cf4d685c61f3f954
-    pristine_git_object: b4abe26aeb4a41c09fcd412ce1be1abacab98d9f
+    last_write_checksum: sha1:79832115f94be7bc844cc0b9c9779311926e24d9
+    pristine_git_object: 0b3e86ab8e5faf7231eb6d1e6fe11bbf4d4faf01
   Rakefile:
     id: 44b7fa1ba503
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
@@ -598,8 +598,8 @@ trackedFiles:
     pristine_git_object: 4790705d31dc51af2c7b81571a84696c3a44f950
   docs/models/components/entityreport.md:
     id: b1496a4cc150
-    last_write_checksum: sha1:d2b543c3bf14bb4bb28a94f947f64cc905662adb
-    pristine_git_object: d5972f745654f7edd8c07f087fd413e79bfd3478
+    last_write_checksum: sha1:f8dbed4a52f6dd527443ae2cf2f9ea93a444e686
+    pristine_git_object: d44637fef75674d8421e9a24fe65b8672a6f93c1
   docs/models/components/entityreportlinks.md:
     id: 22fa2ce8288f
     last_write_checksum: sha1:d919cfc608745da372187f09f46f096c912be86a
@@ -1406,8 +1406,8 @@ trackedFiles:
     pristine_git_object: e3f22b2715dec6839e45b964a4908f790afeae10
   docs/models/components/paymentrequest.md:
     id: 3fdd80e71849
-    last_write_checksum: sha1:7a0f9cfa45222bfd50bbfc0e62e38054b27021f8
-    pristine_git_object: 6c50ae41d2d37f81757a2c376ba0fd66b462dfee
+    last_write_checksum: sha1:4cabaa8f63cd6e638dc5bafa88274bc7d201febc
+    pristine_git_object: c224c29f467ac5594b570a35b35a8424fd9fda3e
   docs/models/components/paymentrequestapplicationfee.md:
     id: 0b96de6cea93
     last_write_checksum: sha1:c253df20974afdfe2c1ba959a2f52eab96ca2b14
@@ -1578,8 +1578,8 @@ trackedFiles:
     pristine_git_object: 86f4aeba57cd72e00a999f33c703828a0725ecb7
   docs/models/components/reportstatusreasoncode.md:
     id: b7a7dbfaaaa1
-    last_write_checksum: sha1:ed9b773f9b0a58f11ba78e04b4b77c80e7f83058
-    pristine_git_object: 2cacea36ac11f64ca021de0069d47a1e7997343b
+    last_write_checksum: sha1:6672db49cf854ee1f6e0c67ece9d2a93c89aa9f1
+    pristine_git_object: 6df597edf4dd86cc3ff4436790855947bc3fea1a
   docs/models/components/reporttype.md:
     id: 110b06e0bd14
     last_write_checksum: sha1:b64dc2878fdb89b4efca6d71530f25ee9590aa31
@@ -5062,8 +5062,8 @@ trackedFiles:
     pristine_git_object: 53703aae86000dd6e8bda25b66837a6e50c7bd1d
   lib/mollie/models/components/entity_report.rb:
     id: 88960c82e682
-    last_write_checksum: sha1:7abfb512ab98df411fd6742c6e72d77f1be69abf
-    pristine_git_object: f4f8f4f49abf2f5ac37ffb8de5981672ad9d5d3d
+    last_write_checksum: sha1:f9cca94fe40491a78d8d94eb5c56b243043273f0
+    pristine_git_object: 085fda74c3933a91cf3c42e6db784121838ba262
   lib/mollie/models/components/entity_report.rbi:
     id: d6f8f1f482d0
     last_write_checksum: sha1:cf4d3e14db0dbfe2bf00d1273e689422b4b03aab
@@ -6678,8 +6678,8 @@ trackedFiles:
     pristine_git_object: c6592f9e5d0f70c67963d48ed4ec07322633f6fc
   lib/mollie/models/components/payment_request.rb:
     id: fc68ea5043af
-    last_write_checksum: sha1:dca3e122af56b20cf055df78681e0021ef9e5ada
-    pristine_git_object: 8a67ab377767d0c70b7747a692094c3bd4dd0710
+    last_write_checksum: sha1:685dcd3bf6c3b7a56b93ece5aec84f43651880a6
+    pristine_git_object: 0eb107d19b7ee40c79d6e456badafe285a209ca2
   lib/mollie/models/components/payment_request.rbi:
     id: dcac111d3d0d
     last_write_checksum: sha1:e3fe49c451e6225ae6bde4b56f4b89ec8fcf8ba9
@@ -7022,8 +7022,8 @@ trackedFiles:
     pristine_git_object: 9b809ed27e19ed8322f85c86e88cf0391762d01b
   lib/mollie/models/components/report_status_reason_code.rb:
     id: d79a082fecf4
-    last_write_checksum: sha1:dd5293cae5c5796f942a249730cff5766cf45fc4
-    pristine_git_object: 29a2175f47b9a364210a4bb364da894252b60ff4
+    last_write_checksum: sha1:056a964939cd22b06116e63d6b9d19032c3f8966
+    pristine_git_object: 310d5dfb4bf55c6a89a4414ac2dcc4a011aedd52
   lib/mollie/models/components/report_status_reason_code.rbi:
     id: b2621c94c295
     last_write_checksum: sha1:297253131dcf959c4964b95203b60a24b83e8c6c
@@ -11434,8 +11434,8 @@ trackedFiles:
     pristine_git_object: f350d9b4a20d1681836aab58bafba582b2a96d1f
   lib/mollie/sdkconfiguration.rb:
     id: d210a4891e32
-    last_write_checksum: sha1:112a88d0070f2f84975ee0b65ace64972405d337
-    pristine_git_object: a027ce6c6c1633259fd6066ff5a4f9ae90101d8c
+    last_write_checksum: sha1:3feb67f4732174eb8e55d7fa81f632c4777a730d
+    pristine_git_object: fecc61b5461fcc5a42b7be5f285f6580385c330d
   lib/mollie/sdkconfiguration.rbi:
     id: c0ffd0c4f524
     last_write_checksum: sha1:736dfd8a0547d28fe74ce3d0e72adfcea4bdcc6c
@@ -11514,8 +11514,8 @@ trackedFiles:
     pristine_git_object: cb4316d4d6219943fca741d87ce16ba9c100f8cf
   mollie-ruby-sdk.gemspec:
     id: 1b774e05b6f3
-    last_write_checksum: sha1:134939f1955bd9ea1bd567680e652539257121a2
-    pristine_git_object: f6834f5277d569087d736f1dba568d5d4c439bb5
+    last_write_checksum: sha1:536120437293940b14898810c2ab99035a8aad6a
+    pristine_git_object: 5b854da4d8c37654f62233261539654eaed7797e
   sorbet/config:
     id: 59392da43f94
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
@@ -15283,10 +15283,12 @@ examples:
           idempotency-key: "123e4567-e89b-12d3-a456-426"
       responses:
         "200":
-          application/hal+json: {"resource": "report", "id": "rpt_XRAG3v9EUyCDcX99pJ2Vc", "reportType": "transaction-margin", "fromDate": "2026-08-01", "untilDate": "2026-08-31", "status": "completed", "statusReason": {"code": "report-validation-failed", "message": "Something went wrong while generating the report. Try again, or contact support if it keeps happening."}, "createdAt": "2024-03-20T09:13:37+00:00", "completedAt": "2026-09-01T09:01:12+00:00", "failedAt": "2026-09-01T09:03:00+00:00", "downloadExpiresAt": "2026-09-01T09:16:12+00:00", "_links": {"self": {"href": "https://...", "type": "application/hal+json"}, "download": {"href": "https://...", "type": "application/hal+json"}, "documentation": {"href": "https://...", "type": "application/hal+json"}}}
+          application/hal+json: {"resource": "report", "id": "rpt_XRAG3v9EUyCDcX99pJ2Vc", "reportType": "transaction-margin", "fromDate": "2026-08-01", "untilDate": "2026-08-31", "status": "completed", "statusReason": {"code": "empty-report", "message": "Something went wrong while generating the report. Try again, or contact support if it keeps happening."}, "createdAt": "2024-03-20T09:13:37+00:00", "completedAt": "2026-09-01T09:01:12+00:00", "failedAt": "2026-09-01T09:03:00+00:00", "downloadExpiresAt": "2026-09-01T09:16:12+00:00", "_links": {"self": {"href": "https://...", "type": "application/hal+json"}, "download": {"href": "https://...", "type": "application/hal+json"}, "documentation": {"href": "https://...", "type": "application/hal+json"}}}
         "404":
           application/hal+json: {"status": 404, "title": "Not Found", "detail": "The resource does not exist", "field": "description", "_links": {"documentation": {"href": "https://docs.mollie.com/errors", "type": "text/html"}}}
         "400":
           application/hal+json: {"status": 404, "title": "Not Found", "detail": "The resource does not exist", "field": "description", "_links": {"documentation": {"href": "https://docs.mollie.com/errors", "type": "text/html"}}}
 examplesVersion: 1.0.2
-releaseNotes: "## Ruby SDK Changes:\n* `client.reports.create()`: \n  *  `request.body.report_type` **Changed** (Breaking ⚠️)\n* `client.reports.get()`: \n  *  `response` **Changed** (Breaking ⚠️)\n  *  `error` **Changed**\n"
+releaseNotes: |
+  ## Ruby SDK Changes:
+  * `client.reports.get()`:  `response.status_reason.code` **Changed** (Breaking ⚠️)
