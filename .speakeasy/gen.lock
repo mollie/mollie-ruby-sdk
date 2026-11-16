@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: a76ce462-91f2-4777-a0d1-dbc0a271cee2
 management:
-  docChecksum: 4053bb223e937a21d6b24f7d8bf71870
+  docChecksum: 4afb838923553b2c29b8409cad5fe1f4
   docVersion: 1.0.0
   speakeasyVersion: 1.809.0
   generationVersion: 2.961.1
-  releaseVersion: 0.0.1-alpha.9
-  configChecksum: bb774aecbbc20174fa27b09da14174cf
+  releaseVersion: 0.0.1-alpha.10
+  configChecksum: be5b758bf2da61ddd1086b803571609a
   repoURL: https://github.com/mollie/mollie-ruby-sdk.git
   installationURL: https://github.com/mollie/mollie-ruby-sdk
   published: true
 persistentEdits:
-  generation_id: ce27183c-c490-42e0-a257-843be6cbd34e
-  pristine_commit_hash: 0e28482b1ac0eab3c7a98a615f051f55305b355b
-  pristine_tree_hash: afc600b97dd92c186504fbf0b81323261570e0ad
+  generation_id: 3c6a09dd-15a2-4522-912c-60e79a5cf9b6
+  pristine_commit_hash: bf97ff8eafe2afc1c40d18e1305212e2c92f7538
+  pristine_tree_hash: a2dc90da2778fbfc189caf6bf09bc7a9d64b77a4
 features:
   ruby:
     core: 3.11.38
@@ -51,8 +51,8 @@ trackedFiles:
     pristine_git_object: b0ea40558f3ca80dcf7d30b159d34a1e5ab33440
   Gemfile.lock:
     id: 21fb5836b499
-    last_write_checksum: sha1:1950f1bf7539e6dcdb08406bb64b7a1eb39beb73
-    pristine_git_object: cdde4acf2c68ecb7b75f855b1dce032432d47c47
+    last_write_checksum: sha1:f8969fb2dd94fd703bc8ff904546a53185cb85bf
+    pristine_git_object: 4eed50d5f467a7d6de3b732c2eb0ac2928d783cf
   Rakefile:
     id: 44b7fa1ba503
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
@@ -3899,8 +3899,8 @@ trackedFiles:
     pristine_git_object: bfc95c4fd1e0353e41ed2b478ef82897c48a6bf7
   docs/sdks/unmatchedcredittransfers/README.md:
     id: e15033c49a61
-    last_write_checksum: sha1:c3260faf08dff6318e3a472ae7e9bd48c1b51a76
-    pristine_git_object: 13e0de81f1251c97d87d955db3531f5eaddebfb8
+    last_write_checksum: sha1:4521a5dccbdae2294b955c72eaabb50fb583eb24
+    pristine_git_object: d5d192365b7b980d61b528317dc9a52e7e169447
   docs/sdks/verifypayee/README.md:
     id: abbd0ec93429
     last_write_checksum: sha1:03483e084f27783b5fbd4d3bb7e9b6d782c82aed
@@ -11519,8 +11519,8 @@ trackedFiles:
     pristine_git_object: f350d9b4a20d1681836aab58bafba582b2a96d1f
   lib/mollie/sdkconfiguration.rb:
     id: d210a4891e32
-    last_write_checksum: sha1:1204591254905f32c854bd92a0fe46391ef65f37
-    pristine_git_object: e7ae07d568724e461641311b2350a4f9d658eadd
+    last_write_checksum: sha1:27a62434dfbae0238419f2b6e1551417e31686c2
+    pristine_git_object: dfe64f02539102bb29f3221fe8b032ac85e72bca
   lib/mollie/sdkconfiguration.rbi:
     id: c0ffd0c4f524
     last_write_checksum: sha1:736dfd8a0547d28fe74ce3d0e72adfcea4bdcc6c
@@ -11543,8 +11543,8 @@ trackedFiles:
     pristine_git_object: b189fe2639f445275aef1ee1b8895e96c6210a49
   lib/mollie/unmatched_credit_transfers.rb:
     id: af88fb0d1dea
-    last_write_checksum: sha1:2ab8d63f12b5b0f8e35c0ca400e9bed5252cf187
-    pristine_git_object: 7065eb3f6428df60249c98ae88c49266f11f5561
+    last_write_checksum: sha1:aec4b354d7271c9d4dfbaaaa9b5ef502c0323440
+    pristine_git_object: 14ff685fbc5958b569e816d82093cbd13981d556
   lib/mollie/utils/forms.rb:
     id: 2e80069da18e
     last_write_checksum: sha1:fd4694cf04a1bb6e788bb014205e3ac3540c65ee
@@ -11599,8 +11599,8 @@ trackedFiles:
     pristine_git_object: cb4316d4d6219943fca741d87ce16ba9c100f8cf
   mollie-ruby-sdk.gemspec:
     id: 1b774e05b6f3
-    last_write_checksum: sha1:d0e37a01172c73ffc804c1fa9c8eff6ed189b67c
-    pristine_git_object: de11473c386f05c478dc0589728a53481f6a472b
+    last_write_checksum: sha1:9e7400079a4d360ae5fc0507852642c13f2337ed
+    pristine_git_object: ab77b17a295f8f5088e471c3df37a62be7f4b41c
   sorbet/config:
     id: 59392da43f94
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
@@ -16051,4 +16051,3 @@ examples:
         "201":
           application/hal+json: {"resource": "business-account", "id": "ba_nopqrstuvwxyz23456789A", "accountDetails": {"accountHolderName": "Mollie B.V.", "name": "Main Checking Account", "currency": "EUR", "iban": "NL95MLLE1234567890", "bic": "MLLENL2AXXX"}, "balance": {"total": {"currency": "EUR", "value": "0.00"}}, "status": "active", "mode": "live", "createdAt": "2024-03-20T09:13:37+00:00", "_links": {"self": {"href": "https://api.mollie.com/v2/business-accounts/accounts/ba_nopqrstuvwxyz23456789A", "type": "application/hal+json"}, "documentation": {"href": "https://docs.mollie.com/reference/create-business-account", "type": "text/html"}}}
 examplesVersion: 1.0.2
-releaseNotes: "## Ruby SDK Changes:\n* `client.refunds.create()`:  `request` **Changed** (Breaking ⚠️)\n* `client.mandates.create()`:  `request` **Changed** (Breaking ⚠️)\n* `client.payouts.cancel()`:  `request` **Changed** (Breaking ⚠️)\n* `client.payouts.get()`:  `request` **Changed** (Breaking ⚠️)\n* `client.draft_transfers.cancel()`:  `request` **Changed** (Breaking ⚠️)\n* `client.draft_transfers.get()`:  `request` **Changed** (Breaking ⚠️)\n* `client.transfers.get()`:  `request` **Changed** (Breaking ⚠️)\n* `client.transfers.create()`:  `request` **Changed** (Breaking ⚠️)\n* `client.accounts.get()`:  `request` **Changed** (Breaking ⚠️)\n* `client.accounts.get_account()`: \n  *  `request` **Changed** (Breaking ⚠️)\n  *  `response._links` **Added**\n* `client.sales_invoices.delete()`:  `request` **Changed** (Breaking ⚠️)\n* `client.sales_invoices.update()`:  `request` **Changed** (Breaking ⚠️)\n* `client.sales_invoices.get()`:  `request` **Changed** (Breaking ⚠️)\n* `client.sales_invoices.list()`:  `request` **Changed** (Breaking ⚠️)\n* `client.subscriptions.cancel()`:  `request` **Changed** (Breaking ⚠️)\n* `client.subscriptions.update()`:  `request` **Changed** (Breaking ⚠️)\n* `client.subscriptions.get()`:  `request` **Changed** (Breaking ⚠️)\n* `client.subscriptions.create()`:  `request` **Changed** (Breaking ⚠️)\n* `client.mandates.revoke()`:  `request` **Changed** (Breaking ⚠️)\n* `client.permissions.get()`:  `request` **Changed** (Breaking ⚠️)\n* `client.organizations.get()`:  `request` **Changed** (Breaking ⚠️)\n* `client.mandates.get()`:  `request` **Changed** (Breaking ⚠️)\n* `client.customers.create_payment()`:  `request` **Changed** (Breaking ⚠️)\n* `client.customers.delete()`:  `request` **Changed** (Breaking ⚠️)\n* `client.profiles.list()`:  `request` **Changed** (Breaking ⚠️)\n* `client.profiles.get()`:  `request` **Changed** (Breaking ⚠️)\n* `client.profiles.update()`:  `request` **Changed** (Breaking ⚠️)\n* `client.customers.update()`:  `request` **Changed** (Breaking ⚠️)\n* `client.customers.get()`:  `request` **Changed** (Breaking ⚠️)\n* `client.delayed_routing.get()`:  `request` **Changed** (Breaking ⚠️)\n* `client.delayed_routing.list()`:  `request` **Changed** (Breaking ⚠️)\n* `client.delayed_routing.create()`:  `request` **Changed** (Breaking ⚠️)\n* `client.clients.list()`:  `request` **Changed** (Breaking ⚠️)\n* `client.clients.get()`:  `request` **Changed** (Breaking ⚠️)\n* `client.terminals.terminals_get_pairing_code()`:  `request` **Changed** (Breaking ⚠️)\n* `client.terminals.terminals_request_pairing_code()`:  `request` **Changed** (Breaking ⚠️)\n* `client.terminals.get()`:  `request` **Changed** (Breaking ⚠️)\n* `client.webhooks.update()`: \n  *  `request` **Changed** (Breaking ⚠️)\n  *  `response.event_types[].enum(business_account.created)` **Added**\n* `client.webhooks.get()`: \n  *  `request` **Changed** (Breaking ⚠️)\n  *  `response.event_types[].enum(business_account.created)` **Added**\n* `client.webhooks.delete()`:  `request` **Changed** (Breaking ⚠️)\n* `client.webhooks.test()`:  `request` **Changed** (Breaking ⚠️)\n* `client.webhook_events.get()`: \n  *  `request` **Changed** (Breaking ⚠️)\n  *  `response` **Changed** (Breaking ⚠️)\n* `client.payment_links.delete()`:  `request` **Changed** (Breaking ⚠️)\n* `client.payment_links.update()`:  `request` **Changed** (Breaking ⚠️)\n* `client.balance_transfers.get()`:  `request` **Changed** (Breaking ⚠️)\n* `client.payments.create()`:  `request` **Changed** (Breaking ⚠️)\n* `client.payment_links.get()`:  `request` **Changed** (Breaking ⚠️)\n* `client.payment_links.list()`:  `request` **Changed** (Breaking ⚠️)\n* `client.payments.update()`:  `request` **Changed** (Breaking ⚠️)\n* `client.payments.cancel()`:  `request` **Changed** (Breaking ⚠️)\n* `client.payments.release_authorization()`:  `request` **Changed** (Breaking ⚠️)\n* `client.unmatched_credit_transfers.list()`:  `request` **Changed** (Breaking ⚠️)\n* `client.captures.create()`:  `request` **Changed** (Breaking ⚠️)\n* `client.unmatched_credit_transfers.match()`:  `request` **Changed** (Breaking ⚠️)\n* `client.refunds.cancel()`:  `request` **Changed** (Breaking ⚠️)\n* `client.balances.get()`:  `request` **Changed** (Breaking ⚠️)\n* `client.methods.disable_issuer()`:  `request` **Changed** (Breaking ⚠️)\n* `client.methods.disable()`:  `request` **Changed** (Breaking ⚠️)\n* `client.methods.enable()`:  `request` **Changed** (Breaking ⚠️)\n* `client.onboarding.get()`:  `request` **Changed**\n* `client.mandates.list()`:  `request` **Changed**\n* `client.methods.list()`:  `request` **Changed**\n* `client.methods.enable_issuer()`:  `request` **Changed**\n* `client.checkout_sessions.get()`:  `request` **Changed**\n* `client.checkout_sessions.create()`:  `request` **Changed**\n* `client.customers.list()`:  `request` **Changed**\n* `client.settlements.get_open()`:  `request` **Changed**\n* `client.unmatched_credit_transfers.return()`:  `request` **Changed**\n* `client.profiles.create()`:  `request` **Changed**\n* `client.chargebacks.list()`:  `request` **Changed**\n* `client.chargebacks.get()`:  `request` **Changed**\n* `client.chargebacks.all()`:  `request` **Changed**\n* `client.unmatched_credit_transfers.get()`:  `request` **Changed**\n* `client.captures.list()`:  `request` **Changed**\n* `client.captures.get()`:  `request` **Changed**\n* `client.wallets.request_apple_pay_session()`:  `request` **Changed**\n* `client.payment_links.create()`:  `request` **Changed**\n* `client.payments.get()`:  `request` **Changed**\n* `client.payments.list()`:  `request` **Changed**\n* `client.balance_transfers.list()`:  `request` **Changed**\n* `client.balance_transfers.create()`:  `request` **Changed**\n* `client.payment_links.list_payments()`:  `request` **Changed**\n* `client.terminals.list()`:  `request` **Changed**\n* `client.webhooks.list()`: \n  *  `request` **Changed**\n  *  `response._embedded.webhooks[].event_types[].enum(business_account.created)` **Added**\n* `client.webhooks.create()`: \n  *  `request` **Changed**\n  *  `response.event_types[].enum(business_account.created)` **Added**\n* `client.terminals.terminals_list_pairing_codes()`:  `request` **Changed**\n* `client.client_links.create()`:  `request` **Changed**\n* `client.terminals.terminals_revoke_pairing_code()`:  `request` **Changed**\n* `client.capabilities.list()`:  `request` **Changed**\n* `client.onboarding.submit()`:  `request` **Changed**\n* `client.profiles.get_current()`:  `request` **Changed**\n* `client.customers.create()`:  `request` **Changed**\n* `client.methods.get()`:  `request` **Changed**\n* `client.balances.list()`:  `request` **Changed**\n* `client.methods.all()`:  `request` **Changed**\n* `client.refunds.all()`:  `request` **Changed**\n* `client.organizations.get_partner()`:  `request` **Changed**\n* `client.customers.list_payments()`:  `request` **Changed**\n* `client.refunds.list()`:  `request` **Changed**\n* `client.subscriptions.all()`:  `request` **Changed**\n* `client.organizations.get_current()`:  `request` **Changed**\n* `client.permissions.list()`:  `request` **Changed**\n* `client.invoices.get()`:  `request` **Changed**\n* `client.subscriptions.list()`:  `request` **Changed**\n* `client.invoices.list()`:  `request` **Changed**\n* `client.settlements.list_chargebacks()`:  `request` **Changed**\n* `client.settlements.list_refunds()`:  `request` **Changed**\n* `client.profiles.delete()`:  `request` **Changed**\n* `client.subscriptions.list_payments()`:  `request` **Changed**\n* `client.sales_invoices.create()`:  `request` **Changed**\n* `client.settlements.list_captures()`:  `request` **Changed**\n* `client.settlements.list_payments()`:  `request` **Changed**\n* `client.settlements.get_next()`:  `request` **Changed**\n* `client.refunds.get()`:  `request` **Changed**\n* `client.accounts.list_accounts()`: \n  *  `request` **Changed**\n  *  `response._embedded.business_accounts[]._links` **Added**\n* `client.settlements.get()`:  `request` **Changed**\n* `client.accounts.list()`:  `request` **Changed**\n* `client.settlements.list()`:  `request` **Changed**\n* `client.reports.get()`:  `request` **Changed**\n* `client.reports.create()`:  `request` **Changed**\n* `client.verify_payee.create()`:  `request` **Changed**\n* `client.draft_transfers.create()`:  `request` **Changed**\n* `client.draft_transfers.list()`:  `request` **Changed**\n* `client.balances.list_transactions()`:  `request` **Changed**\n* `client.balances.get_report()`:  `request` **Changed**\n* `client.payouts.create()`:  `request` **Changed**\n* `client.payouts.list()`:  `request` **Changed**\n* `client.balances.get_primary()`:  `request` **Changed**\n* `client.accounts.create_account()`: **Added**\n"

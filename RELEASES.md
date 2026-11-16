@@ -73,3 +73,13 @@ Based on:
 - [ruby v0.0.1-alpha.9] .
 ### Releases
 - [Ruby Gems v0.0.1-alpha.9] https://rubygems.org/gems/mollie-ruby-sdk/versions/0.0.1-alpha.9 - .
+
+## 2026-11-16 10:03:30
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.809.0 (2.961.1) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [ruby v0.0.1-alpha.10] .
+### Releases
+- [Ruby Gems v0.0.1-alpha.10] https://rubygems.org/gems/mollie-ruby-sdk/versions/0.0.1-alpha.10 - .
