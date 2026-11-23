@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: a76ce462-91f2-4777-a0d1-dbc0a271cee2
 management:
-  docChecksum: 4afb838923553b2c29b8409cad5fe1f4
+  docChecksum: 43bb426a6dacee4cfe87197a7e53739c
   docVersion: 1.0.0
-  speakeasyVersion: 1.809.0
-  generationVersion: 2.961.1
-  releaseVersion: 0.0.1-alpha.10
-  configChecksum: be5b758bf2da61ddd1086b803571609a
+  speakeasyVersion: 1.811.0
+  generationVersion: 2.968.1
+  releaseVersion: 0.0.1-alpha.11
+  configChecksum: ba99719357a58a3e8ade5080d56102c5
   repoURL: https://github.com/mollie/mollie-ruby-sdk.git
   installationURL: https://github.com/mollie/mollie-ruby-sdk
   published: true
 persistentEdits:
-  generation_id: 3c6a09dd-15a2-4522-912c-60e79a5cf9b6
-  pristine_commit_hash: bf97ff8eafe2afc1c40d18e1305212e2c92f7538
-  pristine_tree_hash: a2dc90da2778fbfc189caf6bf09bc7a9d64b77a4
+  generation_id: 4f016440-9043-4a13-93fa-2d167144d023
+  pristine_commit_hash: 1c4ca44f451903ffd30d0b793c91a8bf31e7d36f
+  pristine_tree_hash: fd05296928a8cb4d688e22473ea412320879d09a
 features:
   ruby:
     core: 3.11.38
@@ -51,8 +51,8 @@ trackedFiles:
     pristine_git_object: b0ea40558f3ca80dcf7d30b159d34a1e5ab33440
   Gemfile.lock:
     id: 21fb5836b499
-    last_write_checksum: sha1:f8969fb2dd94fd703bc8ff904546a53185cb85bf
-    pristine_git_object: 4eed50d5f467a7d6de3b732c2eb0ac2928d783cf
+    last_write_checksum: sha1:2931912cb51ca335296f3d364e989556190c3b8e
+    pristine_git_object: 8c008c581c569fea6ce7f5ba9db6b9b7fd03a11f
   Rakefile:
     id: 44b7fa1ba503
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
@@ -3779,8 +3779,8 @@ trackedFiles:
     pristine_git_object: 849bbd57309325a20d144e07f6c647c0a1decc9c
   docs/sdks/accounts/README.md:
     id: d6c754b1ca96
-    last_write_checksum: sha1:a712fc8667a8318d434a4e1f56ef87707f951bc8
-    pristine_git_object: 043210900558ae1957ad0296aa217d47bfdcecc7
+    last_write_checksum: sha1:b6648b257748e6809f97e6a40e74f93112e8bc89
+    pristine_git_object: 82fb7ab3d4debe13a4f82bd02d88e8f2f79f169e
   docs/sdks/balances/README.md:
     id: 6ca85866f00d
     last_write_checksum: sha1:8869db2965b8a773d8b5604e6326718a4a535312
@@ -3947,8 +3947,8 @@ trackedFiles:
     pristine_git_object: 25e1320117ff211fa56da96e984c2eaee5681f18
   lib/mollie/accounts.rb:
     id: aae1eec35bb3
-    last_write_checksum: sha1:91242080a939369dc85a319a306b3efcda83ef00
-    pristine_git_object: 3c42fbb2041679a841ce7dde7e6d651d1194f22d
+    last_write_checksum: sha1:8bf283c8b95f7b85f676b0668109fb673ce63e63
+    pristine_git_object: 959a91089bd9952a216088affccd24b3cdc55835
   lib/mollie/balance_transfers.rb:
     id: 3272093744bf
     last_write_checksum: sha1:39077f307b9a3adffe12055bad643191dcf826df
@@ -11519,8 +11519,8 @@ trackedFiles:
     pristine_git_object: f350d9b4a20d1681836aab58bafba582b2a96d1f
   lib/mollie/sdkconfiguration.rb:
     id: d210a4891e32
-    last_write_checksum: sha1:27a62434dfbae0238419f2b6e1551417e31686c2
-    pristine_git_object: dfe64f02539102bb29f3221fe8b032ac85e72bca
+    last_write_checksum: sha1:c61af539d9cbafb1b3981811b8180af2d847e55c
+    pristine_git_object: ad5de7eae654becb04b80059b4037cee33a7f6e4
   lib/mollie/sdkconfiguration.rbi:
     id: c0ffd0c4f524
     last_write_checksum: sha1:736dfd8a0547d28fe74ce3d0e72adfcea4bdcc6c
@@ -11599,8 +11599,8 @@ trackedFiles:
     pristine_git_object: cb4316d4d6219943fca741d87ce16ba9c100f8cf
   mollie-ruby-sdk.gemspec:
     id: 1b774e05b6f3
-    last_write_checksum: sha1:9e7400079a4d360ae5fc0507852642c13f2337ed
-    pristine_git_object: ab77b17a295f8f5088e471c3df37a62be7f4b41c
+    last_write_checksum: sha1:eb3510a02f2790672a5e25509e9635bc4d3b4e0b
+    pristine_git_object: f796ea21c6d6a126a65a807ef929e08add744a7b
   sorbet/config:
     id: 59392da43f94
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40
