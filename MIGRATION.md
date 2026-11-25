@@ -5,7 +5,6 @@ This guide covers migrating from the legacy community Ruby client (`mollie-api-r
 ## Table of contents
 
 - [Why migrate?](#why-migrate)
-- [Requirements](#requirements)
 - [Installation](#installation)
 - [Client initialization](#client-initialization)
 - [Authentication](#authentication)
@@ -13,9 +12,7 @@ This guide covers migrating from the legacy community Ruby client (`mollie-api-r
 - [Request parameters](#request-parameters)
 - [Pagination and listing resources](#pagination-and-listing-resources)
 - [Error handling](#error-handling)
-- [Response and model types](#response-and-model-types)
 - [New features](#new-features)
-- [Known gaps](#known-gaps)
 - [Full resource mapping](#full-resource-mapping)
 
 ---
@@ -26,24 +23,13 @@ Mollie is working towards fully migrating to the new, **automatically generated 
 
 Beyond staying up to date automatically, `mollie-ruby-sdk` also provides:
 
-- Complete API coverage, including Webhooks, Webhook Events, Checkout Sessions, Sales Invoices, Payouts, Transfers, Draft Transfers, Delayed Routing, and Business Accounts/Balances.
-- Sorbet type signatures (`sig { ... }`) on every public method and model.
+- Complete API coverage, including Webhooks, Webhook Events, Checkout Sessions, Sales Invoices, Payouts, Transfers, Draft Transfers, Delayed Routing, and Business Accounts.
+- Sorbet type signatures (`sig { ... }`) on every public method and model, instead of the legacy gem's untyped `attr_accessor`s.
 - Built-in retry logic with configurable backoff, per call or per client.
 - Native webhook signature validation, no more hand-rolled HMAC checks.
 - `profile_id` and `testmode` available as global client options for organization-level credentials.
 - Native OAuth token exchange (`oauth.generate` / `oauth.revoke`), no external OAuth gem required.
-- Idempotency keys as a first-class parameter on every mutating call.
-
-## Requirements
-
-| | `mollie-api-ruby` | `mollie-ruby-sdk` |
-| --- | --- | --- |
-| Ruby version | `>= 2.5` | `>= 3.2` |
-| License | BSD | Apache-2.0 |
-| HTTP library | `Net::HTTP` (bundled `cacert.pem`) | `Faraday` (+ `faraday-multipart`, `faraday-retry`) |
-| Typing | None | Sorbet (`sorbet-runtime`) |
-
-Check your Ruby version before migrating — `mollie-ruby-sdk` will not install on Ruby 3.1 or earlier.
+- Idempotency keys as a first-class parameter on every mutating call, generated automatically if you don't supply one.
 
 ---
 
@@ -68,6 +54,8 @@ The require path uses underscores, not the gem name's hyphens:
 -require "mollie-api-ruby"
 +require "mollie_ruby_sdk"
 ```
+
+`mollie-ruby-sdk` requires Ruby **3.2 or later** (the legacy gem only required Ruby 2.5+), and is licensed under Apache-2.0 instead of the legacy gem's BSD license. It also swaps the legacy gem's bundled `Net::HTTP` client for `Faraday` (plus `faraday-multipart` and `faraday-retry`) and adds a runtime dependency on `sorbet-runtime` for its type signatures. Check your Ruby version before migrating, `mollie-ruby-sdk` will not install on Ruby 3.1 or earlier.
 
 ---
 
@@ -108,7 +96,7 @@ There is no replacement for `Mollie::Client.instance`, `Mollie::Client.with_api_
 -  Mollie::Payment.create(...)
 -end
 +client = ::Mollie::Client.new(security: Models::Components::Security.new(api_key: "test_..."))
-+client.payments.create(body: ...)
++client.payments.create(request: Models::Operations::CreatePaymentRequest.new(body: ...))
 ```
 
 ---
@@ -124,7 +112,7 @@ There is no replacement for `Mollie::Client.instance`, `Mollie::Client.with_api_
 
 ### Access tokens (Connect / organization-level credentials)
 
-The legacy gem has no distinct concept for OAuth/organization-level tokens — any token (API key or OAuth access token) is passed as `api_key` and sent as `Authorization: Bearer <token>`. The new SDK has dedicated security schemes:
+The legacy gem has no distinct concept for OAuth/organization-level tokens, any token (API key or OAuth access token) is passed as `api_key` and sent as `Authorization: Bearer <token>`. The new SDK has dedicated security schemes:
 
 ```ruby
 client = ::Mollie::Client.new(
@@ -140,9 +128,9 @@ client = ::Mollie::Client.new(
 
 ### Global defaults (`profile_id`, `testmode`)
 
-In the legacy gem, `profileId`/`testmode` were not first-class client options — you passed them by hand as part of the options/query hash on every call, and the client happily camelized and forwarded whatever keys you gave it, regardless of credential type.
+In the legacy gem, `profileId`/`testmode` were not first-class client options, you passed them by hand as part of the options/data hash on every call, and the client happily camelized and forwarded whatever keys you gave it.
 
-In the new SDK, `profile_id` and `testmode` are configured on the client and **validated at initialization**: they are only accepted when your token looks like an organization-level credential (i.e. it starts with `access_`, which is what `advanced_access_token` and `o_auth` tokens look like). Setting either option while using a plain `api_key` raises a `StandardError` immediately, rather than silently being ignored or rejected later by the API.
+In the new SDK, `profile_id` and `testmode` are configured once on the client:
 
 ```ruby
 client = ::Mollie::Client.new(
@@ -151,6 +139,8 @@ client = ::Mollie::Client.new(
   testmode: true
 )
 ```
+
+The SDK automatically adds `profileId`/`testmode` to the body of every mutating operation that supports them, but only while the configured credential looks like an organization-level token (one starting with `access_`, the shape used by `advanced_access_token` and `o_auth`). If you configure a plain API key, the values are simply not injected rather than raising an error, so double-check your requests (or use an access token) if you rely on these globals.
 
 Both can still be overridden per request (see [Request parameters](#request-parameters)).
 
@@ -170,38 +160,41 @@ payment = Mollie::Payment.create(
 )
 ```
 
-The new SDK exposes resources as instance methods off the `Client` object you create, mirroring the structure of the API itself:
+The new SDK exposes resources as instance methods off the `Client` object you create, mirroring the structure of the API itself. Request bodies are typed `Models::Components::*Request` objects (e.g. `PaymentRequest`, `MandateRequest`), not plain hashes, though the SDK also accepts a plain `Hash` wherever a typed model is expected:
 
 ```ruby
 res = client.payments.create(
-  body: Models::Components::PaymentRequest.new(
-    amount: Models::Components::Amount.new(currency: "EUR", value: "10.00"),
-    description: "Order #478",
-    redirect_url: "https://example.com/redirect"
+  request: Models::Operations::CreatePaymentRequest.new(
+    body: Models::Components::PaymentRequest.new(
+      amount: Models::Components::Amount.new(currency: "EUR", value: "10.00"),
+      description: "Order #478",
+      redirect_url: "https://example.com/redirect"
+    )
   )
 )
 res.payment_response
 ```
 
-Request bodies are typed `Models::Components::*Request` objects (e.g. `PaymentRequest`, `MandateRequest`), not plain hashes. Enum-like fields (`locale`, `method`, `sequence_type`, payment status, etc.) are Sorbet enum classes under `Models::Components` (e.g. `Models::Components::SequenceType::ONEOFF`) instead of plain strings or the legacy gem's string constants (`Mollie::Payment::STATUS_PAID`).
+Enum-like fields (`locale`, `method`, `sequence_type`, payment status, etc.) are Sorbet enum classes under `Models::Components` (e.g. `Models::Components::SequenceType::ONEOFF`) instead of plain strings or the legacy gem's string constants (`Mollie::Payment::STATUS_PAID`).
 
-### Parameter passing is per method, not uniformly "one request object"
+### Parameter passing: a `request:` object for almost everything
 
-Unlike some other official Mollie SDKs, `mollie-ruby-sdk` does **not** uniformly wrap every call in a single request object, nor does it uniformly use direct keyword arguments — the choice is made per operation, and the two styles are mixed even among single-resource `get` calls:
+Unlike the legacy gem's flat argument lists, `mollie-ruby-sdk` bundles every path parameter, query parameter, header, and the request body into a single typed `Models::Operations::<Operation>Request` object, passed as the `request:` keyword argument:
 
 ```ruby
-# Direct keyword arguments:
-client.customers.update(customer_id: "cst_...", body: ...)
-client.mandates.revoke(customer_id: "cst_...", mandate_id: "mdt_...")
-client.customers.get(customer_id: "cst_...")
-
-# A single typed request: object instead:
+client.customers.get(request: Models::Operations::GetCustomerRequest.new(customer_id: "cst_..."))
+client.customers.update(request: Models::Operations::UpdateCustomerRequest.new(customer_id: "cst_...", body: ...))
+client.mandates.revoke(request: Models::Operations::RevokeMandateRequest.new(customer_id: "cst_...", mandate_id: "mdt_..."))
 client.payments.list(request: Models::Operations::ListPaymentsRequest.new(limit: 50))
-client.payments.get(request: Models::Operations::GetPaymentRequest.new(payment_id: "tr_..."))
-client.chargebacks.get(request: Models::Operations::GetChargebackRequest.new(payment_id: "tr_...", chargeback_id: "chb_..."))
 ```
 
-`list`/`all` operations always take `request:`. Single-resource `get`/`update`/`delete`/`revoke` operations go either way depending on the operation (e.g. `customers.get` takes `customer_id:` directly, but `payments.get` takes `request:`) — there's no shortcut: check the signature in `docs/sdks/<resource>/README.md` for every method you call.
+The only exception is a handful of top-level `create` operations that have no path parameter and no query string at all (just a body and optional idempotency/signing headers): `customers.create`, `webhooks.create`, `accounts.create_account`, `wallets.request_apple_pay_session`, and `oauth.generate`/`oauth.revoke`. These accept `body:`, `idempotency_key:`, and the signature headers directly as keyword arguments instead of a wrapped `request:` object:
+
+```ruby
+client.customers.create(body: Models::Components::EntityCustomer.new(name: "Customer A"))
+```
+
+Check the signature in `docs/sdks/<resource>/README.md` for every method you call rather than assuming one style.
 
 ### Nested resources
 
@@ -209,10 +202,10 @@ Both gems group nested resources (mandates, subscriptions, refunds, etc.) under 
 
 | Legacy (`Mollie::`) | New (`client.`) |
 | --- | --- |
-| `Customer::Mandate.create(customer_id:, ...)` | `mandates.create(customer_id:, body: ...)` |
-| `Customer::Mandate.get(mandate_id, customer_id:)` | `mandates.get(customer_id:, mandate_id:)` |
+| `Customer::Mandate.create(customer_id:, ...)` | `mandates.create(request: CreateMandateRequest.new(customer_id:, body: ...))` |
+| `Customer::Mandate.get(mandate_id, customer_id:)` | `mandates.get(request: GetMandateRequest.new(customer_id:, mandate_id:))` |
 | `Customer::Mandate.all(customer_id:)` | `mandates.list(request: ListMandatesRequest.new(customer_id: ...))` |
-| `Customer::Mandate.delete(mandate_id, customer_id:)` (aliased `cancel`) | `mandates.revoke(customer_id:, mandate_id:)` |
+| `Customer::Mandate.delete(mandate_id, customer_id:)` (aliased `cancel`) | `mandates.revoke(request: RevokeMandateRequest.new(customer_id:, mandate_id:))` |
 | `Customer::Payment.all(customer_id:)` | `customers.list_payments(request: ListCustomerPaymentsRequest.new(customer_id: ...))` |
 | `Customer::Subscription.all(customer_id:)` | `subscriptions.list(request: ListSubscriptionsRequest.new(customer_id: ...))` |
 | `Payment::Refund.all(payment_id:)` | `refunds.list(request: ListRefundsRequest.new(payment_id: ...))` |
@@ -223,7 +216,7 @@ Both gems group nested resources (mandates, subscriptions, refunds, etc.) under 
 | `Settlement::Capture.all(settlement_id:)` | `settlements.list_captures(request: ...)` |
 | `Settlement::Chargeback.all(settlement_id:)` | `settlements.list_chargebacks(request: ...)` |
 
-Note the `all` method name collision: in the legacy gem, `.all` means "list every item of this resource for its parent" (the normal list operation). In the new SDK, `all` is a **different, non-nested endpoint** that lists a resource across your *entire account* rather than for one parent — e.g. `chargebacks.list(request:)` needs a `payment_id` and lists chargebacks for that one payment, while `chargebacks.all(request:)` lists every chargeback across all your payments. The same distinction applies to `methods.list`/`methods.all`, `refunds.list`/`refunds.all`, and `subscriptions.list`/`subscriptions.all`. Map your old `.all(parent_id: ...)` calls to the new `list` method, not to `all`.
+Note the `all` method name collision: in the legacy gem, `.all` means "list every item of this resource for its parent" (the normal list operation). In the new SDK, `all` is a **different, non-nested endpoint** that lists a resource across your *entire account* rather than for one parent, e.g. `chargebacks.list(request:)` needs a `payment_id` and lists chargebacks for that one payment, while `chargebacks.all(request:)` lists every chargeback across all your payments. The same distinction applies to `methods.list`/`methods.all`, `refunds.list`/`refunds.all`, and `subscriptions.list`/`subscriptions.all`. Map your old `.all(parent_id: ...)` calls to the new `list` method, not to `all`.
 
 ### Instance relationship helpers are gone
 
@@ -238,7 +231,7 @@ payment.paid?            # => status == "paid"
 payment.refund!(amount: ...)
 ```
 
-Response objects in the new SDK are plain typed data (see [Response and model types](#response-and-model-types)) with no behavior and no automatic traversal of `_links`/`_embedded`. Replace these with explicit calls, reading IDs and links off the response yourself:
+Response objects in the new SDK are plain typed data with no behavior and no automatic traversal of `_links`/`_embedded`. Every operation response is wrapped in a `Models::Operations::<Operation>Response` object exposing `status_code`, `content_type`, `raw_response` (the raw `Faraday::Response`), and a resource-specific accessor for the parsed body (e.g. `payment_response`, `customer_response`, or `object` for list endpoints), check each method's response type for the exact accessor name. Replace the legacy helpers with explicit calls, reading IDs and links off the response yourself:
 
 ```ruby
 payment = client.payments.get(request: Models::Operations::GetPaymentRequest.new(payment_id: "tr_...")).payment_response
@@ -254,21 +247,23 @@ To embed related resources in a single response instead of making extra calls, u
 
 ### Idempotency key
 
-The legacy gem accepted `idempotency_key` as a magic key inside the data/options hash, which it stripped out and sent as the `Idempotency-Key` header (POST requests only). The new SDK exposes it as an explicit, documented keyword argument on every mutating method, for every HTTP verb that mutates state:
+The legacy gem accepted `idempotency_key` as a magic key inside the data/options hash, which it stripped out and sent as the `Idempotency-Key` header (POST requests only). The new SDK exposes it as an explicit, documented field on the request object for every operation that mutates state, and generates one automatically with `SecureRandom.uuid` if you don't supply one:
 
 ```ruby
 client.payments.create(
-  body: ...,
-  idempotency_key: "123e4567-e89b-12d3-a456-426614174000"
+  request: Models::Operations::CreatePaymentRequest.new(
+    body: ...,
+    idempotency_key: "123e4567-e89b-12d3-a456-426614174000"
+  )
 )
 ```
 
 ### `testmode` and `profile_id` per request
 
-These can be set on the client (see [Global defaults](#global-defaults-profile_id-testmode)) and overridden per call on operations that support them:
+These can be set on the client (see [Global defaults](#global-defaults-profile_id-testmode)) and overridden per call on operations whose request object supports them:
 
 ```ruby
-client.customers.get(customer_id: "cst_...", testmode: false)
+client.customers.get(request: Models::Operations::GetCustomerRequest.new(customer_id: "cst_...", testmode: false))
 ```
 
 ---
@@ -306,7 +301,7 @@ To fetch just the next page manually instead of iterating to the end:
 next_response = res.next_page&.call
 ```
 
-There is no `previous` equivalent in the new SDK — only forward pagination via `next_page`.
+There is no `previous` equivalent in the new SDK, only forward pagination via `next_page`.
 
 ---
 
@@ -351,15 +346,7 @@ rescue Mollie::Models::Errors::APIError => e
 end
 ```
 
-Which status codes raise `ErrorResponse` vs. fall through to `APIError` is documented per operation in `docs/sdks/<resource>/README.md` under "Errors" — it varies by endpoint (e.g. `payments.create` documents `422, 429`; `payments.get` documents `404, 429`).
-
----
-
-## Response and model types
-
-- Legacy models (`Mollie::Payment`, `Mollie::Customer::Mandate`, etc.) are mutable objects built from `attr_accessor`s, with ad-hoc coercion in custom setters (timestamps parsed into `Time`, nested hashes into `OpenStruct`, amounts into `Mollie::Amount` wrapping a `BigDecimal`). New SDK models (`Models::Components::PaymentResponse`, `Models::Components::MandateResponse`, etc.) are Sorbet-typed data classes generated from the API schema, with no custom coercion logic beyond JSON (de)serialization.
-- `Mollie::Amount` had a `value` setter that parsed into `BigDecimal` and a `to_h` method. `Models::Components::Amount` just holds `currency`/`value` as plain strings, exactly as sent/received over the wire — do your own decimal handling if you need it.
-- Every operation response is wrapped in an `Models::Operations::<Operation>Response` object exposing `status_code`, `content_type`, `raw_response` (the raw `Faraday::Response`), and a resource-specific accessor for the parsed body (e.g. `payment_response`, `customer_response`, or `object` for list endpoints) — check each method's response type for the exact accessor name.
+Which status codes raise `ErrorResponse` vs. fall through to `APIError` is documented per operation in `docs/sdks/<resource>/README.md` under "Errors", it varies by endpoint (e.g. `mandates.create` documents `404, 429`; `customers.create_payment` documents `422, 429, 503`).
 
 ---
 
@@ -367,7 +354,7 @@ Which status codes raise `ErrorResponse` vs. fall through to `APIError` is docum
 
 ### Webhook signature validation
 
-The legacy gem has no webhook helper at all — verifying a webhook payload meant writing your own HMAC check. The new SDK ships one:
+The legacy gem has no webhook helper at all, verifying a webhook payload meant writing your own HMAC check. The new SDK ships one:
 
 ```ruby
 require "mollie_ruby_sdk"
@@ -383,7 +370,7 @@ rescue Mollie::Utils::Webhooks::InvalidSignatureException
 end
 ```
 
-`signing_secrets` accepts either a single secret or an array (useful during secret rotation), and `signatures` accepts either a single header value or an array.
+`signing_secrets` accepts either a single secret or an array (useful during secret rotation), and `signatures` accepts either a single header value or an array. The call returns `false` if no signature was supplied at all, and raises `InvalidSignatureException` if a signature was supplied but none of the configured secrets match it.
 
 ### Native OAuth token exchange
 
@@ -407,11 +394,11 @@ res = client.oauth.generate(
 
 ### Manual capture
 
-The legacy gem never documented or shipped an example for creating a capture — only reading one (`get`) or listing them (`all`). The new SDK explicitly types and documents `client.captures.create(payment_id:, body: ...)`, for use with payments created via `capture_mode: Models::Components::CaptureMode::MANUAL`.
+The legacy gem never documented or shipped an example for creating a capture, only reading one (`get`) or listing them (`list`/`all`). The new SDK explicitly types and documents `client.captures.create(request: Models::Operations::CreateCaptureRequest.new(payment_id:, body: ...))`, for use with payments created via `capture_mode: Models::Components::CaptureMode::MANUAL`.
 
 ### Apple Pay payment sessions
 
-New `client.wallets.request_apple_pay_session(body: ...)` — the legacy gem has no equivalent; Apple Pay was only available as a payment `method` value.
+New `client.wallets.request_apple_pay_session(body: ...)`, the legacy gem has no equivalent; Apple Pay was only available as a payment `method` value.
 
 ### Retries and a custom HTTP client
 
@@ -432,17 +419,6 @@ client = ::Mollie::Client.new(
 ```
 
 The underlying HTTP client is a `Faraday::Connection` (the legacy gem used `Net::HTTP` directly), which you can also supply yourself via the `client:` keyword argument if you need custom middleware.
-
----
-
-## Known gaps
-
-As of this writing, the following legacy-gem resources have **no equivalent** in `mollie-ruby-sdk`:
-
-- **Orders API** (`Mollie::Order`, including `Order::Line`, `Order::Payment`, `Order::Refund`)
-- **Shipments API** (`Mollie::Order::Shipment`)
-
-If your integration relies on these, verify current support before migrating — do not assume they will appear automatically, and re-check the generated SDK's resource list for your Mollie SDK version before cutting over.
 
 ---
 
@@ -503,8 +479,10 @@ If your integration relies on these, verify current support before migrating —
 
 ### Resources available only in the legacy gem
 
+As of this writing, the following legacy-gem resources have **no equivalent** in `mollie-ruby-sdk`. If your integration relies on them, verify current support before migrating, do not assume they will appear automatically, and re-check the generated SDK's resource list for your Mollie SDK version before cutting over.
+
 | Legacy (`Mollie::`) | Status in `mollie-ruby-sdk` |
 | --- | --- |
-| `Order`, `Order::Line`, `Order::Payment`, `Order::Refund` | Not available — see [Known gaps](#known-gaps) |
-| `Order::Shipment` | Not available — see [Known gaps](#known-gaps) |
+| `Order`, `Order::Line`, `Order::Payment`, `Order::Refund` | Not available, superseded by [Payment Links](https://docs.mollie.com/reference/v2/payment-links-api/create-payment-link) and standard Payments |
+| `Order::Shipment` | Not available |
 | `Partner` | Superseded by `organizations.get_partner` |
