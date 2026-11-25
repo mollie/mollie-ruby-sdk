@@ -5,15 +5,15 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.811.0
   generationVersion: 2.968.1
-  releaseVersion: 0.0.1-alpha.12
-  configChecksum: 69fff5e1702627bd2bec4f1c3e880b16
+  releaseVersion: 1.0.0-beta.1
+  configChecksum: 255fe66337c4b1586b4d2ea6b37da5d4
   repoURL: https://github.com/mollie/mollie-ruby-sdk.git
   installationURL: https://github.com/mollie/mollie-ruby-sdk
   published: true
 persistentEdits:
-  generation_id: 851ad8ae-f0f3-43fd-92d8-6cb9be1fbd96
-  pristine_commit_hash: 044e525b46608eb251008c849267e92c8f75bf01
-  pristine_tree_hash: 2f4f109e431826faad190259721f43444fbed261
+  generation_id: 985366cd-6998-483d-8724-daae5c814b63
+  pristine_commit_hash: dd79a0992bb562351444a1951631962caaa529c4
+  pristine_tree_hash: 76925564e1af7fca96ca999e1bc2592d20917c32
 features:
   ruby:
     core: 3.11.38
@@ -51,8 +51,8 @@ trackedFiles:
     pristine_git_object: b0ea40558f3ca80dcf7d30b159d34a1e5ab33440
   Gemfile.lock:
     id: 21fb5836b499
-    last_write_checksum: sha1:45ad3930f74a37ad177ae82f7e2e6b510ddc696d
-    pristine_git_object: 5f8f5c0137a37372a699586c0b6bceee93c6f77a
+    last_write_checksum: sha1:688a06c3a5a173f2ba4d134b0e33cd00b264b325
+    pristine_git_object: 8d12d835b70a03dfa5ae2e39ccfa0cac7fb2ad89
   Rakefile:
     id: 44b7fa1ba503
     last_write_checksum: sha1:c572639efdae8c7b24141ee5c02d8f009e101ed8
@@ -11519,8 +11519,8 @@ trackedFiles:
     pristine_git_object: f350d9b4a20d1681836aab58bafba582b2a96d1f
   lib/mollie/sdkconfiguration.rb:
     id: d210a4891e32
-    last_write_checksum: sha1:9e9ce7339d2b9521d509ca3ba2d3170c077b4a02
-    pristine_git_object: 6e43557e663dd3d795a377ddc0771b36e72f2f9b
+    last_write_checksum: sha1:688e32fdc7b2c418b2d655d621f462d35722e371
+    pristine_git_object: 58d83a22705e73d089c69d2eec6cea653421cf44
   lib/mollie/sdkconfiguration.rbi:
     id: c0ffd0c4f524
     last_write_checksum: sha1:736dfd8a0547d28fe74ce3d0e72adfcea4bdcc6c
@@ -11599,8 +11599,8 @@ trackedFiles:
     pristine_git_object: cb4316d4d6219943fca741d87ce16ba9c100f8cf
   mollie-ruby-sdk.gemspec:
     id: 1b774e05b6f3
-    last_write_checksum: sha1:5edef56c21ad7eaa3fc1214fed9b625374a6b9a9
-    pristine_git_object: 55b52885fe6f236d66548bcec2e96673ae1722a0
+    last_write_checksum: sha1:77afc392c3cb5fc9c4671aa574efc1b0f87ef584
+    pristine_git_object: 1455d77ad488716d97fcb4d422b05eda32ddd139
   sorbet/config:
     id: 59392da43f94
     last_write_checksum: sha1:d02b32628dad70edc5929a9b9801d5e2dca15d40

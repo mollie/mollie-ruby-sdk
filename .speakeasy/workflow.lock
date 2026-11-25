@@ -14,7 +14,7 @@ targets:
         sourceRevisionDigest: sha256:653884e7e50a8fa4c0bc5222568b5c8025d3dc4775c0f92204946293cc7262b1
         sourceBlobDigest: sha256:3f060a6dabf9d59df9a9de6d32609a81c5da341dda5287e2da25c316097cf691
         codeSamplesNamespace: mollie-api-ruby-code-samples
-        codeSamplesRevisionDigest: sha256:fb5001024796f9cbf56e9e08657d7abb0998b56d8ba3b5fbe7cdb96052d39f04
+        codeSamplesRevisionDigest: sha256:5be842f45e32cf3352629af14ce20d427206b2b8207896228281a30c5c0653ab
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
