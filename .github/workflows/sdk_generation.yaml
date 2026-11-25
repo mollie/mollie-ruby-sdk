@@ -5,6 +5,7 @@ permissions:
   pull-requests: write
   statuses: write
   id-token: write
+  actions: write
 "on":
   workflow_dispatch:
     inputs:
@@ -22,7 +23,19 @@ permissions:
       - labeled
       - unlabeled
 jobs:
+  pre-check:
+    runs-on: ubuntu-latest
+    outputs:
+      sha_before: ${{ steps.sha.outputs.sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - id: sha
+        run: echo "sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+
   generate:
+    needs: pre-check
     uses: speakeasy-api/sdk-generation-action/.github/workflows/workflow-executor.yaml@v15
     with:
       force: ${{ github.event.inputs.force }}
@@ -32,3 +45,38 @@ jobs:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
       rubygems_auth_token: ${{ secrets.RUBYGEMS_AUTH_TOKEN }}
       speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+
+  trigger-release-note:
+    needs: [pre-check, generate]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Check if Speakeasy pushed changes
+        id: check
+        run: |
+          CURRENT_SHA=$(git rev-parse HEAD)
+          BEFORE_SHA="${{ needs.pre-check.outputs.sha_before }}"
+          AUTHOR=$(git log -1 --format='%ae')
+          if [[ "$CURRENT_SHA" != "$BEFORE_SHA" && "$AUTHOR" == *"speakeasy"* ]]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "sha=$CURRENT_SHA" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+      - name: Trigger Release Note workflow
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/contents/.github/workflows/sdk_release_note.yaml?ref=main")
+          if [ "$STATUS" = "200" ]; then
+            curl -sf -X POST \
+              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              "https://api.github.com/repos/${{ github.repository }}/actions/workflows/sdk_release_note.yaml/dispatches" \
+              -d "{\"ref\":\"main\",\"inputs\":{\"commit_sha\":\"${{ steps.check.outputs.sha }}\"}}"
+          else
+            echo "sdk_release_note.yaml not on main yet, skipping dispatch"
+          fi
